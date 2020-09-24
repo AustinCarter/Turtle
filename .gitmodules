@@ -1,0 +1,12 @@
+[submodule "Turtle/vendor/GLFW"]
+	path = Turtle/vendor/GLFW
+	url = git@github.com:TheCherno/glfw.git
+[submodule "Turtle/vendor/spdlog"]
+	path = Turtle/vendor/spdlog
+	url = git@github.com:gabime/spdlog.git
+[submodule "Turtle/vendor/glm"]
+	path = Turtle/vendor/glm
+	url = https://github.com/g-truc/glm
+[submodule "Turtle/vendor/imgui"]	
+	path = Turtle/vendor/imgui
+	url = https://github.com/TheCherno/imgui
