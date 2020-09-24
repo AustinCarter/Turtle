@@ -31,6 +31,11 @@ namespace Turtle {
 
 		auto square = m_ActiveScene->CreateEntity("Square Entity");
 		square.AddComponenet<SpriteRendererComponent>(m_CheckerboardTexture.get()->GetRendererID(), glm::vec4{1.0f, 1.0f, 1.0f, 1.0f});
+
+		auto square2 = m_ActiveScene->CreateEntity("Square Entity 2");
+		square2.AddComponenet<SpriteRendererComponent>(glm::vec4{8.0f, 0.2f, 0.6f, 1.0f});
+
+
 		m_SquareEntity = square;
 
 		m_CameraEntity = m_ActiveScene->CreateEntity("CameraA");

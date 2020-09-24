@@ -33,9 +33,6 @@ namespace Turtle {
 		static void DrawQuad(const glm::vec2& position, const glm::vec2& size, const Ref<SubTexture2D>& subtexture, const glm::vec4& tint = glm::vec4(1.0f));
 		static void DrawQuad(const glm::vec3& position, const glm::vec2& size, const Ref<SubTexture2D>& subtexture, const glm::vec4& tint = glm::vec4(1.0f));
 
-/*		// TODO: this allows for rendering of a texture without having the ref to it, however it does not allow for subtextures to be communicated effectively. Furthermore, if more information is ever needed for rendering, then communicating that information will become more difficult. One solution is to create a texture/asset manager that will allow for a texture/asset id to be used to return a reference to that item. That way, SCene can use the id from SpriteRendererComponent to obtain a ref to that texture for rendering (alternativly, the renderer could do this process, however the Renderer side of things should probably not be tasked with such a task)
-		static void DrawQuad(const glm::mat4& transform, uint32_t textureID, const glm::vec4& tint = glm::vec4(1.0f));
-		//-----------------------------------		*/
 		static void DrawQuad(const glm::mat4& transform, const glm::vec4& color);
 		static void DrawQuad(const glm::mat4& transform, const Ref<Texture2D>& texture, const glm::vec4& tint = glm::vec4(1.0f));
 		static void DrawQuad(const glm::mat4& transform, const Ref<SubTexture2D>& subtexture, const glm::vec4& tint = glm::vec4(1.0f));
