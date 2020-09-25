@@ -1,7 +1,6 @@
 #include "turtpch.h"
 #include "Scene.h"
 
-#include "Turtle/Scene/Components.h"
 #include "Turtle/Renderer/Renderer2D.h"
 
 #include <glm/glm.hpp>
@@ -10,9 +9,10 @@
 
 #include "Turtle/Core/TextureManager.h"
 
+#include "Turtle/Scene/Components.h"
+
 
 namespace Turtle {
-
 
 	Scene::Scene()
 	{
@@ -104,6 +104,11 @@ namespace Turtle {
 				cameraComponent.Camera.SetViewportSize(width, height);
 			}
 		}
+	}
+
+	void Scene::OnCameraAdd(CameraComponent& cameraComponent)
+	{
+		cameraComponent.Camera.SetViewportSize(m_ViewportWidth, m_ViewportHeight);	
 	}
 
 }

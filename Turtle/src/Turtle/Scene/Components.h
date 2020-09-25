@@ -8,6 +8,12 @@
 
 namespace Turtle {
 
+	//NOTE: Tag and Transform component should be after any newly added components
+	enum class ComponentType { 
+		SpriteRendererComponent = 0, CameraComponent = 1, NativeScriptComponent = 2,
+		TagComponent = 3, TransformComponent = 4
+	};
+
 	struct TagComponent
 	{
 		std::string Tag;

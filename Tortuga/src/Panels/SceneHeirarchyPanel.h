@@ -5,6 +5,9 @@
 #include "Turtle/Scene/Scene.h"
 #include "Turtle/Scene/Entity.h"
 
+#include "ComponentAddPanel.h"
+
+
 namespace Turtle {
 
 	class SceneHeirarchyPanel
@@ -22,6 +25,9 @@ namespace Turtle {
 
 		Ref<Scene> m_Context;
 		Entity m_SelectionContext;
+
+		bool m_AddingComponent = false;
+		ComponentAddPanel m_ComponentDialogue;
 	};
 
 }

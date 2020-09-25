@@ -37,6 +37,12 @@ namespace Turtle {
 		{
 			DrawComponents(m_SelectionContext);
 		}
+
+		if( m_AddingComponent )
+		{
+			m_AddingComponent = m_ComponentDialogue.OnImGuiRender(); 
+		}
+
 		ImGui::End();
 	}
 
@@ -151,6 +157,30 @@ namespace Turtle {
 
 				ImGui::TreePop();
 			}
+		}
+
+
+		if(entity.HasComponent<SpriteRendererComponent>())
+		{
+			if (ImGui::TreeNodeEx((void*)typeid(SpriteRendererComponent).hash_code(), ImGuiTreeNodeFlags_DefaultOpen, "Sprite"))
+			{
+				auto& spriteComponent = entity.GetComponent<SpriteRendererComponent>();
+				auto& color = spriteComponent.Color; 
+				ImGui::ColorEdit4("Color", glm::value_ptr(color));
+
+				// MIGHT BE TEMP
+				if (spriteComponent.Textured)
+					ImGui::Image((void*)spriteComponent.TextureID, ImVec2{ 128, 128 }, ImVec2{ 0, 1 }, ImVec2{ 1, 0 });
+
+				ImGui::TreePop();
+			}
+		}
+
+		if (ImGui::Button("+ Add Component"))
+		{
+			// entity.AddComponenet<SpriteRendererComponent>();
+			m_AddingComponent = true;
+			m_ComponentDialogue.InitState(entity, m_Context);
 		}
 	}
 }

@@ -1,7 +1,5 @@
 #include "EditorLayer.h"
 
-
-
 #include "imgui/imgui.h"
 
 #include "glm/gtc/matrix_transform.hpp"
@@ -34,16 +32,15 @@ namespace Turtle {
 
 		auto square2 = m_ActiveScene->CreateEntity("Square Entity 2");
 		square2.AddComponenet<SpriteRendererComponent>(glm::vec4{8.0f, 0.2f, 0.6f, 1.0f});
-
+		square2.GetComponent<TransformComponent>().Transform[3][0] = rand() % 10  - 5.0f;
 
 		m_SquareEntity = square;
 
-		m_CameraEntity = m_ActiveScene->CreateEntity("CameraA");
+		m_CameraEntity = m_ActiveScene->CreateEntity("Camera A");
 		m_CameraEntity.AddComponenet<CameraComponent>();
 
-		m_SecondCamera = m_ActiveScene->CreateEntity("CameraB");
-		auto& cc =  m_SecondCamera.AddComponenet<CameraComponent>();
-		cc.Primary = false;
+		auto testEntity = m_ActiveScene->CreateEntity("Test Entity");
+		testEntity.GetComponent<TransformComponent>().Transform[3][0] = rand() % 10  - 5.0f;
 
 		class CameraController : public ScriptableEntity
 		{
@@ -51,7 +48,7 @@ namespace Turtle {
 			void OnCreate()
 			{
 				auto& transform = GetComponent<TransformComponent>().Transform;
-				transform[3][0] = rand() % 10  - 5.0f;
+				// transform[3][0] = rand() % 10  - 5.0f;
 			}
 
 			void OnDestroy()
@@ -76,7 +73,6 @@ namespace Turtle {
 		};
 
 		m_CameraEntity.AddComponenet<NativeScriptComponent>().Bind<CameraController>();
-		m_SecondCamera.AddComponenet<NativeScriptComponent>().Bind<CameraController>();
 
 		m_SceneHeirarchy.SetContext(m_ActiveScene);
 	}
@@ -128,7 +124,8 @@ namespace Turtle {
 
 	    // We are using the ImGuiWindowFlags_NoDocking flag to make the parent window not dockable into,
 	    // because it would be confusing to have two docking targets within each others.
-	    ImGuiWindowFlags window_flags = ImGuiWindowFlags_MenuBar | ImGuiWindowFlags_NoDocking;
+	    //  ImGuiWindowFlags_MenuBar to re-enable menu bar 
+	    ImGuiWindowFlags window_flags = ImGuiWindowFlags_NoDocking;
 	    if (opt_fullscreen)
 	    {
 	        ImGuiViewport* viewport = ImGui::GetMainViewport();
@@ -177,7 +174,7 @@ namespace Turtle {
 
 	    m_SceneHeirarchy.OnImGuiRender();
 
-		ImGui::Begin("Settings");
+		ImGui::Begin("Info");
 
 		auto stats = Renderer2D::GetStats();
 		ImGui::Text("Renderer2D Stats:");
@@ -185,23 +182,6 @@ namespace Turtle {
 		ImGui::Text("Quads: %d", stats.QuadCount);
 		ImGui::Text("Vertices: %d", stats.GetTotalVertexCount());
 		ImGui::Text("Indices: %d", stats.GetTotalIndexCount());
-
-		if(m_SquareEntity)
-		{
-			ImGui::Separator();
-			auto& tag = m_SquareEntity.GetComponent<TagComponent>().Tag;
-			ImGui::Text("%s", tag.c_str());
-
-			auto& squareColor = m_SquareEntity.GetComponent<SpriteRendererComponent>().Color;
-			ImGui::ColorEdit4("Square Color", glm::value_ptr(squareColor));
-			ImGui::Separator();
-		}
-
-		if (ImGui::Checkbox("Camera A", &m_PrimaryCamera))
-		{
-			m_CameraEntity.GetComponent<CameraComponent>().Primary = m_PrimaryCamera;
-			m_SecondCamera.GetComponent<CameraComponent>().Primary = !m_PrimaryCamera;
-		}
 
 		ImGui::End();
 

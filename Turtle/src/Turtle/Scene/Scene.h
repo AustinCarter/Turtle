@@ -4,8 +4,10 @@
 
 #include "Turtle/Core/Timestep.h"
 
+
 namespace Turtle {
 	class Entity;
+	struct CameraComponent;
 	class Scene 
 	{
 	public:
@@ -16,6 +18,8 @@ namespace Turtle {
 
 		void OnUpdate(Timestep ts);
 		void OnViewportResize(uint32_t width, uint32_t height);
+
+		void OnCameraAdd(CameraComponent& cameraComponent);
 
 	private:
 		entt::registry m_Registry;

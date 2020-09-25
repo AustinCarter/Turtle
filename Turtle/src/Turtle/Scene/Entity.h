@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Turtle/Scene/Scene.h"
+#include "Turtle/Core/Log.h"
 
 #include <entt.hpp>
 
