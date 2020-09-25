@@ -176,6 +176,18 @@ namespace Turtle {
 			}
 		}
 
+		if(entity.HasComponent<NativeScriptComponent>())
+		{
+			if (ImGui::TreeNodeEx((void*)typeid(NativeScriptComponent).hash_code(), ImGuiTreeNodeFlags_DefaultOpen, "Native Script"))
+			{
+				auto& nativeScriptComponent = entity.GetComponent<NativeScriptComponent>();
+				bool bound = nativeScriptComponent.Bound;
+				const char* BoundString = bound ? "" : "No script bound";
+				ImGui::Button(BoundString);
+				ImGui::TreePop();
+			}
+		}
+
 		if (ImGui::Button("+ Add Component"))
 		{
 			// entity.AddComponenet<SpriteRendererComponent>();

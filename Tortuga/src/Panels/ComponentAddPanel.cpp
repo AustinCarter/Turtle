@@ -34,12 +34,12 @@ namespace Turtle {
 			{
 				m_Entity.AddComponenet<SpriteRendererComponent>();
 			}
-			if(m_ComponentType == (int)ComponentType::CameraComponent)
+			else if(m_ComponentType == (int)ComponentType::CameraComponent)
 			{
 				m_Entity.AddComponenet<CameraComponent>();
 				m_Context->OnCameraAdd(m_Entity.GetComponent<CameraComponent>());
 			}
-			if(m_ComponentType == (int)ComponentType::NativeScriptComponent)
+			else if(m_ComponentType == (int)ComponentType::NativeScriptComponent)
 			{
 				//NOTE: won't work until script instantiating is moved to a scene on play method
 				//tries to create an instance without a script chosen (could also set it to some default script)

@@ -31,7 +31,7 @@ namespace Turtle {
 		square.AddComponenet<SpriteRendererComponent>(m_CheckerboardTexture.get()->GetRendererID(), glm::vec4{1.0f, 1.0f, 1.0f, 1.0f});
 
 		auto square2 = m_ActiveScene->CreateEntity("Square Entity 2");
-		square2.AddComponenet<SpriteRendererComponent>(glm::vec4{8.0f, 0.2f, 0.6f, 1.0f});
+		square2.AddComponenet<SpriteRendererComponent>(glm::vec4{0.6f, 0.2f, 0.5f, 1.0f});
 		square2.GetComponent<TransformComponent>().Transform[3][0] = rand() % 10  - 5.0f;
 
 		m_SquareEntity = square;

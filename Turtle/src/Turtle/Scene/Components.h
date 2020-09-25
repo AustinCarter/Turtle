@@ -65,6 +65,7 @@ namespace Turtle {
 	struct NativeScriptComponent
 	{
 		ScriptableEntity* Instance = nullptr;
+		bool Bound = false; 
 
 		ScriptableEntity*(*InstantiateScript)();
 		void (*DestroyScript)(NativeScriptComponent*);
@@ -74,6 +75,7 @@ namespace Turtle {
 		{
 			InstantiateScript = []() { return static_cast<ScriptableEntity*>(new T()); };
 			DestroyScript = [](NativeScriptComponent* nsc) {delete nsc->Instance; nsc->Instance = nullptr; };
+			Bound = true; 
 		}
 	};
 }
