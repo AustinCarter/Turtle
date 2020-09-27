@@ -9,6 +9,7 @@
 #ifdef TURT_ENABLE_ASSERTS
 	#define TURT_ASSERT(x, ...) { if(!(x)) { TURT_ERROR("Assertion Failed: {0}", __VA_ARGS__); __debugbreak(); } }
 	#define TURT_CORE_ASSERT(x, ...) { if(!(x)) { TURT_CORE_ERROR("Assertion Failed: {0}", __VA_ARGS__); __debugbreak(); } }
+	#define TURT_STATIC_ASSERT(expr) static_assert(expr, "Static assert failed: " #expr);
 #else
 	#define TURT_ASSERT(x, ...)
 	#define TURT_CORE_ASSERT(x, ...)

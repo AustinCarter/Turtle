@@ -30,6 +30,11 @@ namespace Turtle {
 		if (ImGui::IsMouseDown(0) && ImGui::IsWindowHovered())
 			m_SelectionContext = {};
 
+		if (ImGui::Button("Add Entity"))
+		{
+			m_Context->CreateEntity();
+		}
+
 		ImGui::End();
 
 		ImGui::Begin("Properties");
@@ -185,7 +190,7 @@ namespace Turtle {
 				const char* BoundString = bound ? "" : "No script bound";
 				ImGui::Button(BoundString);
 				ImGui::TreePop();
-			}
+			} 
 		}
 
 		if (ImGui::Button("+ Add Component"))

@@ -117,6 +117,8 @@ namespace Turtle {
 	{
 		TURT_PROFILE_FUNCTION();
 
+		ImGui::ShowDemoWindow();
+
 		static bool dockingEnabled = true;
 		static bool opt_fullscreen_persistant = true;
 	    bool opt_fullscreen = opt_fullscreen_persistant;
@@ -173,6 +175,7 @@ namespace Turtle {
 	    }
 
 	    m_SceneHeirarchy.OnImGuiRender();
+	    m_FileSelector.SelectFile();
 
 		ImGui::Begin("Info");
 
