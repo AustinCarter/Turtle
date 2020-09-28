@@ -14,6 +14,7 @@ namespace Turtle {
 		static int selected = -1;
 		//NOTE: Order matters, must match ComponentType order
 		const char* componentTypes[] = {"SpriteRendererComponent", "CameraComponent", "NativeScriptComponent"};
+		ImGui::BeginChild("Component Select", ImVec2(ImGui::GetWindowContentRegionWidth(), 100), true);
 		if(ImGui::Selectable("None", -1==m_ComponentType))
 			m_ComponentType = -1;
         for (int i = 0; i < 3; i++)
@@ -25,7 +26,7 @@ namespace Turtle {
                 m_ComponentType = i;
             }
         }
-        ImGui::Separator();
+        ImGui::EndChild();
 		if(ImGui::Button("Select"))
 		{
 			m_ComponentCreated = true;

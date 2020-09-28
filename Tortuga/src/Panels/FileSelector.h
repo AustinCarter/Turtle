@@ -16,7 +16,10 @@ namespace Turtle {
 		void OnImGuiRender();
 	private:
 		std::filesystem::path m_CurrentDirectory;
+		ImGuiTextFilter m_filter;
 		std::string m_SelectedFile = "";
+
+
 
 		int32_t m_Selected = -1;
 	};

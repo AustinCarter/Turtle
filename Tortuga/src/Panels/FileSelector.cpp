@@ -13,7 +13,6 @@ namespace Turtle {
 
 	void FileSelector::SelectFile()
 	{
-		// ImGui::Begin("File Selector");
 		ImGui::Begin("File Selector");
 		char buffer[1024];
 		int i = 0;
@@ -28,16 +27,16 @@ namespace Turtle {
 
 			strcpy_s(&buffer[i], sizeof(buffer) - i, name.c_str());
 			i += name.size();
-			strcpy_s(&buffer[i], sizeof(buffer) - i, "\\");	
-			i += 1;
-
 			if (ImGui::Button(name.c_str()))
 			{
+				//NOTE: DOES NOT WORK FOR REDUNDANTLY NAMED DIRECTOREIS:
+				//	EG: directory/directory/dir - The first directory button will work as will dir, however the second directory will not
 				changeDir = true;
 				m_SelectedFile = ""; 
-				buffer[i] == '\0';
 				break;
-			}
+			}	
+			strcpy_s(&buffer[i], sizeof(buffer) - i, "\\");	
+			i += 1;
 			
 		}
 
@@ -50,25 +49,28 @@ namespace Turtle {
 		
 		for (auto& file : std::filesystem::directory_iterator(m_CurrentDirectory.c_str()))
 		{
-			if (ImGui::Selectable(file.path().u8string().c_str(), index == m_Selected, ImGuiSelectableFlags_AllowDoubleClick))
+			if (m_filter.PassFilter(file.path().u8string().c_str()))
 			{
-				m_Selected = index;
-				bool isDir = std::filesystem::is_directory(file.path());
-
-				m_SelectedFile = isDir ? "" : file.path().filename().string();
-
-				if (ImGui::IsMouseDoubleClicked(0))
+				if (ImGui::Selectable(file.path().u8string().c_str(), index == m_Selected, ImGuiSelectableFlags_AllowDoubleClick))
 				{
-					if(isDir)
+					m_Selected = index;
+					bool isDir = std::filesystem::is_directory(file.path());
+
+					m_SelectedFile = isDir ? "" : file.path().filename().string();
+
+					if (ImGui::IsMouseDoubleClicked(0))
 					{
-						m_SelectedFile = "";
-						m_CurrentDirectory = file.path();
-					}		
-					else
-						TURT_WARN("{0}\\{1}", m_CurrentDirectory.u8string().c_str(), m_SelectedFile.c_str()); //return path		
+						if(isDir)
+						{
+							m_SelectedFile = "";
+							m_CurrentDirectory = file.path();
+						}		
+						else
+							TURT_WARN("{0}\\{1}", m_CurrentDirectory.u8string().c_str(), m_SelectedFile.c_str()); //return path		
+					}
 				}
+				index++;
 			}
-			index++;
 		}
 		
 		ImGui::EndChild();
@@ -78,10 +80,16 @@ namespace Turtle {
 		if(!m_SelectedFile.empty())
 			strcpy_s(&buffer[i], sizeof(buffer) - i, m_SelectedFile.c_str());
 
-		if(ImGui::InputText("filename", buffer, sizeof(buffer)))
+		if(ImGui::InputText("filename", buffer, sizeof(buffer), ImGuiInputTextFlags_EnterReturnsTrue))
 		{
-			m_CurrentDirectory = std::filesystem::path(std::string(buffer));
+			auto& newPath = std::filesystem::path(std::string(buffer));
+			if(std::filesystem::exists(newPath))
+			{
+				m_CurrentDirectory = newPath;
+				m_SelectedFile = "";
+			}
 		}
+		m_filter.Draw();
 		if(ImGui::Button("Open"))
 		{
 			if(!m_SelectedFile.empty())
@@ -90,7 +98,5 @@ namespace Turtle {
 				TURT_ERROR("Please select a valid file. Directory selected.	");
 		}
 		ImGui::End();
-
-		//return m_CurrentDirectory;
 	}
 }
