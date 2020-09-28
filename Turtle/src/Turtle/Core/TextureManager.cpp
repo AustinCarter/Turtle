@@ -2,11 +2,22 @@
 #include "TextureManager.h"
 
 namespace Turtle {
-	TextureManager* TextureManager::s_Instance = nullptr;
 
-	TextureManager::TextureManager() 
+	struct TextureManagerData
 	{
-		TURT_CORE_ASSERT(!s_Instance, "TextureManager Already exixts.");
-		s_Instance = this;
+		std::unordered_map<uint32_t, Ref<Texture2D>> TextureMap;
+	};
+
+	static TextureManagerData s_Data;
+
+
+	void TextureManager::RegisterTexture(uint32_t textureID, const Ref<Texture2D> texture)
+	{
+		s_Data.TextureMap[textureID] = texture;
+	}
+
+	const Ref<Texture2D>& TextureManager::GetTexture(uint32_t textureID)
+	{
+		return s_Data.TextureMap[textureID];
 	}
 }

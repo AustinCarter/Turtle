@@ -85,7 +85,7 @@ namespace Turtle {
 				auto [transform, sprite] = group.get<TransformComponent, SpriteRendererComponent>(entity);
 
 				if (sprite.Textured)
-					Renderer2D::DrawQuad(transform, TextureManager::Get().GetTexture(sprite.TextureID), sprite.Color);
+					Renderer2D::DrawQuad(transform, TextureManager::GetTexture(sprite.TextureID), sprite.Color);
 				else
 					Renderer2D::DrawQuad(transform, sprite.Color);
 

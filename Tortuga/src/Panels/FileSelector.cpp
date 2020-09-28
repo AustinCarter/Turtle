@@ -80,7 +80,7 @@ namespace Turtle {
 		if(!m_SelectedFile.empty())
 			strcpy_s(&buffer[i], sizeof(buffer) - i, m_SelectedFile.c_str());
 
-		if(ImGui::InputText("filename", buffer, sizeof(buffer), ImGuiInputTextFlags_EnterReturnsTrue))
+		if(ImGui::InputText("", buffer, sizeof(buffer), ImGuiInputTextFlags_EnterReturnsTrue))
 		{
 			auto& newPath = std::filesystem::path(std::string(buffer));
 			if(std::filesystem::exists(newPath))
@@ -89,7 +89,8 @@ namespace Turtle {
 				m_SelectedFile = "";
 			}
 		}
-		m_filter.Draw();
+		ImGui::SameLine();
+		m_filter.Draw("filter", ImGui::GetContentRegionAvailWidth());
 		if(ImGui::Button("Open"))
 		{
 			if(!m_SelectedFile.empty())

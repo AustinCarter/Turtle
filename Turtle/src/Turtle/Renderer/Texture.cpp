@@ -14,7 +14,7 @@ namespace Turtle {
 			case RendererAPI::API::None: TURT_CORE_ASSERT(false, "RendererAPI::None is not currently supported."); return nullptr;
 			case RendererAPI::API::OpenGL: 
 				Ref<Texture2D> texture = CreateRef<OpenGLTexture2D>(path);
-				TextureManager::Get().RegisterTexture(texture.get()->GetRendererID(), texture);
+				TextureManager::RegisterTexture(texture.get()->GetRendererID(), texture);
 				return texture;
 		}
 		TURT_CORE_ASSERT(false, "Unknown RendererAPI");
@@ -29,7 +29,7 @@ namespace Turtle {
 			case RendererAPI::API::None: TURT_CORE_ASSERT(false, "RendererAPI::None is not currently supported."); return nullptr;
 			case RendererAPI::API::OpenGL: 
 				Ref<Texture2D> texture = CreateRef<OpenGLTexture2D>(width, height);
-				TextureManager::Get().RegisterTexture(texture.get()->GetRendererID(), texture);
+				TextureManager::RegisterTexture(texture.get()->GetRendererID(), texture);
 				return texture;
 		}
 		TURT_CORE_ASSERT(false, "Unknown RendererAPI");
