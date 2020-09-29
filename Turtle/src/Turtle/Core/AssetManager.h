@@ -7,11 +7,15 @@
 
 namespace Turtle {
 
-	class TextureManager 
+
+	class AssetManager 
 	{
 	public:
-		TextureManager() = default;
+		AssetManager() = default;
 
+		static void Init();
+
+		// TODO: Textures should eventually be registered with an internal asset id instead of their opengl renderer id
 		static void RegisterTexture(uint32_t textureID, const Ref<Texture2D> texture);
 		static const Ref<Texture2D>& GetTexture(uint32_t textureID);
 

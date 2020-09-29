@@ -5,8 +5,8 @@
 
 #include "Turtle/Core/input.h"
 #include "Turtle/Renderer/Renderer.h"
+#include "Turtle/Core/AssetManager.h"
 
-#include "Turtle/Core/TextureManager.h"
 
 #include "glfw/glfw3.h"
 
@@ -22,11 +22,12 @@ namespace Turtle {
 		TURT_CORE_ASSERT(!s_Instance, "Application already exists.");
 		s_Instance = this;
 
-		// new TextureManager();
 
 		m_Window = Window::Create(WindowProps(name));
 		m_Window->SetEventCallback(TURT_BIND_EVENT_FN(Application::OnEvent));
 
+		//initiate sub-systems
+		AssetManager::Init();
 		Renderer::Init();
 
 		m_ImGuiLayer = new ImGuiLayer();
@@ -36,7 +37,9 @@ namespace Turtle {
 	Application::~Application()
 	{
 		TURT_PROFILE_FUNCTION();
+		//shutdown sub=systems
 		// Renderer::Shutdown();
+		// AssetManager::Shutdown();
 	}
 
 	void Application::OnEvent(Event& e)

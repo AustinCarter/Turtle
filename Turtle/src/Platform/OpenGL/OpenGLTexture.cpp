@@ -3,7 +3,7 @@
 
 #include "stb_image.h"
 
-#include "Turtle/Core/TextureManager.h"
+#include "Turtle/Core/AssetManager.h"
 
 namespace Turtle{
 	

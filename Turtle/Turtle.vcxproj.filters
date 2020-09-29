@@ -90,6 +90,9 @@
     <ClInclude Include="src\Turtle\Core\Application.h">
       <Filter>src\Turtle\Core</Filter>
     </ClInclude>
+    <ClInclude Include="src\Turtle\Core\AssetManager.h">
+      <Filter>src\Turtle\Core</Filter>
+    </ClInclude>
     <ClInclude Include="src\Turtle\Core\Core.h">
       <Filter>src\Turtle\Core</Filter>
     </ClInclude>
@@ -109,9 +112,6 @@
       <Filter>src\Turtle\Core</Filter>
     </ClInclude>
     <ClInclude Include="src\Turtle\Core\MouseButtonCodes.h">
-      <Filter>src\Turtle\Core</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Turtle\Core\TextureManager.h">
       <Filter>src\Turtle\Core</Filter>
     </ClInclude>
     <ClInclude Include="src\Turtle\Core\Timestep.h">
@@ -1460,6 +1460,9 @@
     <ClCompile Include="src\Turtle\Core\Application.cpp">
       <Filter>src\Turtle\Core</Filter>
     </ClCompile>
+    <ClCompile Include="src\Turtle\Core\AssetManager.cpp">
+      <Filter>src\Turtle\Core</Filter>
+    </ClCompile>
     <ClCompile Include="src\Turtle\Core\Layer.cpp">
       <Filter>src\Turtle\Core</Filter>
     </ClCompile>
@@ -1467,9 +1470,6 @@
       <Filter>src\Turtle\Core</Filter>
     </ClCompile>
     <ClCompile Include="src\Turtle\Core\Log.cpp">
-      <Filter>src\Turtle\Core</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Turtle\Core\TextureManager.cpp">
       <Filter>src\Turtle\Core</Filter>
     </ClCompile>
     <ClCompile Include="src\Turtle\Core\Window.cpp">
