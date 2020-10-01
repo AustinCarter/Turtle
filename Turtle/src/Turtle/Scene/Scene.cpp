@@ -26,6 +26,8 @@ namespace Turtle {
 
 	Entity Scene::CreateEntity(const std::string& name)
 	{
+
+		TURT_PROFILE_FUNCTION();
 		Entity entity = {  m_Registry.create(), this };
 		entity.AddComponenet<TransformComponent>();
 		auto& tag = entity.AddComponenet<TagComponent>();
@@ -36,6 +38,7 @@ namespace Turtle {
 
 	void Scene::OnUpdate(Timestep ts)
 	{
+		TURT_PROFILE_FUNCTION();
 		//update scripts
 		{
 			m_Registry.view<NativeScriptComponent>().each([=](auto entity, auto& nsc)
@@ -96,6 +99,8 @@ namespace Turtle {
 
 	void Scene::OnViewportResize(uint32_t width, uint32_t height)
 	{
+		
+		TURT_PROFILE_FUNCTION();
 		m_ViewportWidth = width;
 		m_ViewportHeight = height;
 
