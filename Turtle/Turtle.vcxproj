@@ -153,6 +153,7 @@
     <ClInclude Include="src\Turtle\Core\AssetManager.h" />
     <ClInclude Include="src\Turtle\Core\Core.h" />
     <ClInclude Include="src\Turtle\Core\EntryPoint.h" />
+    <ClInclude Include="src\Turtle\Core\Hash.h" />
     <ClInclude Include="src\Turtle\Core\KeyCodes.h" />
     <ClInclude Include="src\Turtle\Core\Layer.h" />
     <ClInclude Include="src\Turtle\Core\LayerStack.h" />

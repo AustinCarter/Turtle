@@ -28,7 +28,7 @@ namespace Turtle {
 		m_ActiveScene = CreateRef<Scene>();
 
 		auto square = m_ActiveScene->CreateEntity("Square Entity");
-		square.AddComponenet<SpriteRendererComponent>(m_CheckerboardTexture.get()->GetAssetID(), glm::vec4{1.0f, 1.0f, 1.0f, 1.0f});
+		square.AddComponenet<SpriteRendererComponent>(m_CheckerboardTexture.get()->GetRendererID(), glm::vec4{1.0f, 1.0f, 1.0f, 1.0f});
 
 		auto square2 = m_ActiveScene->CreateEntity("Square Entity 2");
 		square2.AddComponenet<SpriteRendererComponent>(glm::vec4{0.6f, 0.2f, 0.5f, 1.0f});

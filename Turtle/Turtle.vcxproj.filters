@@ -99,6 +99,9 @@
     <ClInclude Include="src\Turtle\Core\EntryPoint.h">
       <Filter>src\Turtle\Core</Filter>
     </ClInclude>
+    <ClInclude Include="src\Turtle\Core\Hash.h">
+      <Filter>src\Turtle\Core</Filter>
+    </ClInclude>
     <ClInclude Include="src\Turtle\Core\KeyCodes.h">
       <Filter>src\Turtle\Core</Filter>
     </ClInclude>
