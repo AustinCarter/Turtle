@@ -43,11 +43,6 @@ namespace Turtle {
 			DrawComponents(m_SelectionContext);
 		}
 
-		if( m_AddingComponent )
-		{
-			m_AddingComponent = m_ComponentDialogue.OnImGuiRender(); 
-		}
-
 
 		ImGui::End();
 	}
@@ -216,9 +211,37 @@ namespace Turtle {
 
 		if (ImGui::Button("+ Add Component"))
 		{
-			// entity.AddComponenet<SpriteRendererComponent>();
-			m_AddingComponent = true;
-			m_ComponentDialogue.InitState(entity, m_Context);
+			m_ComponentDialogue.Open();
+		}
+
+		if(m_ComponentDialogue.Active())
+		{
+			m_ComponentDialogue.Display();
+			if(m_ComponentDialogue.HasSelected())
+			{
+				int compType = m_ComponentDialogue.GetComponentSelection();
+				m_ComponentDialogue.Close();
+
+				switch (compType)
+				{
+					case (int)ComponentType::SpriteRendererComponent: 
+					{
+						entity.AddComponent<SpriteRendererComponent>(); 
+						break;
+					}
+					case (int)ComponentType::CameraComponent: 
+					{
+						entity.AddComponent<CameraComponent>(); 
+						m_Context->OnCameraAdd(entity.GetComponent<CameraComponent>()); 
+						break;
+					}
+					case (int)ComponentType::NativeScriptComponent:
+					{
+						entity.AddComponent<NativeScriptComponent>(); 
+						break;
+					}
+				}
+			}
 		}
 	}
 }

@@ -15,7 +15,7 @@ namespace Turtle {
 		Entity(const Entity& other) = default;
 
 		template<typename T, typename... Args>
-		T& AddComponenet(Args&&... args)
+		T& AddComponent(Args&&... args)
 		{
 			TURT_CORE_ASSERT(!HasComponent<T>(), "Entity already has component.");
 			return m_Scene->m_Registry.emplace<T>(m_EntityHandle, std::forward<Args>(args)...);

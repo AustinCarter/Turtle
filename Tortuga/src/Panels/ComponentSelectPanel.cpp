@@ -1,11 +1,11 @@
-#include "ComponentAddPanel.h"
+#include "ComponentSelectPanel.h"
 
 #include <imgui/imgui.h>
 
 #include "Turtle/Scene/Components.h";
 
 namespace Turtle {
-	bool ComponentAddPanel::OnImGuiRender()
+	void ComponentSelectPanel::Display()
 	{
 		ImGui::Begin("Add Component");
 
@@ -29,39 +29,13 @@ namespace Turtle {
         ImGui::EndChild();
 		if(ImGui::Button("Select"))
 		{
-			m_ComponentCreated = true;
-
-			if(m_ComponentType == (int)ComponentType::SpriteRendererComponent)
-			{
-				m_Entity.AddComponenet<SpriteRendererComponent>();
-			}
-			else if(m_ComponentType == (int)ComponentType::CameraComponent)
-			{
-				m_Entity.AddComponenet<CameraComponent>();
-				m_Context->OnCameraAdd(m_Entity.GetComponent<CameraComponent>());
-			}
-			else if(m_ComponentType == (int)ComponentType::NativeScriptComponent)
-			{
-				//NOTE: won't work until script instantiating is moved to a scene on play method
-				//tries to create an instance without a script chosen (could also set it to some default script)
-				m_Entity.AddComponenet<NativeScriptComponent>();
-			}
-
+			m_ComponentSelected = true;
 		}
 		ImGui::End();
-
-		if(m_ComponentCreated)
-		{
-			ResetState();
-			return false;
-		}
-
-		return true;
 	}
 
-	void ComponentAddPanel::ResetState()
+	void ComponentSelectPanel::Close()
 	{
-		m_ComponentCreated = false;
-		m_ComponentType = -1;
+		m_Active = false;
 	}
 }

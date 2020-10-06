@@ -6,7 +6,7 @@
 #include "Turtle/Scene/Entity.h"
 #include "FileSelector.h"
 
-#include "ComponentAddPanel.h"
+#include "ComponentSelectPanel.h"
 
 
 namespace Turtle {
@@ -28,7 +28,7 @@ namespace Turtle {
 		Entity m_SelectionContext;
 
 		bool m_AddingComponent = false;
-		ComponentAddPanel m_ComponentDialogue;
+		ComponentSelectPanel m_ComponentDialogue;
 		FileSelector m_FileSelector; 
 	};
 

@@ -28,16 +28,16 @@ namespace Turtle {
 		m_ActiveScene = CreateRef<Scene>();
 
 		auto square = m_ActiveScene->CreateEntity("Square Entity");
-		square.AddComponenet<SpriteRendererComponent>(m_CheckerboardTexture.get()->GetRendererID(), glm::vec4{1.0f, 1.0f, 1.0f, 1.0f});
+		square.AddComponent<SpriteRendererComponent>(m_CheckerboardTexture.get()->GetRendererID(), glm::vec4{1.0f, 1.0f, 1.0f, 1.0f});
 
 		auto square2 = m_ActiveScene->CreateEntity("Square Entity 2");
-		square2.AddComponenet<SpriteRendererComponent>(glm::vec4{0.6f, 0.2f, 0.5f, 1.0f});
+		square2.AddComponent<SpriteRendererComponent>(glm::vec4{0.6f, 0.2f, 0.5f, 1.0f});
 		square2.GetComponent<TransformComponent>().Transform[3][0] = rand() % 10  - 5.0f;
 
 		m_SquareEntity = square;
 
 		m_CameraEntity = m_ActiveScene->CreateEntity("Camera A");
-		m_CameraEntity.AddComponenet<CameraComponent>();
+		m_CameraEntity.AddComponent<CameraComponent>();
 
 		class CameraController : public ScriptableEntity
 		{
@@ -69,7 +69,7 @@ namespace Turtle {
 			}
 		};
 
-		m_CameraEntity.AddComponenet<NativeScriptComponent>().Bind<CameraController>();
+		m_CameraEntity.AddComponent<NativeScriptComponent>().Bind<CameraController>();
 
 		m_SceneHeirarchy.SetContext(m_ActiveScene);
 	}

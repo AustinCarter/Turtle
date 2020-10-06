@@ -29,8 +29,8 @@ namespace Turtle {
 
 		TURT_PROFILE_FUNCTION();
 		Entity entity = {  m_Registry.create(), this };
-		entity.AddComponenet<TransformComponent>();
-		auto& tag = entity.AddComponenet<TagComponent>();
+		entity.AddComponent<TransformComponent>();
+		auto& tag = entity.AddComponent<TagComponent>();
 		tag.Tag = name.empty() ? "Unnamed Entity" : name;
 
 		return entity;
