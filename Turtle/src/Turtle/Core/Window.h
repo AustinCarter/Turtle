@@ -14,8 +14,8 @@ namespace Turtle {
 		uint32_t Height;
 
 		WindowProps(const std::string& title = "Turtle Engine",
-			        uint32_t width = 1280,
-			        uint32_t height = 720)
+			        uint32_t width = 150 * 16,
+			        uint32_t height = 150 * 9)
 			: Title(title), Width(width), Height(height)
 		{
 		}

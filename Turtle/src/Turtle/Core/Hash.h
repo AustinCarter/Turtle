@@ -2,7 +2,7 @@
 
 #include <stdint.h>
 
-#define TURT_HASH_SEED 0x32813902
+#define TURT_HASH_SEED 0x32F1A902
 
 namespace Turtle {
 

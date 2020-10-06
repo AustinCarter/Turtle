@@ -40,8 +40,6 @@ namespace Turtle {
 		bool m_ViewportHovered = false;
 
 		SceneHeirarchyPanel m_SceneHeirarchy;
-
-		FileSelector m_FileSelector; 
 	};
 
 }

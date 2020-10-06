@@ -11,7 +11,7 @@ namespace Turtle {
 		m_CurrentDirectory = std::filesystem::current_path();
 	}
 
-	void FileSelector::SelectFile()
+	void FileSelector::Display()
 	{
 		ImGui::Begin("File Selector");
 		char buffer[1024];
@@ -24,7 +24,7 @@ namespace Turtle {
 			if(name[0] == '\\')
 				continue;
 			ImGui::SameLine();  
-
+				
 			strcpy_s(&buffer[i], sizeof(buffer) - i, name.c_str());
 			i += name.size();
 			if (ImGui::Button(name.c_str()))
@@ -49,7 +49,7 @@ namespace Turtle {
 		
 		for (auto& file : std::filesystem::directory_iterator(m_CurrentDirectory.c_str()))
 		{
-			if (m_filter.PassFilter(file.path().u8string().c_str()))
+			if (m_Filter.PassFilter(file.path().u8string().c_str()) || std::filesystem::is_directory(file))
 			{
 				if (ImGui::Selectable(file.path().u8string().c_str(), index == m_Selected, ImGuiSelectableFlags_AllowDoubleClick))
 				{
@@ -66,7 +66,7 @@ namespace Turtle {
 							m_CurrentDirectory = file.path();
 						}		
 						else
-							TURT_WARN("{0}\\{1}", m_CurrentDirectory.u8string().c_str(), m_SelectedFile.c_str()); //return path		
+							m_HasSelected = true; 		
 					}
 				}
 				index++;
@@ -90,14 +90,32 @@ namespace Turtle {
 			}
 		}
 		ImGui::SameLine();
-		m_filter.Draw("filter", ImGui::GetContentRegionAvailWidth());
+		m_Filter.Draw("filter", ImGui::GetContentRegionAvailWidth());
 		if(ImGui::Button("Open"))
 		{
 			if(!m_SelectedFile.empty())
-				TURT_WARN("{0}\\{1}", m_CurrentDirectory.u8string().c_str(), m_SelectedFile.c_str()); //return path
+				m_HasSelected = true;
 			else
-				TURT_ERROR("Please select a valid file. Directory selected.	");
+				TURT_CORE_ERROR("Directory selection not supported");
 		}
+		ImGui::SameLine();
+		ImGui::Spacing();
+		ImGui::SameLine();
+		if(ImGui::Button("Close"))
+			Close();
 		ImGui::End();
+	}
+
+	std::string FileSelector::GetSelection()
+	{
+		char buffer[1024];
+		sprintf_s(buffer, 1024, "%s\\%s", m_CurrentDirectory.u8string().c_str(), m_SelectedFile.c_str());
+		return std::string(buffer);
+	}
+
+	void FileSelector::SetFilter(const std::string& filter)
+	{
+		strcpy(m_Filter.InputBuf, filter.c_str());
+		m_Filter.Build();
 	}
 }

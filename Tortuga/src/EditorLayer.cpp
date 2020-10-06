@@ -39,9 +39,6 @@ namespace Turtle {
 		m_CameraEntity = m_ActiveScene->CreateEntity("Camera A");
 		m_CameraEntity.AddComponenet<CameraComponent>();
 
-		auto testEntity = m_ActiveScene->CreateEntity("Test Entity");
-		testEntity.GetComponent<TransformComponent>().Transform[3][0] = rand() % 10  - 5.0f;
-
 		class CameraController : public ScriptableEntity
 		{
 		public:
@@ -173,7 +170,6 @@ namespace Turtle {
 	    }
 
 	    m_SceneHeirarchy.OnImGuiRender();
-	    m_FileSelector.SelectFile();
 
 		ImGui::Begin("Info");
 

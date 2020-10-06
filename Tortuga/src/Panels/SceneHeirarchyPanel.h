@@ -4,6 +4,7 @@
 #include "Turtle/Core/Core.h"
 #include "Turtle/Scene/Scene.h"
 #include "Turtle/Scene/Entity.h"
+#include "FileSelector.h"
 
 #include "ComponentAddPanel.h"
 
@@ -28,6 +29,7 @@ namespace Turtle {
 
 		bool m_AddingComponent = false;
 		ComponentAddPanel m_ComponentDialogue;
+		FileSelector m_FileSelector; 
 	};
 
 }

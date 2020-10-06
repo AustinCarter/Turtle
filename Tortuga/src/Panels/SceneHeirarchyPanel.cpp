@@ -48,6 +48,7 @@ namespace Turtle {
 			m_AddingComponent = m_ComponentDialogue.OnImGuiRender(); 
 		}
 
+
 		ImGui::End();
 	}
 
@@ -66,6 +67,7 @@ namespace Turtle {
 		{
 			ImGui::TreePop();
 		}
+		
 		
 	}
 
@@ -176,6 +178,25 @@ namespace Turtle {
 				// MIGHT BE TEMP
 				if (spriteComponent.Textured)
 					ImGui::Image((void*)spriteComponent.TextureID, ImVec2{ 128, 128 }, ImVec2{ 0, 1 }, ImVec2{ 1, 0 });
+				
+				if(ImGui::Button("Add Texture"))
+				{
+					m_FileSelector.SetFilter(".png");
+					m_FileSelector.Open();
+				}
+
+				if(m_FileSelector.Active())
+				{
+					m_FileSelector.Display();
+					if(m_FileSelector.HasSelected())
+					{
+						std::string path = m_FileSelector.GetSelection();
+						m_FileSelector.Close();
+						Ref<Texture2D> tex = Texture2D::Create(path);
+						spriteComponent.TextureID = tex->GetRendererID();
+						spriteComponent.Textured = true;
+					}
+				}
 
 				ImGui::TreePop();
 			}
