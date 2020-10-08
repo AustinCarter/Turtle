@@ -15,6 +15,7 @@ namespace Turtle {
 		~Scene();
 
 		Entity CreateEntity(const std::string& name = std::string());
+		void DestoryEntity();
 
 		void OnUpdate(Timestep ts);
 		void OnViewportResize(uint32_t width, uint32_t height);

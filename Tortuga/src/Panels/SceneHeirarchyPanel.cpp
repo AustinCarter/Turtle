@@ -57,6 +57,17 @@ namespace Turtle {
 		{
 			m_SelectionContext = entity;
 		}
+		if (ImGui::BeginPopupContextItem())
+		{
+			bool removed = ImGui::Selectable("Remove Entity");
+			if (removed)
+			{
+				m_Context->m_Registry.destroy((entt::entity)(uint32_t)entity);
+				if(m_SelectionContext == entity)
+					m_SelectionContext = {};
+			}
+			ImGui::EndPopup();
+		}
 
 		if (opened)
 		{
