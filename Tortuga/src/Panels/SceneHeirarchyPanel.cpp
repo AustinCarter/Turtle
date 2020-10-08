@@ -24,7 +24,7 @@ namespace Turtle {
 		m_Context->m_Registry.each([&](auto entityID)
 		{
 			Entity entity = { entityID, m_Context.get() };
-			DrawEntityNode(entity);		
+			DrawEntityNode(entity);
 		});
 
 		if (ImGui::IsMouseDown(0) && ImGui::IsWindowHovered())
@@ -62,12 +62,11 @@ namespace Turtle {
 		{
 			ImGui::TreePop();
 		}
-		
-		
 	}
 
 	void SceneHeirarchyPanel::DrawComponents(Entity entity)
 	{
+
 		if(entity.HasComponent<TagComponent>())
 		{
 			auto& tag = entity.GetComponent<TagComponent>().Tag;
@@ -94,7 +93,19 @@ namespace Turtle {
 
 		if(entity.HasComponent<CameraComponent>())
 		{
-			if (ImGui::TreeNodeEx((void*)typeid(CameraComponent).hash_code(), ImGuiTreeNodeFlags_DefaultOpen, "Camera"))
+			bool open = ImGui::TreeNodeEx((void*)typeid(CameraComponent).hash_code(), ImGuiTreeNodeFlags_DefaultOpen, "Camera");
+			if (ImGui::BeginPopupContextItem("Camera Component Context Menu"))
+			{
+				bool removed = ImGui::Selectable("Remove Component");
+				if (removed)
+				{
+					entity.RemoveComponent<CameraComponent>();
+					open = false;
+				}
+				ImGui::EndPopup();
+				if(removed) ImGui::TreePop();
+			}
+			if (open)
 			{
 				auto& cameraComponent = entity.GetComponent<CameraComponent>();
 				auto& camera = cameraComponent.Camera;
@@ -159,18 +170,30 @@ namespace Turtle {
 
 				ImGui::TreePop();
 			}
-		}
+			
+			}
 
 
 		if(entity.HasComponent<SpriteRendererComponent>())
 		{
-			if (ImGui::TreeNodeEx((void*)typeid(SpriteRendererComponent).hash_code(), ImGuiTreeNodeFlags_DefaultOpen, "Sprite"))
+			bool open = ImGui::TreeNodeEx((void*)typeid(SpriteRendererComponent).hash_code(), ImGuiTreeNodeFlags_DefaultOpen, "Sprite");
+			if (ImGui::BeginPopupContextItem("Sprite Renderer Component Context Menu"))
+			{
+				bool removed = ImGui::Selectable("Remove Component");
+				if (removed)
+				{
+					entity.RemoveComponent<SpriteRendererComponent>();
+					open = false;
+				}
+				ImGui::EndPopup();
+				if(removed) ImGui::TreePop();
+			}
+			if (open)
 			{
 				auto& spriteComponent = entity.GetComponent<SpriteRendererComponent>();
 				auto& color = spriteComponent.Color; 
 				ImGui::ColorEdit4("Color", glm::value_ptr(color));
 
-				// MIGHT BE TEMP
 				if (spriteComponent.Textured)
 					ImGui::Image((void*)spriteComponent.TextureID, ImVec2{ 128, 128 }, ImVec2{ 0, 1 }, ImVec2{ 1, 0 });
 				
@@ -195,15 +218,28 @@ namespace Turtle {
 
 				ImGui::TreePop();
 			}
+			
 		}
 
 		if(entity.HasComponent<NativeScriptComponent>())
 		{
-			if (ImGui::TreeNodeEx((void*)typeid(NativeScriptComponent).hash_code(), ImGuiTreeNodeFlags_DefaultOpen, "Native Script"))
+			bool open = ImGui::TreeNodeEx((void*)typeid(NativeScriptComponent).hash_code(), ImGuiTreeNodeFlags_DefaultOpen, "Native Script");
+			if (ImGui::BeginPopupContextItem("Camera Component Context Menu"))
+			{
+				bool removed = ImGui::Selectable("Remove Component");
+				if (removed)
+				{
+					entity.RemoveComponent<NativeScriptComponent>();
+					open = false;
+				}
+				ImGui::EndPopup();
+				if(removed) ImGui::TreePop();
+			}
+			if (open)
 			{
 				auto& nativeScriptComponent = entity.GetComponent<NativeScriptComponent>();
 				bool bound = nativeScriptComponent.Bound;
-				const char* BoundString = bound ? "" : "No script bound";
+				const char* BoundString = bound ? "" : "No script bound";	
 				ImGui::Button(BoundString);
 				ImGui::TreePop();
 			} 
@@ -224,22 +260,26 @@ namespace Turtle {
 
 				switch (compType)
 				{
-					case (int)ComponentType::SpriteRendererComponent: 
+					case (int)ComponentTypes::SpriteRendererComponent: 
 					{
 						entity.AddComponent<SpriteRendererComponent>(); 
 						break;
 					}
-					case (int)ComponentType::CameraComponent: 
+					case (int)ComponentTypes::CameraComponent: 
 					{
 						entity.AddComponent<CameraComponent>(); 
 						m_Context->OnCameraAdd(entity.GetComponent<CameraComponent>()); 
 						break;
 					}
-					case (int)ComponentType::NativeScriptComponent:
+					case (int)ComponentTypes::NativeScriptComponent:
 					{
 						entity.AddComponent<NativeScriptComponent>(); 
 						break;
 					}
+					case -1:
+						break;
+					default:
+						TURT_CORE_ERROR("Component Type cannot be added");
 				}
 			}
 		}

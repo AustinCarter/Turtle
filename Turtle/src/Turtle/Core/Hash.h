@@ -23,10 +23,10 @@ namespace Turtle {
 	  return h;
 	}
 
-	uint32_t MurmurHash( const void * key, int len)
+	uint32_t MurmurHash( const void * key, int numBytes)
 	{
 	  const uint8_t * data = (const uint8_t*)key;
-	  const int nblocks = len / 4;
+	  const int nblocks = numBytes / 4;
 
 	  uint32_t hash = TURT_HASH_SEED;
 
