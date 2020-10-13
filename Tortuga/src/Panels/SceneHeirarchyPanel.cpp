@@ -105,18 +105,19 @@ namespace Turtle {
 		if(entity.HasComponent<CameraComponent>())
 		{
 			bool open = ImGui::TreeNodeEx((void*)typeid(CameraComponent).hash_code(), ImGuiTreeNodeFlags_DefaultOpen, "Camera");
+			bool removed = false;
 			if (ImGui::BeginPopupContextItem("Camera Component Context Menu"))
 			{
-				bool removed = ImGui::Selectable("Remove Component");
+				removed = ImGui::Selectable("Remove Component");
 				if (removed)
 				{
 					entity.RemoveComponent<CameraComponent>();
-					open = false;
+					// open = false;
 				}
 				ImGui::EndPopup();
-				if(removed) ImGui::TreePop();
+				if(removed && open) ImGui::TreePop();
 			}
-			if (open)
+			if (open && !removed)
 			{
 				auto& cameraComponent = entity.GetComponent<CameraComponent>();
 				auto& camera = cameraComponent.Camera;
@@ -188,18 +189,19 @@ namespace Turtle {
 		if(entity.HasComponent<SpriteRendererComponent>())
 		{
 			bool open = ImGui::TreeNodeEx((void*)typeid(SpriteRendererComponent).hash_code(), ImGuiTreeNodeFlags_DefaultOpen, "Sprite");
+			bool removed = false;
 			if (ImGui::BeginPopupContextItem("Sprite Renderer Component Context Menu"))
 			{
-				bool removed = ImGui::Selectable("Remove Component");
+				removed = ImGui::Selectable("Remove Component");
 				if (removed)
 				{
 					entity.RemoveComponent<SpriteRendererComponent>();
-					open = false;
+					// open = false;
 				}
 				ImGui::EndPopup();
-				if(removed) ImGui::TreePop();
+				if(open && removed) ImGui::TreePop();
 			}
-			if (open)
+			if (open && !removed)
 			{
 				auto& spriteComponent = entity.GetComponent<SpriteRendererComponent>();
 				auto& color = spriteComponent.Color; 
@@ -235,18 +237,19 @@ namespace Turtle {
 		if(entity.HasComponent<NativeScriptComponent>())
 		{
 			bool open = ImGui::TreeNodeEx((void*)typeid(NativeScriptComponent).hash_code(), ImGuiTreeNodeFlags_DefaultOpen, "Native Script");
+			bool removed = false;
 			if (ImGui::BeginPopupContextItem("Camera Component Context Menu"))
 			{
-				bool removed = ImGui::Selectable("Remove Component");
+				removed = ImGui::Selectable("Remove Component");
 				if (removed)
 				{
 					entity.RemoveComponent<NativeScriptComponent>();
-					open = false;
+					// open = false;
 				}
 				ImGui::EndPopup();
-				if(removed) ImGui::TreePop();
+				if(open && removed) ImGui::TreePop();
 			}
-			if (open)
+			if (open && !removed)
 			{
 				auto& nativeScriptComponent = entity.GetComponent<NativeScriptComponent>();
 				bool bound = nativeScriptComponent.Bound;
