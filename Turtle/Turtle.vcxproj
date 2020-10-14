@@ -610,6 +610,7 @@
     <ClCompile Include="src\Platform\Windows\WindowsWindow.cpp" />
     <ClCompile Include="src\Turtle\Core\Application.cpp" />
     <ClCompile Include="src\Turtle\Core\AssetManager.cpp" />
+    <ClCompile Include="src\Turtle\Core\Hash.cpp" />
     <ClCompile Include="src\Turtle\Core\Layer.cpp" />
     <ClCompile Include="src\Turtle\Core\LayerStack.cpp" />
     <ClCompile Include="src\Turtle\Core\Log.cpp" />

@@ -41,8 +41,6 @@ namespace Turtle {
 			m_Scene->m_Registry.remove<T>(m_EntityHandle);
 		}
 
-		entt::entity GetHandle() { return m_EntityHandle; }
-
 		operator bool() const { return m_EntityHandle != entt::null; }
 		operator uint32_t() const { return (uint32_t)m_EntityHandle; }
 		bool operator==(const Entity& other) const 

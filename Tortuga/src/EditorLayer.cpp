@@ -18,7 +18,8 @@ namespace Turtle {
 	{
 		TURT_PROFILE_FUNCTION();
 			
-		m_CheckerboardTexture = Texture2D::Create("assets/textures/Checkerboard.png");
+		// m_CheckerboardTexture = Texture2D::Create("assets/textures/Checkerboard.png");
+		m_CheckerboardTexture = AssetManager::CreateTexture("assets/textures/Checkerboard.png");
 
 		FramebufferSpecification fbSpec;
 		fbSpec.Width = 1280;
@@ -28,7 +29,7 @@ namespace Turtle {
 		m_ActiveScene = CreateRef<Scene>();
 
 		auto square = m_ActiveScene->CreateEntity("Square Entity");
-		square.AddComponent<SpriteRendererComponent>(m_CheckerboardTexture.get()->GetRendererID(), glm::vec4{1.0f, 1.0f, 1.0f, 1.0f});
+		square.AddComponent<SpriteRendererComponent>(m_CheckerboardTexture.get()->GetAssetID(), glm::vec4{1.0f, 1.0f, 1.0f, 1.0f});
 
 		auto square2 = m_ActiveScene->CreateEntity("Square Entity 2");
 		square2.AddComponent<SpriteRendererComponent>(glm::vec4{0.6f, 0.2f, 0.5f, 1.0f});
@@ -173,12 +174,15 @@ namespace Turtle {
 
 		ImGui::Begin("Info");
 
-		auto stats = Renderer2D::GetStats();
+		auto renderStats = Renderer2D::GetStats();
 		ImGui::Text("Renderer2D Stats:");
-		ImGui::Text("Draw Calls: %d", stats.DrawCalls);
-		ImGui::Text("Quads: %d", stats.QuadCount);
-		ImGui::Text("Vertices: %d", stats.GetTotalVertexCount());
-		ImGui::Text("Indices: %d", stats.GetTotalIndexCount());
+		ImGui::Text("Draw Calls: %d", renderStats.DrawCalls);
+		ImGui::Text("Quads: %d", renderStats.QuadCount);
+		ImGui::Text("Vertices: %d", renderStats.GetTotalVertexCount());
+		ImGui::Text("Indices: %d", renderStats.GetTotalIndexCount());
+		auto assetStats = AssetManager::GetStats();
+		ImGui::Text("AssetManager Stats:");
+		ImGui::Text("Textures Loaded: %d", assetStats.TexturesLoaded);
 
 		ImGui::End();
 

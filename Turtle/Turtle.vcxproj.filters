@@ -1466,6 +1466,9 @@
     <ClCompile Include="src\Turtle\Core\AssetManager.cpp">
       <Filter>src\Turtle\Core</Filter>
     </ClCompile>
+    <ClCompile Include="src\Turtle\Core\Hash.cpp">
+      <Filter>src\Turtle\Core</Filter>
+    </ClCompile>
     <ClCompile Include="src\Turtle\Core\Layer.cpp">
       <Filter>src\Turtle\Core</Filter>
     </ClCompile>

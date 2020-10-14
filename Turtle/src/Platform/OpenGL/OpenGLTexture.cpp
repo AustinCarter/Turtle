@@ -1,9 +1,9 @@
 #include "turtpch.h"
 #include "OpenGLTexture.h"
 
-#include "stb_image.h"
+#include "Turtle/Core/Hash.h"
 
-#include "Turtle/Core/AssetManager.h"
+#include "stb_image.h"
 
 namespace Turtle{
 	
@@ -11,6 +11,8 @@ namespace Turtle{
 		: m_Path(path)
 	{
 		TURT_PROFILE_FUNCTION();
+
+		m_AssetID = MurmurHash(path.c_str(), path.size());
 		
 		int width, height, channels;
 		stbi_set_flip_vertically_on_load(1);

@@ -5,6 +5,7 @@
 #include <glm/gtc/type_ptr.hpp>
 
 #include "Turtle/Scene/Components.h"
+#include "Turtle/Core/AssetManager.h"
 
 namespace Turtle {
 	SceneHeirarchyPanel::SceneHeirarchyPanel(const Ref<Scene>& scene)
@@ -208,7 +209,7 @@ namespace Turtle {
 				ImGui::ColorEdit4("Color", glm::value_ptr(color));
 
 				if (spriteComponent.Textured)
-					ImGui::Image((void*)spriteComponent.TextureID, ImVec2{ 128, 128 }, ImVec2{ 0, 1 }, ImVec2{ 1, 0 });
+					ImGui::Image((void*)(AssetManager::GetTexture(spriteComponent.TextureID).get()->GetRendererID()), ImVec2{ 128, 128 }, ImVec2{ 0, 1 }, ImVec2{ 1, 0 });
 				
 				if(ImGui::Button("Add Texture"))
 				{
@@ -223,8 +224,8 @@ namespace Turtle {
 					{
 						std::string path = m_FileSelector.GetSelection();
 						m_FileSelector.Close();
-						Ref<Texture2D> tex = Texture2D::Create(path);
-						spriteComponent.TextureID = tex->GetRendererID();
+						Ref<Texture2D> tex = AssetManager::CreateTexture(path);
+						spriteComponent.TextureID = tex->GetAssetID();
 						spriteComponent.Textured = true;
 					}
 				}

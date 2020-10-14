@@ -44,31 +44,31 @@ namespace Turtle {
 		Renderer2D::Statistics Stats; 
 	};
 
-	static Renderer2DData s_Data;
+	static Renderer2DData s_RenderData;
 
 	void Renderer2D::Init()
 	{
 		TURT_PROFILE_FUNCTION();
 		
-		s_Data.QuadVertexArray = VertexArray::Create();
+		s_RenderData.QuadVertexArray = VertexArray::Create();
 
-		s_Data.QuadVertexBuffer = VertexBuffer::Create(s_Data.MaxVertices * sizeof(QuadVertex));
+		s_RenderData.QuadVertexBuffer = VertexBuffer::Create(s_RenderData.MaxVertices * sizeof(QuadVertex));
 
-		s_Data.QuadVertexBuffer->SetLayout( {
+		s_RenderData.QuadVertexBuffer->SetLayout( {
 			{ ShaderDataType::Float3, "a_Position" },
 			{ ShaderDataType::Float4, "a_Color" },
 			{ ShaderDataType::Float2, "a_TexCoord" },
 			{ ShaderDataType::Float, "a_TexIndex" }
 		});	
-		s_Data.QuadVertexArray->AddVertexBuffer(s_Data.QuadVertexBuffer);
+		s_RenderData.QuadVertexArray->AddVertexBuffer(s_RenderData.QuadVertexBuffer);
 
-		s_Data.QuadVertexBufferBase = new QuadVertex[s_Data.MaxVertices];
+		s_RenderData.QuadVertexBufferBase = new QuadVertex[s_RenderData.MaxVertices];
 
 
-		uint32_t* quadIndicies = new uint32_t[s_Data.MaxIndices];
+		uint32_t* quadIndicies = new uint32_t[s_RenderData.MaxIndices];
 
 		uint32_t offset = 0;
-		for (uint32_t i = 0; i < s_Data.MaxIndices; i+=6)
+		for (uint32_t i = 0; i < s_RenderData.MaxIndices; i+=6)
 		{
 			quadIndicies[i + 0] = offset + 0;
 			quadIndicies[i + 1] = offset + 1;
@@ -81,48 +81,48 @@ namespace Turtle {
 			offset += 4;
 		}
 
-		Ref<IndexBuffer> quadIB = IndexBuffer::Create(quadIndicies, s_Data.MaxIndices);
-		s_Data.QuadVertexArray->SetIndexBuffer(quadIB);
+		Ref<IndexBuffer> quadIB = IndexBuffer::Create(quadIndicies, s_RenderData.MaxIndices);
+		s_RenderData.QuadVertexArray->SetIndexBuffer(quadIB);
 		//WARNING: TODO: ASSUMES THAT DATA IS IMMEDIATLY UPLOADED, COULD CAUSE DATA DELETION -> CRASH
 		delete[] quadIndicies;
 
-		s_Data.WhiteTexture = Texture2D::Create(1,1);
+		s_RenderData.WhiteTexture = Texture2D::Create(1,1);
 		uint32_t WhiteTextureData = 0xffffffff;
-		s_Data.WhiteTexture->SetData(&WhiteTextureData, sizeof(uint32_t));
+		s_RenderData.WhiteTexture->SetData(&WhiteTextureData, sizeof(uint32_t));
 
-		int32_t samplers[ s_Data.MaxTextureSlots];
-		for(uint32_t i = 0; i < s_Data.MaxTextureSlots; i++)
+		int32_t samplers[ s_RenderData.MaxTextureSlots];
+		for(uint32_t i = 0; i < s_RenderData.MaxTextureSlots; i++)
 			samplers[i] = i;
 
-		s_Data.TextureShader = Shader::Create("assets/shaders/Texture.glsl");
-		s_Data.TextureShader->Bind();
-		s_Data.TextureShader->SetIntArray("u_Textures", samplers, s_Data.MaxTextureSlots);
+		s_RenderData.TextureShader = Shader::Create("assets/shaders/Texture.glsl");
+		s_RenderData.TextureShader->Bind();
+		s_RenderData.TextureShader->SetIntArray("u_Textures", samplers, s_RenderData.MaxTextureSlots);
 
-		s_Data.TextureSlots[0] = s_Data.WhiteTexture;
+		s_RenderData.TextureSlots[0] = s_RenderData.WhiteTexture;
 
-		s_Data.QuadVertexPositions[0] = {-0.5f, -0.5f, 0.0f, 1.0f};
-		s_Data.QuadVertexPositions[1] = { 0.5f, -0.5f, 0.0f, 1.0f};
-		s_Data.QuadVertexPositions[2] = { 0.5f,  0.5f, 0.0f, 1.0f};
-		s_Data.QuadVertexPositions[3] = {-0.5f,  0.5f, 0.0f, 1.0f};
+		s_RenderData.QuadVertexPositions[0] = {-0.5f, -0.5f, 0.0f, 1.0f};
+		s_RenderData.QuadVertexPositions[1] = { 0.5f, -0.5f, 0.0f, 1.0f};
+		s_RenderData.QuadVertexPositions[2] = { 0.5f,  0.5f, 0.0f, 1.0f};
+		s_RenderData.QuadVertexPositions[3] = {-0.5f,  0.5f, 0.0f, 1.0f};
 	}
 
 	void Renderer2D::ShutDown()
 	{
 		TURT_PROFILE_FUNCTION();
 
-		delete[] s_Data.QuadVertexBufferBase;
+		delete[] s_RenderData.QuadVertexBufferBase;
 	}
 
 	void Renderer2D::BeginScene(const OrthographicCamera& camera)
 	{
 		TURT_PROFILE_FUNCTION();
 		
-		s_Data.TextureShader->Bind();
-		s_Data.TextureShader->SetMat4("u_ViewProjection", camera.GetViewProjectionMatrix());
+		s_RenderData.TextureShader->Bind();
+		s_RenderData.TextureShader->SetMat4("u_ViewProjection", camera.GetViewProjectionMatrix());
 
-		s_Data.QuadIndexCount = 0;
-		s_Data.TextureSlotIndex = 1;
-		s_Data.QuadVertexBufferPtr = s_Data.QuadVertexBufferBase;
+		s_RenderData.QuadIndexCount = 0;
+		s_RenderData.TextureSlotIndex = 1;
+		s_RenderData.QuadVertexBufferPtr = s_RenderData.QuadVertexBufferBase;
 	}
 
 
@@ -132,20 +132,20 @@ namespace Turtle {
 
 		glm::mat4 viewProj = camera.GetProjection() * glm::inverse(transform);
 		
-		s_Data.TextureShader->Bind();
-		s_Data.TextureShader->SetMat4("u_ViewProjection", viewProj);
+		s_RenderData.TextureShader->Bind();
+		s_RenderData.TextureShader->SetMat4("u_ViewProjection", viewProj);
 
-		s_Data.QuadIndexCount = 0;
-		s_Data.TextureSlotIndex = 1;
-		s_Data.QuadVertexBufferPtr = s_Data.QuadVertexBufferBase;
+		s_RenderData.QuadIndexCount = 0;
+		s_RenderData.TextureSlotIndex = 1;
+		s_RenderData.QuadVertexBufferPtr = s_RenderData.QuadVertexBufferBase;
 	}
 
 	void Renderer2D::EndScene()
 	{
 		TURT_PROFILE_FUNCTION();
 
-		uint32_t dataSize = (uint32_t)((uint8_t*)s_Data.QuadVertexBufferPtr - (uint8_t*)s_Data.QuadVertexBufferBase);
-		s_Data.QuadVertexBuffer->SetData(s_Data.QuadVertexBufferBase, dataSize);
+		uint32_t dataSize = (uint32_t)((uint8_t*)s_RenderData.QuadVertexBufferPtr - (uint8_t*)s_RenderData.QuadVertexBufferBase);
+		s_RenderData.QuadVertexBuffer->SetData(s_RenderData.QuadVertexBufferBase, dataSize);
 
 		Flush();
 	}
@@ -154,15 +154,15 @@ namespace Turtle {
 	{
 		TURT_PROFILE_FUNCTION();
 
-		if (s_Data.QuadIndexCount == 0)
+		if (s_RenderData.QuadIndexCount == 0)
 			return; 
 
-		for(uint32_t i = 0; i < s_Data.TextureSlotIndex; i++)
-			s_Data.TextureSlots[i]->Bind(i);
+		for(uint32_t i = 0; i < s_RenderData.TextureSlotIndex; i++)
+			s_RenderData.TextureSlots[i]->Bind(i);
 		
-		RenderCommand::DrawIndexed(s_Data.QuadVertexArray, s_Data.QuadIndexCount);
+		RenderCommand::DrawIndexed(s_RenderData.QuadVertexArray, s_RenderData.QuadIndexCount);
 
-		s_Data.Stats.DrawCalls ++;
+		s_RenderData.Stats.DrawCalls ++;
 	}
 
 	void Renderer2D::FlushAndReset()
@@ -171,9 +171,9 @@ namespace Turtle {
 
 		EndScene();
 
-		s_Data.QuadIndexCount = 0;
-		s_Data.TextureSlotIndex = 1;
-		s_Data.QuadVertexBufferPtr = s_Data.QuadVertexBufferBase;
+		s_RenderData.QuadIndexCount = 0;
+		s_RenderData.TextureSlotIndex = 1;
+		s_RenderData.QuadVertexBufferPtr = s_RenderData.QuadVertexBufferBase;
 	}
 
 	void Renderer2D::DrawQuad(const glm::vec2& position, const glm::vec2& size, const glm::vec4& color)
@@ -230,22 +230,22 @@ namespace Turtle {
 		const float textureIndex = 0.0f; // white texture
 		constexpr glm::vec2 textureCoords[] = { {0.0f, 0.0f}, {1.0f, 0.0f}, {1.0f, 1.0f}, {0.0f, 1.0f} };
 
-		if(s_Data.QuadIndexCount >= s_Data.MaxIndices)
+		if(s_RenderData.QuadIndexCount >= s_RenderData.MaxIndices)
 			FlushAndReset();
 		
 		for(size_t i = 0; i < quadVertexCount; i++)
 		{
-			s_Data.QuadVertexBufferPtr->Position = transform * s_Data.QuadVertexPositions[i];
-			s_Data.QuadVertexBufferPtr->Color = color;
-			s_Data.QuadVertexBufferPtr->TexCoord = textureCoords[i];
-			s_Data.QuadVertexBufferPtr->TexIndex = textureIndex;
-			s_Data.QuadVertexBufferPtr++;
+			s_RenderData.QuadVertexBufferPtr->Position = transform * s_RenderData.QuadVertexPositions[i];
+			s_RenderData.QuadVertexBufferPtr->Color = color;
+			s_RenderData.QuadVertexBufferPtr->TexCoord = textureCoords[i];
+			s_RenderData.QuadVertexBufferPtr->TexIndex = textureIndex;
+			s_RenderData.QuadVertexBufferPtr++;
 		}
 
-		s_Data.QuadIndexCount += 6;
+		s_RenderData.QuadIndexCount += 6;
 
 
-		s_Data.Stats.QuadCount ++;
+		s_RenderData.Stats.QuadCount ++;
 	}
 
 	void Renderer2D::DrawQuad(const glm::mat4& transform, const Ref<Texture2D>& texture, const glm::vec4& tint)
@@ -254,15 +254,15 @@ namespace Turtle {
 
 		constexpr size_t quadVertexCount = 4;
 
-		if(s_Data.QuadIndexCount >= s_Data.MaxIndices)
+		if(s_RenderData.QuadIndexCount >= s_RenderData.MaxIndices)
 			FlushAndReset();
 		
 		float textureIndex = 0.0f;
 		constexpr glm::vec2 textureCoords[] = { {0.0f, 0.0f}, {1.0f, 0.0f}, {1.0f, 1.0f}, {0.0f, 1.0f} };
 
-		for (uint32_t i = 1; i < s_Data.TextureSlotIndex; i++)
+		for (uint32_t i = 1; i < s_RenderData.TextureSlotIndex; i++)
 		{
-			if(*s_Data.TextureSlots[i].get() == *texture.get())
+			if(*s_RenderData.TextureSlots[i].get() == *texture.get())
 			{
 				textureIndex = (float)i;
 				break;
@@ -271,24 +271,24 @@ namespace Turtle {
 
 		if (textureIndex == 0.0f)
 		{
-			textureIndex = (float)s_Data.TextureSlotIndex;
-			s_Data.TextureSlots[s_Data.TextureSlotIndex] = texture;
-			s_Data.TextureSlotIndex++;
+			textureIndex = (float)s_RenderData.TextureSlotIndex;
+			s_RenderData.TextureSlots[s_RenderData.TextureSlotIndex] = texture;
+			s_RenderData.TextureSlotIndex++;
 		}
 		
 		for(size_t i = 0; i < quadVertexCount; i++)
 		{
-			s_Data.QuadVertexBufferPtr->Position = transform * s_Data.QuadVertexPositions[i];
-			s_Data.QuadVertexBufferPtr->Color = tint;
-			s_Data.QuadVertexBufferPtr->TexCoord = textureCoords[i];
-			s_Data.QuadVertexBufferPtr->TexIndex = textureIndex;
-			s_Data.QuadVertexBufferPtr++;
+			s_RenderData.QuadVertexBufferPtr->Position = transform * s_RenderData.QuadVertexPositions[i];
+			s_RenderData.QuadVertexBufferPtr->Color = tint;
+			s_RenderData.QuadVertexBufferPtr->TexCoord = textureCoords[i];
+			s_RenderData.QuadVertexBufferPtr->TexIndex = textureIndex;
+			s_RenderData.QuadVertexBufferPtr++;
 		}
 
-		s_Data.QuadIndexCount += 6;
+		s_RenderData.QuadIndexCount += 6;
 
 
-		s_Data.Stats.QuadCount ++;
+		s_RenderData.Stats.QuadCount ++;
 	}
 
 	void Renderer2D::DrawQuad(const glm::mat4& transform, const Ref<SubTexture2D>& subtexture, const glm::vec4& tint)
@@ -297,16 +297,16 @@ namespace Turtle {
 
 		constexpr size_t quadVertexCount = 4;
 
-		if(s_Data.QuadIndexCount >= s_Data.MaxIndices)
+		if(s_RenderData.QuadIndexCount >= s_RenderData.MaxIndices)
 			FlushAndReset();
 		
 		float textureIndex = 0.0f;
 		const glm::vec2* textureCoords = subtexture->GetTexCoords();
 		const Ref<Texture2D> texture = subtexture->GetTexture();
 
-		for (uint32_t i = 1; i < s_Data.TextureSlotIndex; i++)
+		for (uint32_t i = 1; i < s_RenderData.TextureSlotIndex; i++)
 		{
-			if(*s_Data.TextureSlots[i].get() == *texture.get())
+			if(*s_RenderData.TextureSlots[i].get() == *texture.get())
 			{
 				textureIndex = (float)i;
 				break;
@@ -315,25 +315,25 @@ namespace Turtle {
 
 		if (textureIndex == 0.0f)
 		{
-			textureIndex = (float)s_Data.TextureSlotIndex;
-			s_Data.TextureSlots[s_Data.TextureSlotIndex] = texture;
-			s_Data.TextureSlotIndex++;
+			textureIndex = (float)s_RenderData.TextureSlotIndex;
+			s_RenderData.TextureSlots[s_RenderData.TextureSlotIndex] = texture;
+			s_RenderData.TextureSlotIndex++;
 		}
 		
 
 		for(size_t i = 0; i < quadVertexCount; i++)
 		{
-			s_Data.QuadVertexBufferPtr->Position = transform * s_Data.QuadVertexPositions[i];
-			s_Data.QuadVertexBufferPtr->Color = tint;
-			s_Data.QuadVertexBufferPtr->TexCoord = textureCoords[i];
-			s_Data.QuadVertexBufferPtr->TexIndex = textureIndex;
-			s_Data.QuadVertexBufferPtr++;
+			s_RenderData.QuadVertexBufferPtr->Position = transform * s_RenderData.QuadVertexPositions[i];
+			s_RenderData.QuadVertexBufferPtr->Color = tint;
+			s_RenderData.QuadVertexBufferPtr->TexCoord = textureCoords[i];
+			s_RenderData.QuadVertexBufferPtr->TexIndex = textureIndex;
+			s_RenderData.QuadVertexBufferPtr++;
 		}
 
-		s_Data.QuadIndexCount += 6;
+		s_RenderData.QuadIndexCount += 6;
 
 
-		s_Data.Stats.QuadCount ++;
+		s_RenderData.Stats.QuadCount ++;
 	}
 
 
@@ -391,11 +391,11 @@ namespace Turtle {
 
 	Renderer2D::Statistics Renderer2D::GetStats()
 	{
-		return s_Data.Stats;
+		return s_RenderData.Stats;
 	}
 
 	void Renderer2D::ResetStats()
 	{
-		memset(&s_Data.Stats, 0, sizeof(Statistics));
+		memset(&s_RenderData.Stats, 0, sizeof(Statistics));
 	}
 }

@@ -16,6 +16,7 @@ namespace Turtle {
 		virtual uint32_t GetWidth() const override { return m_Width; }
 		virtual uint32_t GetHeight() const override { return m_Height; }
 		virtual uint32_t GetRendererID() const override { return m_RendererID; }
+		virtual uint32_t GetAssetID() const override { return m_AssetID; }
 
 		virtual void SetData(void* data, uint32_t size) override;
 
@@ -29,7 +30,7 @@ namespace Turtle {
 	private:
 		std::string m_Path; // might not actually want this here
 		uint32_t m_Width, m_Height;
-		uint32_t m_RendererID;
+		uint32_t m_RendererID, m_AssetID;
 		GLenum m_InternalFormat, m_DataFormat;
 	};
 }

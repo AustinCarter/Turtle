@@ -109,7 +109,9 @@ namespace Turtle {
 	std::string FileSelector::GetSelection()
 	{
 		char buffer[1024];
-		sprintf_s(buffer, 1024, "%s\\%s", m_CurrentDirectory.u8string().c_str(), m_SelectedFile.c_str());
+		// uint32_t index = std::filesystem::current_path().
+		std::filesystem::path returnDir = std::filesystem::relative(m_CurrentDirectory);
+		sprintf_s(buffer, 1024, "%s/%s", returnDir.generic_u8string().c_str(), m_SelectedFile.c_str());
 		return std::string(buffer);
 	}
 

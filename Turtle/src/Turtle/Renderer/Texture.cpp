@@ -1,8 +1,6 @@
 #include "turtpch.h"
 #include "Texture.h"
 
-#include "Turtle/Core/AssetManager.h"
-
 #include "Renderer.h"
 #include "Platform/OpenGL/OpenGLTexture.h"
 
@@ -12,10 +10,7 @@ namespace Turtle {
 		switch(Renderer::GetAPI())
 		{
 			case RendererAPI::API::None: TURT_CORE_ASSERT(false, "RendererAPI::None is not currently supported."); return nullptr;
-			case RendererAPI::API::OpenGL: 
-				Ref<Texture2D> texture = CreateRef<OpenGLTexture2D>(path);
-				AssetManager::RegisterTexture(texture.get()->GetRendererID(), texture);
-				return texture;
+			case RendererAPI::API::OpenGL: return CreateRef<OpenGLTexture2D>(path);
 		}
 		TURT_CORE_ASSERT(false, "Unknown RendererAPI");
 		return nullptr;
@@ -27,10 +22,7 @@ namespace Turtle {
 		switch(Renderer::GetAPI())
 		{
 			case RendererAPI::API::None: TURT_CORE_ASSERT(false, "RendererAPI::None is not currently supported."); return nullptr;
-			case RendererAPI::API::OpenGL: 
-				Ref<Texture2D> texture = CreateRef<OpenGLTexture2D>(width, height);
-				AssetManager::RegisterTexture(texture.get()->GetRendererID(), texture);
-				return texture;
+			case RendererAPI::API::OpenGL: return CreateRef<OpenGLTexture2D>(width, height);
 		}
 		TURT_CORE_ASSERT(false, "Unknown RendererAPI");
 		return nullptr;

@@ -12,6 +12,8 @@
 #include "Turtle/Core/KeyCodes.h"
 #include "Turtle/Core/MouseButtonCodes.h"
 
+#include "Turtle/Core/AssetManager.h"
+
 #include "Turtle/Renderer/OrthographicCameraController.h"
 
 #include "Turtle/ImGui/ImGuiLayer.h"

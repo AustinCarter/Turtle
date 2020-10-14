@@ -15,15 +15,21 @@ namespace Turtle {
 		//NOTE: At the moment order matters, must match ComponentType order
 		const char* componentTypes[] = {"SpriteRendererComponent", "CameraComponent", "NativeScriptComponent"};
 		ImGui::BeginChild("Component Select", ImVec2(ImGui::GetWindowContentRegionWidth(), 200), true);
-		if(ImGui::Selectable("None", -1==m_ComponentType))
+		if(ImGui::Selectable("None", -1==m_ComponentType, ImGuiSelectableFlags_AllowDoubleClick))
+		{
 			m_ComponentType = -1;
+			if(ImGui::IsMouseDoubleClicked(0))
+				m_ComponentSelected = true;
+		}
         for (int i = 0; i < 3; i++)
         {
-        	//TODO: PROBABLY DON'T WANT TO HARD CODE COMPONENT TYPES
-        	//TODO: SHOULDN'T BE ABLE TO ADD INVALID COMPONENT TYPE 
-            if (ImGui::Selectable(componentTypes[i], i==m_ComponentType))
+            if (ImGui::Selectable(componentTypes[i], i==m_ComponentType, ImGuiSelectableFlags_AllowDoubleClick))
             {
                 m_ComponentType = i;
+                if (ImGui::IsMouseDoubleClicked(0))
+                {
+                	m_ComponentSelected = true;
+                }
             }
         }
         ImGui::EndChild();

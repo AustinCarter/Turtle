@@ -15,9 +15,20 @@ namespace Turtle {
 
 		static void Init();
 
-		// TODO: Textures should eventually be registered with an internal asset id instead of their opengl renderer id
-		static void RegisterTexture(uint32_t textureID, const Ref<Texture2D> texture);
-		static const Ref<Texture2D>& GetTexture(uint32_t textureID);
+		//TODO: at some point should probably have managers for specific assets that inheret from this asset manager class
+		static Ref<Texture2D> CreateTexture(std::string path);
+		static Ref<Texture2D> GetTexture(uint32_t textureID);
+
+
+		struct ResourceData 
+		{
+			uint32_t TexturesLoaded = 0;
+		};
+
+		static ResourceData GetStats();
+		static void ResetStats();
+	private:
+		static bool Loaded(uint32_t textureID);
 
 	};
 }
