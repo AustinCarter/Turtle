@@ -40,6 +40,23 @@ namespace Turtle {
 		return s_AssetData.TextureMap[textureID];
 	}
 
+	void AssetManager::Unload()
+	{
+		std::unordered_map<uint32_t, Ref<Texture2D>>::iterator it = s_AssetData.TextureMap.begin();
+		while(it != s_AssetData.TextureMap.end())
+		{
+			if (it->second.use_count() == 1)
+			{
+				s_AssetData.Stats.TexturesLoaded--;
+				it = s_AssetData.TextureMap.erase(it);
+			}
+			else
+			{
+				it++;
+			}
+		}
+	}
+
 	bool AssetManager::Loaded(uint32_t textureID)
 	{
 		return !(s_AssetData.TextureMap.find(textureID) == s_AssetData.TextureMap.end());

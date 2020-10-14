@@ -6,6 +6,8 @@
 #include "Turtle/Scene/ScriptableEntity.h"
 #include "Turtle/Renderer/Texture.h"
 
+#include "Turtle/Core/AssetManager.h"
+
 namespace Turtle {
 
 	//NOTE: Tag and Transform component should be after any newly added  components
@@ -40,7 +42,7 @@ namespace Turtle {
 	struct SpriteRendererComponent
 	{
 		glm::vec4 Color { 1.0f, 1.0f, 1.0f, 1.0f };
-		uint32_t TextureID; 
+		uint32_t TextureID, RendererID; 
 		bool Textured = false; 
 
 
@@ -49,7 +51,10 @@ namespace Turtle {
 		SpriteRendererComponent(const glm::vec4& color)
 			: Color(color) {}
 		SpriteRendererComponent(uint32_t texture, const glm::vec4& color)
-			: TextureID(texture), Color(color), Textured(true) {}
+			: TextureID(texture), Color(color), Textured(true) 
+			{
+				RendererID = AssetManager::GetTexture(texture).get()->GetRendererID();
+			}
 	};
 
 	struct CameraComponent

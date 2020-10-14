@@ -209,7 +209,7 @@ namespace Turtle {
 				ImGui::ColorEdit4("Color", glm::value_ptr(color));
 
 				if (spriteComponent.Textured)
-					ImGui::Image((void*)(AssetManager::GetTexture(spriteComponent.TextureID).get()->GetRendererID()), ImVec2{ 128, 128 }, ImVec2{ 0, 1 }, ImVec2{ 1, 0 });
+					ImGui::Image((void*)spriteComponent.RendererID, ImVec2{ 128, 128 }, ImVec2{ 0, 1 }, ImVec2{ 1, 0 });
 				
 				if(ImGui::Button("Add Texture"))
 				{
@@ -226,6 +226,7 @@ namespace Turtle {
 						m_FileSelector.Close();
 						Ref<Texture2D> tex = AssetManager::CreateTexture(path);
 						spriteComponent.TextureID = tex->GetAssetID();
+						spriteComponent.RendererID = tex->GetRendererID();
 						spriteComponent.Textured = true;
 					}
 				}

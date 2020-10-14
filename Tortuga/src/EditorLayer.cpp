@@ -183,6 +183,8 @@ namespace Turtle {
 		auto assetStats = AssetManager::GetStats();
 		ImGui::Text("AssetManager Stats:");
 		ImGui::Text("Textures Loaded: %d", assetStats.TexturesLoaded);
+		if(ImGui::Button("AssetManager::Unload()"))
+			AssetManager::Unload();
 
 		ImGui::End();
 

@@ -19,6 +19,8 @@ namespace Turtle {
 		static Ref<Texture2D> CreateTexture(std::string path);
 		static Ref<Texture2D> GetTexture(uint32_t textureID);
 
+		static void Unload();
+
 
 		struct ResourceData 
 		{
