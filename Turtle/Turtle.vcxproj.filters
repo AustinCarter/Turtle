@@ -117,6 +117,9 @@
     <ClInclude Include="src\Turtle\Core\MouseButtonCodes.h">
       <Filter>src\Turtle\Core</Filter>
     </ClInclude>
+    <ClInclude Include="src\Turtle\Core\Random.h">
+      <Filter>src\Turtle\Core</Filter>
+    </ClInclude>
     <ClInclude Include="src\Turtle\Core\Timestep.h">
       <Filter>src\Turtle\Core</Filter>
     </ClInclude>
@@ -157,6 +160,9 @@
       <Filter>src\Turtle\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="src\Turtle\Renderer\OrthographicCameraController.h">
+      <Filter>src\Turtle\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Turtle\Renderer\ParticleSpawner.h">
       <Filter>src\Turtle\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="src\Turtle\Renderer\Renderer.h">
@@ -1478,6 +1484,9 @@
     <ClCompile Include="src\Turtle\Core\Log.cpp">
       <Filter>src\Turtle\Core</Filter>
     </ClCompile>
+    <ClCompile Include="src\Turtle\Core\Random.cpp">
+      <Filter>src\Turtle\Core</Filter>
+    </ClCompile>
     <ClCompile Include="src\Turtle\Core\Window.cpp">
       <Filter>src\Turtle\Core</Filter>
     </ClCompile>
@@ -1497,6 +1506,9 @@
       <Filter>src\Turtle\Renderer</Filter>
     </ClCompile>
     <ClCompile Include="src\Turtle\Renderer\OrthographicCameraController.cpp">
+      <Filter>src\Turtle\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Turtle\Renderer\ParticleSpawner.cpp">
       <Filter>src\Turtle\Renderer</Filter>
     </ClCompile>
     <ClCompile Include="src\Turtle\Renderer\RenderCommand.cpp">

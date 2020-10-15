@@ -18,7 +18,6 @@ namespace Turtle {
 	{
 		TURT_PROFILE_FUNCTION();
 			
-		// m_CheckerboardTexture = Texture2D::Create("assets/textures/Checkerboard.png");
 		m_CheckerboardTexture = AssetManager::CreateTexture("assets/textures/Checkerboard.png");
 
 		FramebufferSpecification fbSpec;
@@ -34,10 +33,11 @@ namespace Turtle {
 		auto square2 = m_ActiveScene->CreateEntity("Square Entity 2");
 		square2.AddComponent<SpriteRendererComponent>(glm::vec4{0.6f, 0.2f, 0.5f, 1.0f});
 		square2.GetComponent<TransformComponent>().Transform[3][0] = rand() % 10  - 5.0f;
+		square2.AddComponent<ParticleSpawnerComponenet>();
 
-		m_SquareEntity = square;
+		// m_SquareEntity = square;
 
-		m_CameraEntity = m_ActiveScene->CreateEntity("Camera A");
+		m_CameraEntity = m_ActiveScene->CreateEntity("Camera");
 		m_CameraEntity.AddComponent<CameraComponent>();
 
 		class CameraController : public ScriptableEntity
@@ -73,13 +73,22 @@ namespace Turtle {
 		m_CameraEntity.AddComponent<NativeScriptComponent>().Bind<CameraController>();
 
 		m_SceneHeirarchy.SetContext(m_ActiveScene);
+
+		m_Particle.ColorBegin = { 254 / 255.0f, 212 / 255.0f, 123 / 255.0f, 1.0f };
+		m_Particle.ColorEnd = { 254 / 255.0f, 109 / 255.0f, 41 / 255.0f, 0.9f };
+		m_Particle.SizeBegin = 0.3f, m_Particle.SizeVariation = 0.2f, m_Particle.SizeEnd = 0.0f;
+		m_Particle.LifeTime = 2.0f;
+		m_Particle.Velocity = { 0.0f, 2.0f };
+		m_Particle.VelocityVariation = { 3.0f, 2.0f };
+		m_Particle.Position = { 0.0f, 0.0f };
+		m_Particle.Rotation = 0.0f;
 	}
 
 	void EditorLayer::OnDetach()
 	{
 		TURT_PROFILE_FUNCTION();
 	}
-
+ 
 	void EditorLayer::OnUpdate(Timestep ts)
 	{
 		TURT_PROFILE_FUNCTION();
@@ -105,9 +114,13 @@ namespace Turtle {
 		RenderCommand::SetClearColor({0.1f, 0.1f, 0.1f, 0.1f});
 		RenderCommand::Clear();
 	
-		m_ActiveScene->OnUpdate(ts);	
-
+		m_ActiveScene->OnUpdate(ts);
 		m_Framebuffer->Unbind();
+		for(int i = 0; i < 5; i++)
+		{
+			m_Particle.Rotation = Random::Float();
+			m_Particles.Emit(m_Particle);
+		}
 	
 	}
 

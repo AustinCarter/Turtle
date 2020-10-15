@@ -159,6 +159,7 @@
     <ClInclude Include="src\Turtle\Core\LayerStack.h" />
     <ClInclude Include="src\Turtle\Core\Log.h" />
     <ClInclude Include="src\Turtle\Core\MouseButtonCodes.h" />
+    <ClInclude Include="src\Turtle\Core\Random.h" />
     <ClInclude Include="src\Turtle\Core\Timestep.h" />
     <ClInclude Include="src\Turtle\Core\Window.h" />
     <ClInclude Include="src\Turtle\Core\input.h" />
@@ -173,6 +174,7 @@
     <ClInclude Include="src\Turtle\Renderer\GraphicsContext.h" />
     <ClInclude Include="src\Turtle\Renderer\OrthographicCamera.h" />
     <ClInclude Include="src\Turtle\Renderer\OrthographicCameraController.h" />
+    <ClInclude Include="src\Turtle\Renderer\ParticleSpawner.h" />
     <ClInclude Include="src\Turtle\Renderer\Renderer.h" />
     <ClInclude Include="src\Turtle\Renderer\RendererAPI.h" />
     <ClInclude Include="src\Turtle\Renderer\Shader.h" />
@@ -614,6 +616,7 @@
     <ClCompile Include="src\Turtle\Core\Layer.cpp" />
     <ClCompile Include="src\Turtle\Core\LayerStack.cpp" />
     <ClCompile Include="src\Turtle\Core\Log.cpp" />
+    <ClCompile Include="src\Turtle\Core\Random.cpp" />
     <ClCompile Include="src\Turtle\Core\Window.cpp" />
     <ClCompile Include="src\Turtle\ImGui\ImGuiBuild.cpp" />
     <ClCompile Include="src\Turtle\ImGui\ImGuiLayer.cpp" />
@@ -621,6 +624,7 @@
     <ClCompile Include="src\Turtle\Renderer\Framebuffer.cpp" />
     <ClCompile Include="src\Turtle\Renderer\OrthographicCamera.cpp" />
     <ClCompile Include="src\Turtle\Renderer\OrthographicCameraController.cpp" />
+    <ClCompile Include="src\Turtle\Renderer\ParticleSpawner.cpp" />
     <ClCompile Include="src\Turtle\Renderer\RenderCommand.cpp" />
     <ClCompile Include="src\Turtle\Renderer\Renderer.cpp" />
     <ClCompile Include="src\Turtle\Renderer\Renderer2D.cpp" />

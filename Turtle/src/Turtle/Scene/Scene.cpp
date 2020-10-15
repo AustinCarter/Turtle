@@ -3,13 +3,13 @@
 
 #include "Turtle/Renderer/Renderer2D.h"
 
+#include "Turtle/Scene/Entity.h"
+#include "Turtle/Core/AssetManager.h"
+#include "Turtle/Scene/Components.h"
+
 #include <glm/glm.hpp>
 
-#include "Turtle/Scene/Entity.h"
-
-#include "Turtle/Core/AssetManager.h"
-
-#include "Turtle/Scene/Components.h"
+#include <fstream>
 
 
 namespace Turtle {
@@ -82,17 +82,19 @@ namespace Turtle {
 		{
 			Renderer2D::BeginScene(primaryCamera->GetProjection(), *cameraTransform);
 			
-			auto group = m_Registry.group<TransformComponent>(entt::get<SpriteRendererComponent>);
-			for (auto entity : group)
 			{
-				auto [transform, sprite] = group.get<TransformComponent, SpriteRendererComponent>(entity);
+				auto group = m_Registry.group<TransformComponent>(entt::get<SpriteRendererComponent>);
+				for (auto entity : group)
+				{
+					auto [transform, sprite] = group.get<TransformComponent, SpriteRendererComponent>(entity);
 
-				if (sprite.Textured)
-					Renderer2D::DrawQuad(transform, AssetManager::GetTexture(sprite.TextureID), sprite.Color);
-				else
-					Renderer2D::DrawQuad(transform, sprite.Color);
+					if (sprite.Textured)
+						Renderer2D::DrawQuad(transform, AssetManager::GetTexture(sprite.TextureID), sprite.Color);
+					else
+						Renderer2D::DrawQuad(transform, sprite.Color);
 
-			}	
+				}
+			}
 			Renderer2D::EndScene();
 		}
 	}
@@ -118,6 +120,19 @@ namespace Turtle {
 	void Scene::OnCameraAdd(CameraComponent& cameraComponent)
 	{
 		cameraComponent.Camera.SetViewportSize(m_ViewportWidth, m_ViewportHeight);	
+	}
+
+	void Scene::SerializeScene()
+	{
+		std::ofstream outputStream;
+		outputStream.open("SceneDump.json");
+		outputStream << "{";
+		m_Registry.each([&](auto entity)
+		{
+			//TODO: FIGURE OUT AN EFFICENT WAY TO VISIT EACH COMPONENT
+		});
+		outputStream << "}";
+		outputStream.close();
 	}
 
 }

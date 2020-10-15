@@ -22,6 +22,8 @@ namespace Turtle {
 
 		void OnCameraAdd(CameraComponent& cameraComponent);
 
+		void SerializeScene();
+
 	private:
 		entt::registry m_Registry;
 		uint32_t m_ViewportWidth = 0, m_ViewportHeight = 0;

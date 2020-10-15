@@ -1,6 +1,7 @@
 #pragma once 
 
 #include <glm/glm.hpp>
+#include <glm/gtx/string_cast.hpp>
 
 #include "Turtle/Scene/SceneCamera.h"
 #include "Turtle/Scene/ScriptableEntity.h"
@@ -8,12 +9,17 @@
 
 #include "Turtle/Core/AssetManager.h"
 
+#include "Turtle/Renderer/ParticleSpawner.h"
+
+#include <fstream>
+
+
 namespace Turtle {
 
 	//NOTE: Tag and Transform component should be after any newly added  components
 	enum class ComponentTypes { 
 		SpriteRendererComponent = 0, CameraComponent = 1, NativeScriptComponent = 2,
-		TagComponent = 3, TransformComponent = 4
+		TagComponent = 3, TransformComponent = 4, ParticleSpawnerComponenet = 5
 	};
 
 	struct TagComponent
@@ -24,6 +30,14 @@ namespace Turtle {
 		TagComponent(const TagComponent&) = default;
 		TagComponent(const std::string& tag)
 			: Tag(tag) {}
+
+		void Serialize(std::ofstream outputStream)
+		{
+			outputStream << "{";
+			outputStream << "\t\"Tag\":\"" << Tag << "\"";
+			outputStream << "}";
+			outputStream.flush();
+		}
 	};
 
 	struct TransformComponent
@@ -37,6 +51,14 @@ namespace Turtle {
 
 		operator glm::mat4& () { return Transform; }
 		operator const glm::mat4& () const { return Transform; }
+
+		void Serialize(std::ofstream outputStream)
+		{
+			outputStream << "{";
+			outputStream << "\t\"Transform\":\"" << glm::to_string(Transform) << "\"";
+			outputStream << "}";
+			outputStream.flush();
+		}
 	};
 
 	struct SpriteRendererComponent
@@ -55,6 +77,18 @@ namespace Turtle {
 			{
 				RendererID = AssetManager::GetTexture(texture).get()->GetRendererID();
 			}
+
+		void Serialize(std::ofstream outputStream)
+		{
+			outputStream << "{";
+			outputStream << "\t\"Color\":\"" << glm::to_string(Color) << "\"";
+			outputStream << "\t\"TextureID\":\"" << TextureID << "\"";
+			outputStream << "\t\"RendererID\":\"" << RendererID << "\"";
+			outputStream << "\t\"TexturedID\":\"" << (Textured ? "True" : "False") << "\"";
+			outputStream << "}";
+			outputStream.flush();
+		}
+
 	};
 
 	struct CameraComponent
@@ -65,7 +99,17 @@ namespace Turtle {
 
 		CameraComponent() = default;
 		CameraComponent(const CameraComponent&) = default;
+
+		void Serialize(std::ofstream outputStream)
+		{
+			outputStream << "{";
+			outputStream << "\t\"Primary\":\"" <<  (Primary ? "True" : "False") << "\"";
+			outputStream << "\t\"FixedAspectRatio\":\"" <<  (FixedAspectRatio ? "True" : "False") << "\"";
+			outputStream << "}";
+			outputStream.flush();
+		}
 	};
+
 
 	struct NativeScriptComponent
 	{
@@ -82,5 +126,13 @@ namespace Turtle {
 			DestroyScript = [](NativeScriptComponent* nsc) {delete nsc->Instance; nsc->Instance = nullptr; };
 			Bound = true; 
 		}
+	};
+
+	struct ParticleSpawnerComponenet
+	{
+		ParticleSpawner ParticleSpawner;
+
+		ParticleSpawnerComponenet() = default;
+
 	};
 }

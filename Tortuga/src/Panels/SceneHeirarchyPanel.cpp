@@ -60,7 +60,7 @@ namespace Turtle {
 		}
 		if (ImGui::BeginPopupContextItem())
 		{
-			bool removed = ImGui::Selectable("Remove Entity");
+			bool removed = ImGui::Selectable("Delete Entity");
 			if (removed)
 			{
 				m_Context->m_Registry.destroy((entt::entity)(uint32_t)entity);
@@ -209,9 +209,23 @@ namespace Turtle {
 				ImGui::ColorEdit4("Color", glm::value_ptr(color));
 
 				if (spriteComponent.Textured)
+				{
 					ImGui::Image((void*)spriteComponent.RendererID, ImVec2{ 128, 128 }, ImVec2{ 0, 1 }, ImVec2{ 1, 0 });
+					if(ImGui::Button("Change Texture"))
+					{
+						m_FileSelector.SetFilter(".png");
+						m_FileSelector.Open();
+					}
+					
+					ImGui::SameLine();
+
+					if(ImGui::Button("Remove Texture"))
+						spriteComponent.Textured = false;
+
+					
+				}
 				
-				if(ImGui::Button("Add Texture"))
+				else if(ImGui::Button("Add Texture"))
 				{
 					m_FileSelector.SetFilter(".png");
 					m_FileSelector.Open();

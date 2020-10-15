@@ -19,13 +19,10 @@ namespace Turtle {
 		virtual void OnImGuiRender() override;
 		virtual void OnEvent(Event& event) override;
 	private:
-		Ref<VertexArray> m_SquareVA;
 		OrthographicCameraController m_CameraController;
-		Ref<Shader> m_FlatColorShader;
 		Ref<Framebuffer> m_Framebuffer;
 
 		Ref<Scene> m_ActiveScene;
-		Entity m_SquareEntity;
 		Entity m_CameraEntity;
 		// Entity m_SecondCamera;
 
@@ -40,6 +37,9 @@ namespace Turtle {
 		bool m_ViewportHovered = false;
 
 		SceneHeirarchyPanel m_SceneHeirarchy;
+
+		ParticleSpawner m_Particles;
+		ParticleProps m_Particle;
 	};
 
 }

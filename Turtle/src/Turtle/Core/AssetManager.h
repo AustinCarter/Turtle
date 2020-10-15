@@ -14,7 +14,7 @@ namespace Turtle {
 		AssetManager() = default;
 
 		static void Init();
-
+		
 		//TODO: at some point should probably have managers for specific assets that inheret from this asset manager class
 		static Ref<Texture2D> CreateTexture(std::string path);
 		static Ref<Texture2D> GetTexture(uint32_t textureID);

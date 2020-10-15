@@ -1,0 +1,16 @@
+Engine:
+	- Seralization
+		might be able to use entt meta/visit to run through all components/component types
+				could also be useful for things such as scene heirarchy panel
+	- Particles
+	- lighting	
+	- Material (Shader + Texture)
+	- Sound
+	- Shader Asset Manegment
+	- Stretch: Non-native scripting
+Editor:
+	- Tile Map/Grid Placement UI
+	- Load/Save Scenes (Re: Seralization)
+	- Scene play
+	- Bindable Scripts
+	- Select Shader	(RE: Materials)

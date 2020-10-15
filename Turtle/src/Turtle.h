@@ -14,6 +14,9 @@
 
 #include "Turtle/Core/AssetManager.h"
 
+#include "Turtle/Core/Hash.h"
+#include "Turtle/Core/Random.h"
+
 #include "Turtle/Renderer/OrthographicCameraController.h"
 
 #include "Turtle/ImGui/ImGuiLayer.h"
@@ -36,4 +39,6 @@
 #include "Turtle/Renderer/Buffer.h"
 
 #include "Turtle/Renderer/OrthographicCamera.h"
+
+#include "Turtle/Renderer/ParticleSpawner.h"
 // -----------------------------------
