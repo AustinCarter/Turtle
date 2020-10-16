@@ -1,7 +1,7 @@
 Engine:
 	- Seralization
 		might be able to use entt meta/visit to run through all components/component types
-				could also be useful for things such as scene heirarchy panel
+				could also be useful for things such as scene heirarchy panel and I think I can avoid the need to maintain the ComponentTypes struct
 	- Particles
 	- lighting	
 	- Material (Shader + Texture)
@@ -14,3 +14,4 @@ Editor:
 	- Scene play
 	- Bindable Scripts
 	- Select Shader	(RE: Materials)
+	- entity click and drag

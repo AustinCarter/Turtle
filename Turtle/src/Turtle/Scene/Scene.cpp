@@ -95,6 +95,21 @@ namespace Turtle {
 
 				}
 			}
+
+			{
+				auto view = m_Registry.view<TransformComponent, ParticleSpawnerComponenet>();
+
+				for (auto entity : view)
+				{
+					auto [transform, spawner] = view.get<TransformComponent, ParticleSpawnerComponenet>(entity);
+
+					spawner.Particle.Position = {transform.Transform[3][0], transform.Transform[3][1]};
+
+					spawner.ParticleSpawner.OnUpdate(ts);
+					spawner.ParticleSpawner.OnRender();
+					spawner.ParticleSpawner.Emit(spawner.Particle);
+				}
+			}
 			Renderer2D::EndScene();
 		}
 	}
@@ -130,6 +145,8 @@ namespace Turtle {
 		m_Registry.each([&](auto entity)
 		{
 			//TODO: FIGURE OUT AN EFFICENT WAY TO VISIT EACH COMPONENT
+			m_Registry.visit(entity, [&](const auto component) {
+			});
 		});
 		outputStream << "}";
 		outputStream.close();

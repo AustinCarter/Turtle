@@ -131,8 +131,11 @@ namespace Turtle {
 	struct ParticleSpawnerComponenet
 	{
 		ParticleSpawner ParticleSpawner;
+		ParticleProps Particle;
 
 		ParticleSpawnerComponenet() = default;
+		ParticleSpawnerComponenet(const ParticleSpawnerComponenet&) = default;
+		ParticleSpawnerComponenet(const ParticleProps& particle) :  Particle(particle) {}
 
 	};
 }

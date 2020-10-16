@@ -33,7 +33,6 @@ namespace Turtle {
 		auto square2 = m_ActiveScene->CreateEntity("Square Entity 2");
 		square2.AddComponent<SpriteRendererComponent>(glm::vec4{0.6f, 0.2f, 0.5f, 1.0f});
 		square2.GetComponent<TransformComponent>().Transform[3][0] = rand() % 10  - 5.0f;
-		square2.AddComponent<ParticleSpawnerComponenet>();
 
 		// m_SquareEntity = square;
 
@@ -82,6 +81,7 @@ namespace Turtle {
 		m_Particle.VelocityVariation = { 3.0f, 2.0f };
 		m_Particle.Position = { 0.0f, 0.0f };
 		m_Particle.Rotation = 0.0f;
+		square2.AddComponent<ParticleSpawnerComponenet>(m_Particle);
 	}
 
 	void EditorLayer::OnDetach()
