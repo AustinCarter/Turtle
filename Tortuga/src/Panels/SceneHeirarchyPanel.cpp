@@ -295,6 +295,7 @@ namespace Turtle {
 				auto& particleSpawnerComponenet = entity.GetComponent<ParticleSpawnerComponenet>();
 				ParticleProps& particle = particleSpawnerComponenet.Particle;
 				ImGui::Checkbox("Random Rotate", &particle.RandomRotate);
+				ImGui::PushItemWidth(ImGui::GetWindowContentRegionWidth() * 0.5f);
 				ImGui::DragFloat2("Velocity", glm::value_ptr(particle.Velocity),  0.03f, -5.0f, 5.0f);
 				ImGui::DragFloat2("Velocity Variation", glm::value_ptr(particle.VelocityVariation),  0.02f, 0.0f, 10.0f);
 				ImGui::ColorEdit4("Color Begin", glm::value_ptr(particle.ColorBegin));
@@ -305,6 +306,43 @@ namespace Turtle {
 				// ImGui::DragFloat("Rotation", &particle.Rotation, 0.03f, 0.0f, 5.0f);
 				ImGui::DragFloat("LifeTime", &particle.LifeTime, 0.03f, 0.0f, 5.0f);
 				ImGui::DragInt("Emission Rate", (int*)(&particleSpawnerComponenet.EmissionRate), 0.03f, 0, 10);
+				ImGui::PopItemWidth();
+				ImGui::TreePop();
+			} 
+		}
+		if(entity.HasComponent<TileSetComponenet>())
+		{
+			bool open = ImGui::TreeNodeEx((void*)typeid(TileSetComponenet).hash_code(), ImGuiTreeNodeFlags_DefaultOpen, "Tile Set");
+			bool removed = false;
+			if (ImGui::BeginPopupContextItem("Particle Spawner Component Context Menu"))
+			{
+				removed = ImGui::Selectable("Remove Component");
+				if (removed)
+				{
+					entity.RemoveComponent<TileSetComponenet>();
+					// open = false;
+				}
+				ImGui::EndPopup();
+				if(open && removed) ImGui::TreePop();
+			}
+			if (open && !removed)
+			{
+				auto& tileSetComponenet = entity.GetComponent<TileSetComponenet>();
+				if(ImGui::Button("Make Active"))
+				{
+					m_TilePallette.SetTexture(tileSetComponenet.TileSet);
+					m_TilePallette.Open();
+				}
+				ImGui::PushItemWidth(ImGui::GetContentRegionAvailWidth() * 0.5f);
+				ImGui::InputScalar("Tile Width", ImGuiDataType_S32, &tileSetComponenet.TileWidth);
+				ImGui::InputScalar("Tile Height", ImGuiDataType_S32, &tileSetComponenet.TileHeight);
+				ImGui::PopItemWidth();
+
+				if(m_TilePallette.Active())
+				{
+					m_TilePallette.Display();
+					
+				}
 				ImGui::TreePop();
 			} 
 		}
@@ -343,6 +381,13 @@ namespace Turtle {
 					case (int)ComponentTypes::ParticleSpawnerComponenet:
 					{
 						entity.AddComponent<ParticleSpawnerComponenet>(); 
+						break;
+					}
+					case (int)ComponentTypes::TileSetComponenet:
+					{
+						entity.AddComponent<TileSetComponenet>(); 
+						auto& comp = entity.GetComponent<TileSetComponenet>();
+						comp.TileSet = AssetManager::CreateTexture("assets/textures/RPGpack_sheet_2X.png");
 						break;
 					}
 					case -1:

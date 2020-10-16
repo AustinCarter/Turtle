@@ -18,8 +18,9 @@ namespace Turtle {
 
 	//NOTE: Tag and Transform component should be after any newly added  components
 	enum class ComponentTypes { 
-		SpriteRendererComponent = 0, CameraComponent = 1, NativeScriptComponent = 2, ParticleSpawnerComponenet = 3,
-		TagComponent = 4, TransformComponent = 5
+		SpriteRendererComponent = 0, CameraComponent = 1, NativeScriptComponent = 2, 
+		ParticleSpawnerComponenet = 3, TileSetComponenet = 4,
+		TagComponent, TransformComponent
 	};
 
 	struct TagComponent
@@ -147,5 +148,14 @@ namespace Turtle {
 		ParticleSpawnerComponenet(const ParticleSpawnerComponenet&) = default;
 		ParticleSpawnerComponenet(const ParticleProps& particle) :  Particle(particle) {}
 
+	};
+
+	struct TileSetComponenet
+	{
+		Ref<Texture2D> TileSet;
+		uint32_t TileWidth = 64, TileHeight = 64;
+
+		TileSetComponenet() = default;
+		TileSetComponenet(const TileSetComponenet&) = default;
 	};
 }

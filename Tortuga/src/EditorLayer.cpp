@@ -79,7 +79,7 @@ namespace Turtle {
 		// m_Particle.LifeTime = 2.0f;
 		// m_Particle.Velocity = { 0.0f, 2.0f };
 		// m_Particle.VelocityVariation = { 3.0f, 2.0f };
-		// m_Particle.Position = { 0.0f, 0.0f };
+		// m_Particle.Position = { 0.0f, 0.0f };	
 		square2.AddComponent<ParticleSpawnerComponenet>();
 	}
 
@@ -121,7 +121,6 @@ namespace Turtle {
 	void EditorLayer::OnImGuiRender()
 	{
 		TURT_PROFILE_FUNCTION();
-		ImGui::ShowDemoWindow();
 
 		static bool dockingEnabled = true;
 		static bool opt_fullscreen_persistant = true;

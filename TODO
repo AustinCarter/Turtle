@@ -2,16 +2,24 @@ Engine:
 	- Seralization
 		might be able to use entt meta/visit to run through all components/component types
 				could also be useful for things such as scene heirarchy panel and I think I can avoid the need to maintain the ComponentTypes struct
-	- Particles
+	- Particles*
 	- lighting	
+	- Animation : Not sure if I want to do this engine side
 	- Material (Shader + Texture)
 	- Sound
 	- Shader Asset Manegment
-	- Stretch: Non-native scripting
+	- Physics
+	- UI system
+	- Stretch: Non-native scripting (lua?)
 Editor:
-	- Tile Map/Grid Placement UI
+	- Tile Map/Grid Import and Placement UI
+		- import tileset/tileset component
+		- set tileset active
+		- display grid viewport panel
+		- select place tiles
+		- conversion from opengl size to pixels
 	- Load/Save Scenes (Re: Seralization)
 	- Scene play
 	- Bindable Scripts
 	- Select Shader	(RE: Materials)
-	- entity click and drag
+	- entity click to select and drag

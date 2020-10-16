@@ -4,9 +4,10 @@
 #include "Turtle/Core/Core.h"
 #include "Turtle/Scene/Scene.h"
 #include "Turtle/Scene/Entity.h"
-#include "FileSelector.h"
 
+#include "FileSelector.h"
 #include "ComponentSelectPanel.h"
+#include "TilePallettePanel.h"
 
 
 namespace Turtle {
@@ -30,6 +31,7 @@ namespace Turtle {
 		bool m_AddingComponent = false;
 		ComponentSelectPanel m_ComponentDialogue;
 		FileSelector m_FileSelector; 
+		TilePallettePanel m_TilePallette;
 	};
 
 }

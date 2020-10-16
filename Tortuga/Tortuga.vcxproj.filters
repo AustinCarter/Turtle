@@ -16,6 +16,9 @@
     <ClInclude Include="src\Panels\SceneHeirarchyPanel.h">
       <Filter>Panels</Filter>
     </ClInclude>
+    <ClInclude Include="src\Panels\TilePallettePanel.h">
+      <Filter>Panels</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\EditorLayer.cpp" />
@@ -26,6 +29,9 @@
       <Filter>Panels</Filter>
     </ClCompile>
     <ClCompile Include="src\Panels\SceneHeirarchyPanel.cpp">
+      <Filter>Panels</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Panels\TilePallettePanel.cpp">
       <Filter>Panels</Filter>
     </ClCompile>
     <ClCompile Include="src\TortugaApp.cpp" />

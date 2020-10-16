@@ -135,12 +135,14 @@
     <ClInclude Include="src\Panels\ComponentSelectPanel.h" />
     <ClInclude Include="src\Panels\FileSelector.h" />
     <ClInclude Include="src\Panels\SceneHeirarchyPanel.h" />
+    <ClInclude Include="src\Panels\TilePallettePanel.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\EditorLayer.cpp" />
     <ClCompile Include="src\Panels\ComponentSelectPanel.cpp" />
     <ClCompile Include="src\Panels\FileSelector.cpp" />
     <ClCompile Include="src\Panels\SceneHeirarchyPanel.cpp" />
+    <ClCompile Include="src\Panels\TilePallettePanel.cpp" />
     <ClCompile Include="src\TortugaApp.cpp" />
   </ItemGroup>
   <ItemGroup>
