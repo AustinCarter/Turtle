@@ -12,8 +12,9 @@ namespace Turtle {
 		glm::vec2 Velocity, VelocityVariation;
 		glm::vec4 ColorBegin, ColorEnd;
 		float SizeBegin, SizeEnd, SizeVariation;
-		float Rotation = 0;
+		// float Rotation = 0;
 		float LifeTime = 1.0f;
+		bool RandomRotate = true;
 	};
 
 	class ParticleSpawner

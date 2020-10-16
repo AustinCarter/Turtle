@@ -107,7 +107,9 @@ namespace Turtle {
 
 					spawner.ParticleSpawner.OnUpdate(ts);
 					spawner.ParticleSpawner.OnRender();
-					spawner.ParticleSpawner.Emit(spawner.Particle);
+					for(int i = 0; i < spawner.EmissionRate; i++)
+						spawner.ParticleSpawner.Emit(spawner.Particle);
+					
 				}
 			}
 			Renderer2D::EndScene();

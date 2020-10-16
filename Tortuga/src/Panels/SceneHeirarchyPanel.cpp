@@ -275,6 +275,40 @@ namespace Turtle {
 			} 
 		}
 
+		if(entity.HasComponent<ParticleSpawnerComponenet>())
+		{
+			bool open = ImGui::TreeNodeEx((void*)typeid(ParticleSpawnerComponenet).hash_code(), ImGuiTreeNodeFlags_DefaultOpen, "Particle Spawner");
+			bool removed = false;
+			if (ImGui::BeginPopupContextItem("Particle Spawner Component Context Menu"))
+			{
+				removed = ImGui::Selectable("Remove Component");
+				if (removed)
+				{
+					entity.RemoveComponent<ParticleSpawnerComponenet>();
+					// open = false;
+				}
+				ImGui::EndPopup();
+				if(open && removed) ImGui::TreePop();
+			}
+			if (open && !removed)
+			{
+				auto& particleSpawnerComponenet = entity.GetComponent<ParticleSpawnerComponenet>();
+				ParticleProps& particle = particleSpawnerComponenet.Particle;
+				ImGui::Checkbox("Random Rotate", &particle.RandomRotate);
+				ImGui::DragFloat2("Velocity", glm::value_ptr(particle.Velocity),  0.03f, -5.0f, 5.0f);
+				ImGui::DragFloat2("Velocity Variation", glm::value_ptr(particle.VelocityVariation),  0.02f, 0.0f, 10.0f);
+				ImGui::ColorEdit4("Color Begin", glm::value_ptr(particle.ColorBegin));
+				ImGui::ColorEdit4("Color End", glm::value_ptr(particle.ColorEnd));
+				ImGui::DragFloat("Size Begin", &particle.SizeBegin, 0.01f, 0.0f, 1.0f);
+				ImGui::DragFloat("Size End", &particle.SizeEnd, 0.01f, 0.0f, 1.0f);
+				ImGui::DragFloat("Size Variation", &particle.SizeVariation, 0.01f, 0.0f, 1.0f);
+				// ImGui::DragFloat("Rotation", &particle.Rotation, 0.03f, 0.0f, 5.0f);
+				ImGui::DragFloat("LifeTime", &particle.LifeTime, 0.03f, 0.0f, 5.0f);
+				ImGui::DragInt("Emission Rate", (int*)(&particleSpawnerComponenet.EmissionRate), 0.03f, 0, 10);
+				ImGui::TreePop();
+			} 
+		}
+
 		if (ImGui::Button("+ Add Component"))
 		{
 			m_ComponentDialogue.Open();

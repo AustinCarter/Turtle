@@ -132,6 +132,7 @@ namespace Turtle {
 	{
 		ParticleSpawner ParticleSpawner;
 		ParticleProps Particle;
+		uint32_t EmissionRate = 1;
 
 		ParticleSpawnerComponenet() = default;
 		ParticleSpawnerComponenet(const ParticleSpawnerComponenet&) = default;

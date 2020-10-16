@@ -80,7 +80,6 @@ namespace Turtle {
 		m_Particle.Velocity = { 0.0f, 2.0f };
 		m_Particle.VelocityVariation = { 3.0f, 2.0f };
 		m_Particle.Position = { 0.0f, 0.0f };
-		m_Particle.Rotation = 0.0f;
 		square2.AddComponent<ParticleSpawnerComponenet>(m_Particle);
 	}
 
@@ -116,17 +115,13 @@ namespace Turtle {
 	
 		m_ActiveScene->OnUpdate(ts);
 		m_Framebuffer->Unbind();
-		for(int i = 0; i < 5; i++)
-		{
-			m_Particle.Rotation = Random::Float();
-			m_Particles.Emit(m_Particle);
-		}
 	
 	}
 
 	void EditorLayer::OnImGuiRender()
 	{
 		TURT_PROFILE_FUNCTION();
+		ImGui::ShowDemoWindow();
 
 		static bool dockingEnabled = true;
 		static bool opt_fullscreen_persistant = true;

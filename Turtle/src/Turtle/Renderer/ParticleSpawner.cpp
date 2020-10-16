@@ -69,8 +69,8 @@ namespace Turtle {
 		Particle& particle = m_ParticlePool[m_PoolIndex];
 		particle.Active = true;
 		particle.Position = particleProps.Position;
-		// particle.Rotation = Random::Float() * 2.0f * glm::pi<float>();
-		particle.Rotation = particleProps.Rotation * 2.0f * glm::pi<float>();
+		particle.Rotation = particleProps.RandomRotate ? Random::Float() * 2.0f * glm::pi<float>() : 0;
+		// particle.Rotation = particleProps.Rotation * 2.0f * glm::pi<float>();
 
 		// Velocity
 		particle.Velocity = particleProps.Velocity;
