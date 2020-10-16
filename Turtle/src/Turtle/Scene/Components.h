@@ -18,8 +18,8 @@ namespace Turtle {
 
 	//NOTE: Tag and Transform component should be after any newly added  components
 	enum class ComponentTypes { 
-		SpriteRendererComponent = 0, CameraComponent = 1, NativeScriptComponent = 2,
-		TagComponent = 3, TransformComponent = 4, ParticleSpawnerComponenet = 5
+		SpriteRendererComponent = 0, CameraComponent = 1, NativeScriptComponent = 2, ParticleSpawnerComponenet = 3,
+		TagComponent = 4, TransformComponent = 5
 	};
 
 	struct TagComponent
@@ -134,7 +134,16 @@ namespace Turtle {
 		ParticleProps Particle;
 		uint32_t EmissionRate = 1;
 
-		ParticleSpawnerComponenet() = default;
+		ParticleSpawnerComponenet()
+		{
+			Particle.ColorBegin = { 254 / 255.0f, 212 / 255.0f, 123 / 255.0f, 1.0f };
+			Particle.ColorEnd = { 254 / 255.0f, 109 / 255.0f, 41 / 255.0f, 0.9f };
+			Particle.SizeBegin = 0.3f, Particle.SizeVariation = 0.2f, Particle.SizeEnd = 0.0f;
+			Particle.LifeTime = 2.0f;
+			Particle.Velocity = { 0.0f, 2.0f };
+			Particle.VelocityVariation = { 3.0f, 2.0f };
+			Particle.Position = { 0.0f, 0.0f };
+		}
 		ParticleSpawnerComponenet(const ParticleSpawnerComponenet&) = default;
 		ParticleSpawnerComponenet(const ParticleProps& particle) :  Particle(particle) {}
 

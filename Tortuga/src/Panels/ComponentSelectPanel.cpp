@@ -13,7 +13,7 @@ namespace Turtle {
 
 		static int selected = -1;
 		//NOTE: At the moment order matters, must match ComponentType order
-		const char* componentTypes[] = {"SpriteRendererComponent", "CameraComponent", "NativeScriptComponent"};
+		const char* componentTypes[] = {"SpriteRendererComponent", "CameraComponent", "NativeScriptComponent", "ParticleSpawnerComponenet"};
 		ImGui::BeginChild("Component Select", ImVec2(ImGui::GetWindowContentRegionWidth(), 200), true);
 		if(ImGui::Selectable("None", -1==m_ComponentType, ImGuiSelectableFlags_AllowDoubleClick))
 		{
@@ -21,7 +21,7 @@ namespace Turtle {
 			if(ImGui::IsMouseDoubleClicked(0))
 				m_ComponentSelected = true;
 		}
-        for (int i = 0; i < 3; i++)
+        for (int i = 0; i < sizeof(componentTypes) / sizeof(char*); i++)
         {
             if (ImGui::Selectable(componentTypes[i], i==m_ComponentType, ImGuiSelectableFlags_AllowDoubleClick))
             {

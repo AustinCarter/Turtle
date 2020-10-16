@@ -73,14 +73,14 @@ namespace Turtle {
 
 		m_SceneHeirarchy.SetContext(m_ActiveScene);
 
-		m_Particle.ColorBegin = { 254 / 255.0f, 212 / 255.0f, 123 / 255.0f, 1.0f };
-		m_Particle.ColorEnd = { 254 / 255.0f, 109 / 255.0f, 41 / 255.0f, 0.9f };
-		m_Particle.SizeBegin = 0.3f, m_Particle.SizeVariation = 0.2f, m_Particle.SizeEnd = 0.0f;
-		m_Particle.LifeTime = 2.0f;
-		m_Particle.Velocity = { 0.0f, 2.0f };
-		m_Particle.VelocityVariation = { 3.0f, 2.0f };
-		m_Particle.Position = { 0.0f, 0.0f };
-		square2.AddComponent<ParticleSpawnerComponenet>(m_Particle);
+		// m_Particle.ColorBegin = { 254 / 255.0f, 212 / 255.0f, 123 / 255.0f, 1.0f };
+		// m_Particle.ColorEnd = { 254 / 255.0f, 109 / 255.0f, 41 / 255.0f, 0.9f };
+		// m_Particle.SizeBegin = 0.3f, m_Particle.SizeVariation = 0.2f, m_Particle.SizeEnd = 0.0f;
+		// m_Particle.LifeTime = 2.0f;
+		// m_Particle.Velocity = { 0.0f, 2.0f };
+		// m_Particle.VelocityVariation = { 3.0f, 2.0f };
+		// m_Particle.Position = { 0.0f, 0.0f };
+		square2.AddComponent<ParticleSpawnerComponenet>();
 	}
 
 	void EditorLayer::OnDetach()

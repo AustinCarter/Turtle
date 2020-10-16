@@ -340,6 +340,11 @@ namespace Turtle {
 						entity.AddComponent<NativeScriptComponent>(); 
 						break;
 					}
+					case (int)ComponentTypes::ParticleSpawnerComponenet:
+					{
+						entity.AddComponent<ParticleSpawnerComponenet>(); 
+						break;
+					}
 					case -1:
 						break;
 					default:
