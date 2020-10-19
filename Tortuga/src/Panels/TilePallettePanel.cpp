@@ -7,9 +7,9 @@
 namespace Turtle {
 	void TilePallettePanel::Display()
 	{
-		ImGui::Begin("TilePallette"); 
+		ImGui::Begin("Tile Pallette"); 
 		ImGuiIO& io = ImGui::GetIO();
-		ImGui::BeginChild("TileSet", ImVec2{ ImGui::GetContentRegionAvail().x, ImGui::GetContentRegionAvail().y - 50 }, false);
+		ImGui::BeginChild("Tile Set", ImVec2{ ImGui::GetContentRegionAvail().x, ImGui::GetContentRegionAvail().y - 50 }, false);
 		ImVec2 p = ImGui::GetCursorScreenPos();
 		ImGui::Image((void*)m_Texture.get()->GetRendererID(), ImVec2{ (float)m_Texture.get()->GetWidth(), (float)m_Texture.get()->GetHeight()},ImVec2{ 0, 1 }, ImVec2{ 1, 0 });
 		

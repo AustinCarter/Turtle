@@ -154,6 +154,7 @@ namespace Turtle {
 	{
 		Ref<Texture2D> TileSet;
 		uint32_t TileWidth = 64, TileHeight = 64;
+		bool Active = false; 
 
 		TileSetComponenet() = default;
 		TileSetComponenet(const TileSetComponenet&) = default;

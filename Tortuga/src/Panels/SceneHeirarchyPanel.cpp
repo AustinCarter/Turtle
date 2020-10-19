@@ -332,6 +332,7 @@ namespace Turtle {
 				{
 					m_TilePallette.SetTexture(tileSetComponenet.TileSet);
 					m_TilePallette.SetTileSize(tileSetComponenet.TileWidth, tileSetComponenet.TileHeight);
+					tileSetComponenet.Active = true;
 					m_TilePallette.Open();
 				}
 				ImGui::PushItemWidth(ImGui::GetContentRegionAvailWidth() * 0.5f);
@@ -352,8 +353,11 @@ namespace Turtle {
 					uint32_t width = tileSetComponenet.TileSet.get()->GetWidth();
 					uint32_t height = tileSetComponenet.TileSet.get()->GetHeight();
 
-					ImVec2 min = ImVec2((float)(selection[0] * tileSetComponenet.TileWidth)/width, 1.0f - (float)(selection[1] * tileSetComponenet.TileHeight)/height);
-					ImVec2 max = ImVec2((float)((selection[0] + 1) * tileSetComponenet.TileWidth)/width, 1.0f - (float)((selection[1] + 1) * tileSetComponenet.TileHeight)/height);
+					ImVec2 min = ImVec2((float)(selection[0] * tileSetComponenet.TileWidth)/width, 
+						1.0f - (float)(selection[1] * tileSetComponenet.TileHeight)/height);
+					ImVec2 max = ImVec2((float)((selection[0] + 1) * tileSetComponenet.TileWidth)/width, 
+						1.0f - (float)((selection[1] + 1) * tileSetComponenet.TileHeight)/height);
+
 					ImGui::Image((void*)tileSetComponenet.TileSet->GetRendererID(),  ImVec2{ (float)tileSetComponenet.TileWidth, (float)tileSetComponenet.TileHeight}, min, max);
 				}
 				ImGui::TreePop();

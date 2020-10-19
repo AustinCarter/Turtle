@@ -112,6 +112,33 @@ namespace Turtle {
 					
 				}
 			}
+
+			{
+				auto view = m_Registry.view<TileSetComponenet>();
+				
+
+				for (auto entity : view)
+				{
+					TileSetComponenet tileSet = view.get<TileSetComponenet>(entity);
+					if(tileSet.Active)
+					{
+						float orthoSize = ((SceneCamera*)primaryCamera)->GetOrthographicSize();
+						float ppu = ((SceneCamera*)primaryCamera)->GetOrthographicPixelSize();
+						float aspectRatio = ((SceneCamera*)primaryCamera)->GetAspectRatio();
+						glm::vec2 unitsPerTile = glm::vec2(tileSet.TileWidth/ppu, tileSet.TileHeight/ppu);
+						for(int x = -1; x <=( orthoSize * aspectRatio * ppu)/tileSet.TileWidth + 1; x++)
+						{
+							Renderer2D::DrawQuad(glm::vec2(((x*unitsPerTile.x) + ((*cameraTransform)[3][0] - fmod((*cameraTransform)[3][0], unitsPerTile.x))) - (orthoSize*aspectRatio)/2, (*cameraTransform)[3][1]), glm::vec2(.05f, orthoSize), glm::vec4(0.5f, 0.0f, 0.8f, 1.0f));
+						}
+						for(int y = -1; y < (orthoSize * ppu) / tileSet.TileHeight + 1 ; y++)
+						{
+							Renderer2D::DrawQuad(glm::vec2((*cameraTransform)[3][0], ((y*unitsPerTile.y) + ((*cameraTransform)[3][1] - fmod((*cameraTransform)[3][1], unitsPerTile.y))) - orthoSize/2), glm::vec2( orthoSize*aspectRatio, .05f), glm::vec4(0.5f, 0.0f, 0.8f, 1.0f));
+							//Renderer2D::DrawQuad(glm::vec2());
+						}
+					}
+				}
+			}
+
 			Renderer2D::EndScene();
 		}
 	}

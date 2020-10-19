@@ -34,6 +34,7 @@ namespace Turtle {
 	{
 		m_AspectRatio = (float)width/(float)height;
 		RecalcualteProjection();
+		m_OrthoPixelsPerUnit = height / m_OrthographicSize;
 	}
 
 	void SceneCamera::RecalcualteProjection()
