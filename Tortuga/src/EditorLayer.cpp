@@ -121,6 +121,7 @@ namespace Turtle {
 	void EditorLayer::OnImGuiRender()
 	{
 		TURT_PROFILE_FUNCTION();
+		ImGui::ShowDemoWindow();
 
 		static bool dockingEnabled = true;
 		static bool opt_fullscreen_persistant = true;
