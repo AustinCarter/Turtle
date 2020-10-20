@@ -347,7 +347,7 @@ namespace Turtle {
 				ImGui::PopItemWidth();
 
 				if(m_TilePallette.Active())
-				{
+				{	
 					m_TilePallette.Display();
 					int* selection = m_TilePallette.GetSelection();
 					uint32_t width = tileSetComponenet.TileSet.get()->GetWidth();

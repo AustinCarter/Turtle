@@ -123,16 +123,20 @@ namespace Turtle {
 					if(tileSet.Active)
 					{
 						float orthoSize = ((SceneCamera*)primaryCamera)->GetOrthographicSize();
-						float ppu = ((SceneCamera*)primaryCamera)->GetOrthographicPixelSize();
+						float gridSize = 1.0f;
+						// float ppu = ((SceneCamera*)primaryCamera)->GetOrthographicPixelSize();
+						float ppu = 128;
 						float aspectRatio = ((SceneCamera*)primaryCamera)->GetAspectRatio();
 						glm::vec2 unitsPerTile = glm::vec2(tileSet.TileWidth/ppu, tileSet.TileHeight/ppu);
-						for(int x = -1; x <=( orthoSize * aspectRatio * ppu)/tileSet.TileWidth + 1; x++)
+						for(int x = -1; x <= orthoSize*aspectRatio/gridSize; x++)
 						{
-							Renderer2D::DrawQuad(glm::vec2(((x*unitsPerTile.x) + ((*cameraTransform)[3][0] - fmod((*cameraTransform)[3][0], unitsPerTile.x))) - (orthoSize*aspectRatio)/2, (*cameraTransform)[3][1]), glm::vec2(.05f, orthoSize), glm::vec4(0.5f, 0.0f, 0.8f, 1.0f));
+							// Renderer2D::DrawQuad(glm::vec2(((x*unitsPerTile.x) + ((*cameraTransform)[3][0] - fmod((*cameraTransform)[3][0], unitsPerTile.x))) - (orthoSize*aspectRatio)/2, (*cameraTransform)[3][1]), glm::vec2(.02f, orthoSize), glm::vec4(0.5f, 0.5f, 0.5f, 1.0f));
+							Renderer2D::DrawQuad(glm::vec2( ((x*gridSize) + ((*cameraTransform)[3][0]-fmod((*cameraTransform)[3][0], gridSize)) - (((orthoSize * aspectRatio) / 2) - fmod((orthoSize * aspectRatio) / 2, gridSize))) + 0.5f, (*cameraTransform)[3][1]), glm::vec2(.02f, orthoSize), glm::vec4(0.5f, 0.5f, 0.5f, 1.0f));
 						}
-						for(int y = -1; y < (orthoSize * ppu) / tileSet.TileHeight + 1 ; y++)
+						for(int y = -1; y <= orthoSize/gridSize ; y++)
 						{
-							Renderer2D::DrawQuad(glm::vec2((*cameraTransform)[3][0], ((y*unitsPerTile.y) + ((*cameraTransform)[3][1] - fmod((*cameraTransform)[3][1], unitsPerTile.y))) - orthoSize/2), glm::vec2( orthoSize*aspectRatio, .05f), glm::vec4(0.5f, 0.0f, 0.8f, 1.0f));
+							Renderer2D::DrawQuad(glm::vec2((*cameraTransform)[3][0],(y*gridSize) + ((*cameraTransform)[3][1]-fmod((*cameraTransform)[3][1], gridSize)) - ((orthoSize/ 2) - fmod(orthoSize/ 2, gridSize))+ 0.5f), glm::vec2(orthoSize*aspectRatio, .02f), glm::vec4(0.5f, 0.5f, 0.5f, 1.0f));
+							// Renderer2D::DrawQuad(glm::vec2((*cameraTransform)[3][0], ((y*unitsPerTile.y) + ((*cameraTransform)[3][1] - fmod((*cameraTransform)[3][1], unitsPerTile.y))) - orthoSize/2), glm::vec2( orthoSize*aspectRatio, .02f), glm::vec4(0.5f, 0.5f, 0.5f, 1.0f));
 							//Renderer2D::DrawQuad(glm::vec2());
 						}
 					}
