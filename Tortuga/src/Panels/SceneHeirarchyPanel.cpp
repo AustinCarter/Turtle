@@ -320,6 +320,7 @@ namespace Turtle {
 				if (removed)
 				{
 					entity.RemoveComponent<TileSetComponenet>();
+					entity.RemoveComponent<GridComponent>();
 					// open = false;
 				}
 				ImGui::EndPopup();
@@ -328,11 +329,10 @@ namespace Turtle {
 			if (open && !removed)
 			{
 				auto& tileSetComponenet = entity.GetComponent<TileSetComponenet>();
-				if(ImGui::Button("Make Active"))
+				if(ImGui::Button("Use Pallette"))
 				{
 					m_TilePallette.SetTexture(tileSetComponenet.TileSet);
 					m_TilePallette.SetTileSize(tileSetComponenet.TileWidth, tileSetComponenet.TileHeight);
-					tileSetComponenet.Active = true;
 					m_TilePallette.Open();
 				}
 				ImGui::PushItemWidth(ImGui::GetContentRegionAvailWidth() * 0.5f);
@@ -362,6 +362,18 @@ namespace Turtle {
 				}
 				ImGui::TreePop();
 			} 
+		}
+
+		if(entity.HasComponent<GridComponent>())
+		{
+			if (ImGui::TreeNodeEx((void*)typeid(GridComponent).hash_code(), ImGuiTreeNodeFlags_DefaultOpen, "Grid"))
+			{
+				auto& gridComponent = entity.GetComponent<GridComponent>();
+				ImGui::Checkbox("Active", &gridComponent.Active);
+				ImGui::DragFloat("Size", &gridComponent.GridSize, 0.01f);
+
+				ImGui::TreePop();
+			}
 		}
 
 		if (ImGui::Button("+ Add Component"))
@@ -403,8 +415,13 @@ namespace Turtle {
 					case (int)ComponentTypes::TileSetComponenet:
 					{
 						entity.AddComponent<TileSetComponenet>(); 
-						auto& comp = entity.GetComponent<TileSetComponenet>();
-						comp.TileSet = AssetManager::CreateTexture("assets/textures/RPGpack_sheet_2X.png");
+						entity.AddComponent<GridComponent>();
+						entity.AddComponent<TileMapComponent>();
+						auto& tileSet = entity.GetComponent<TileSetComponenet>();
+						tileSet.TileSet = AssetManager::CreateTexture("assets/textures/RPGpack_sheet_2X.png");
+						auto& tileMap = entity.GetComponent<TileMapComponent>();
+						tileMap.Positions.emplace_back(glm::vec2(2.5f, 2.5f));
+						tileMap.Textures.emplace_back(SubTexture2D::CreateFromCoords(tileSet.TileSet, {1.0f, 1.0f}, {128.0f, 128.0f}));
 						break;
 					}
 					case -1:

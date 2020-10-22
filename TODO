@@ -23,3 +23,12 @@ Editor:
 	- Bindable Scripts
 	- Select Shader	(RE: Materials)
 	- entity click to select and drag
+	- layer integration
+
+
+
+mousepos 
+	=
+CameraTransform + ((MousePos.x/ScreenWidth) * (orthoSize*aspectRatio) - (orthoSize * aspectRatio * 0.5f))
+
+CameraTransform

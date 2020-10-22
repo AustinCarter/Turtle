@@ -6,6 +6,7 @@
 #include "Turtle/Scene/SceneCamera.h"
 #include "Turtle/Scene/ScriptableEntity.h"
 #include "Turtle/Renderer/Texture.h"
+#include "Turtle/Renderer/SubTexture2D.h"
 
 #include "Turtle/Core/AssetManager.h"
 
@@ -150,13 +151,36 @@ namespace Turtle {
 
 	};
 
+	//NOTE: if an Entity has a tile set, it is expected to also have a grid and tile map at the moment
 	struct TileSetComponenet
 	{
 		Ref<Texture2D> TileSet;
 		uint32_t TileWidth = 64, TileHeight = 64;
-		bool Active = false; 
 
 		TileSetComponenet() = default;
 		TileSetComponenet(const TileSetComponenet&) = default;
+	};
+
+	struct GridComponent
+	{
+		//COULD MAKE A GLM::VEC2 FOR NON SQUARE GRID
+		float GridSize = 1.0f;
+		bool Active = false;
+
+		GridComponent() = default;
+		GridComponent(const GridComponent&) = default;
+	};
+
+	struct TileMapComponent
+	{
+		//NOTE: ON SERIALIZATION COULD STORE THE SIZE OF THE VECTORS TO ALLOW FOR ONLY
+		//ALLOCATION DURING DESERIALIZATION
+		Ref<TileSetComponenet> TileSet;
+		glm::vec4 Tint {1.0f, 1.0f, 1.0f, 1.0f};
+		std::vector<glm::vec2> Positions;
+		std::vector<Ref<SubTexture2D>> Textures;
+
+		TileMapComponent() = default;
+		TileMapComponent(const TileMapComponent&) = default;
 	};
 }

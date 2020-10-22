@@ -114,32 +114,39 @@ namespace Turtle {
 			}
 
 			{
-				auto view = m_Registry.view<TileSetComponenet>();
+				auto view = m_Registry.view<GridComponent, TileMapComponent>();
 				
 
 				for (auto entity : view)
 				{
-					TileSetComponenet tileSet = view.get<TileSetComponenet>(entity);
-					if(tileSet.Active)
+					auto [grid, tileMap] = view.get<GridComponent, TileMapComponent>(entity);
+					
+					int index = 0;
+					for( auto& pos : tileMap.Positions)
+					{
+						Renderer2D::DrawQuad(glm::vec2(pos.x, pos.y), glm::vec2(1.0f, 1.0f), tileMap.Textures[index], tileMap.Tint);
+						index ++;
+					}
+
+					if(grid.Active && grid.GridSize > 0)
 					{
 						float orthoSize = ((SceneCamera*)primaryCamera)->GetOrthographicSize();
-						float gridSize = 1.0f;
-						// float ppu = ((SceneCamera*)primaryCamera)->GetOrthographicPixelSize();
-						float ppu = 128;
 						float aspectRatio = ((SceneCamera*)primaryCamera)->GetAspectRatio();
-						glm::vec2 unitsPerTile = glm::vec2(tileSet.TileWidth/ppu, tileSet.TileHeight/ppu);
-						for(int x = -1; x <= orthoSize*aspectRatio/gridSize; x++)
+
+						for(int x = -1; x <= orthoSize*aspectRatio/grid.GridSize; x++)
 						{
-							// Renderer2D::DrawQuad(glm::vec2(((x*unitsPerTile.x) + ((*cameraTransform)[3][0] - fmod((*cameraTransform)[3][0], unitsPerTile.x))) - (orthoSize*aspectRatio)/2, (*cameraTransform)[3][1]), glm::vec2(.02f, orthoSize), glm::vec4(0.5f, 0.5f, 0.5f, 1.0f));
-							Renderer2D::DrawQuad(glm::vec2( ((x*gridSize) + ((*cameraTransform)[3][0]-fmod((*cameraTransform)[3][0], gridSize)) - (((orthoSize * aspectRatio) / 2) - fmod((orthoSize * aspectRatio) / 2, gridSize))) + 0.5f, (*cameraTransform)[3][1]), glm::vec2(.02f, orthoSize), glm::vec4(0.5f, 0.5f, 0.5f, 1.0f));
+							Renderer2D::DrawQuad(glm::vec2( ((x*grid.GridSize) + ((*cameraTransform)[3][0]-fmod((*cameraTransform)[3][0], grid.GridSize)) - (((orthoSize * aspectRatio) / 2) - fmod((orthoSize * aspectRatio) / 2, grid.GridSize))), (*cameraTransform)[3][1]), glm::vec2(.02f, orthoSize), glm::vec4(0.5f, 0.5f, 0.5f, 1.0f));
 						}
-						for(int y = -1; y <= orthoSize/gridSize ; y++)
+						for(int y = -1; y <= orthoSize/grid.GridSize ; y++)
 						{
-							Renderer2D::DrawQuad(glm::vec2((*cameraTransform)[3][0],(y*gridSize) + ((*cameraTransform)[3][1]-fmod((*cameraTransform)[3][1], gridSize)) - ((orthoSize/ 2) - fmod(orthoSize/ 2, gridSize))+ 0.5f), glm::vec2(orthoSize*aspectRatio, .02f), glm::vec4(0.5f, 0.5f, 0.5f, 1.0f));
-							// Renderer2D::DrawQuad(glm::vec2((*cameraTransform)[3][0], ((y*unitsPerTile.y) + ((*cameraTransform)[3][1] - fmod((*cameraTransform)[3][1], unitsPerTile.y))) - orthoSize/2), glm::vec2( orthoSize*aspectRatio, .02f), glm::vec4(0.5f, 0.5f, 0.5f, 1.0f));
-							//Renderer2D::DrawQuad(glm::vec2());
+							Renderer2D::DrawQuad(glm::vec2((*cameraTransform)[3][0],(y*grid.GridSize) + ((*cameraTransform)[3][1]-fmod((*cameraTransform)[3][1], grid.GridSize)) - ((orthoSize/ 2) - fmod(orthoSize/ 2, grid.GridSize))), glm::vec2(orthoSize*aspectRatio, .02f), glm::vec4(0.5f, 0.5f, 0.5f, 1.0f));
 						}
+
+						break;
 					}
+
+					//TileMapComponent tileMap = view.get<TileMapComponent>(entity);
+
 				}
 			}
 

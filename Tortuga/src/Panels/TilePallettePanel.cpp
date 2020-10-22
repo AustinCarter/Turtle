@@ -13,6 +13,9 @@ namespace Turtle {
 		ImVec2 p = ImGui::GetCursorScreenPos();
 		ImGui::Image((void*)m_Texture.get()->GetRendererID(), ImVec2{ (float)m_Texture.get()->GetWidth(), (float)m_Texture.get()->GetHeight()},ImVec2{ 0, 1 }, ImVec2{ 1, 0 });
 		
+		if(!m_TileSize[0]) m_TileSize[0] = m_Texture->GetWidth();
+		if(!m_TileSize[1]) m_TileSize[1] = m_Texture->GetHeight();
+
 		for(int x = 1; x < m_Texture->GetWidth()/m_TileSize[0]; x++)
 		{
 			ImGui::GetWindowDrawList()->AddLine(ImVec2(p.x + m_TileSize[0] * x , p.y), ImVec2(p.x + m_TileSize[0] * x, p.y + m_Texture->GetHeight()), IM_COL32(0, 0, 0, 255), 1.0f);
