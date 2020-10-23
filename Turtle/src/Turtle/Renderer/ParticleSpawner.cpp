@@ -76,6 +76,7 @@ namespace Turtle {
 		particle.Velocity = particleProps.Velocity;
 		particle.Velocity.x += particleProps.VelocityVariation.x * (Random::Float() - 0.5f);
 		particle.Velocity.y += particleProps.VelocityVariation.y * (Random::Float() - 0.5f);
+		particle.Velocity.z += particleProps.VelocityVariation.z * (Random::Float() - 0.5f);
 
 		// Color
 		particle.ColorBegin = particleProps.ColorBegin;

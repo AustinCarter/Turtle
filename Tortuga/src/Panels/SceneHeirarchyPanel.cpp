@@ -1,6 +1,7 @@
 #include "SceneHeirarchyPanel.h"
 
 #include <imgui/imgui.h>
+#include <imgui/imgui_internal.h>
 
 #include <glm/gtc/type_ptr.hpp>
 
@@ -31,10 +32,18 @@ namespace Turtle {
 		if (ImGui::IsMouseDown(0) && ImGui::IsWindowHovered())
 			m_SelectionContext = {};
 
-		if (ImGui::Button("Add Entity"))
+		if(ImGui::BeginPopupContextWindow(0, 1, false))
 		{
-			m_Context->CreateEntity();
+			if (ImGui::MenuItem("Create Entity"))
+				m_Context->CreateEntity();
+
+			ImGui::EndPopup();
 		}
+
+		// if (ImGui::Button("Add Entity"))
+		// {
+		// 	m_Context->CreateEntity();
+		// }
 
 		ImGui::End();
 
@@ -53,6 +62,7 @@ namespace Turtle {
 		auto& tag = entity.GetComponent<TagComponent>().Tag;
 
 		ImGuiTreeNodeFlags flags = ((m_SelectionContext == entity) ? ImGuiTreeNodeFlags_Selected : 0)| ImGuiTreeNodeFlags_OpenOnArrow;
+		flags |= ImGuiTreeNodeFlags_SpanAvailWidth;
 		bool opened = ImGui::TreeNodeEx((void*)(uint64_t)(uint32_t)entity, flags, tag.c_str());
 		if (ImGui::IsItemClicked())
 		{
@@ -63,7 +73,7 @@ namespace Turtle {
 			bool removed = ImGui::Selectable("Delete Entity");
 			if (removed)
 			{
-				m_Context->m_Registry.destroy((entt::entity)(uint32_t)entity);
+				m_Context->DestroyEntity(entity);
 				if(m_SelectionContext == entity)
 					m_SelectionContext = {};
 			}
@@ -76,8 +86,81 @@ namespace Turtle {
 		}
 	}
 
+	template <typename T, typename UIFunction>
+	static void DrawComponent(const std::string& name, Entity entity, UIFunction funtion)
+	{
+
+	}
+
+	static void DrawVec3Control(const std::string& label, glm::vec3& values, float resetValue, float speed = 0.1f, float columnWidth = 100.f)
+	{
+		ImGuiIO& io = ImGui::GetIO();
+		auto boldFont = io.Fonts->Fonts[0];
+		ImGui::PushID(label.c_str());
+
+		ImGui::Columns(2);
+		ImGui::SetColumnWidth(0, columnWidth);
+		ImGui::Text(label.c_str());
+		ImGui::NextColumn();
+
+		ImGui::PushMultiItemsWidths(3, ImGui::CalcItemWidth());
+		ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2{ 0, 0});
+		// ImGui::PushStyleVar(ImGuiStyleVar_FrameRounding, 0.0f);
+
+		float lineHeight = GImGui->Font->FontSize + GImGui->Style.FramePadding.y * 2.0f;
+		ImVec2 buttonSize = {lineHeight + 3.0f, lineHeight};
+
+		ImGui::PushStyleColor(ImGuiCol_Button, ImVec4{0.8f, 0.1f, 0.15f, 1.0f});
+		ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4{0.9f, 0.2f, 0.2f, 1.0f});
+		ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4{0.8f, 0.1f, 0.15f, 1.0f});
+		ImGui::PushFont(boldFont);
+		if (ImGui::Button("x", buttonSize))
+			values.x = resetValue;
+		ImGui::PopStyleColor(3);
+		ImGui::PopFont();
+
+		ImGui::SameLine();
+		ImGui::DragFloat("##x", &values.x, speed, 0.0f, 0.0f, "%.2f");
+		ImGui::PopItemWidth();
+		ImGui::SameLine(); 
+
+		ImGui::PushStyleColor(ImGuiCol_Button, ImVec4{0.2f, 0.7f, 0.2f, 1.0f});
+		ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4{0.3f, 0.8f, 0.2f, 1.0f});
+		ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4{0.2f, 0.7f, 0.2f, 1.0f});
+		ImGui::PushFont(boldFont);
+		if (ImGui::Button("y", buttonSize))
+			values.y = resetValue;
+		ImGui::PopStyleColor(3);
+		ImGui::PopFont();
+
+		ImGui::SameLine();
+		ImGui::DragFloat("##y", &values.y, speed, 0.0f, 0.0f, "%.2f");
+		ImGui::PopItemWidth();
+		ImGui::SameLine(); 
+
+		ImGui::PushStyleColor(ImGuiCol_Button, ImVec4{0.1f, 0.25f, 0.8f, 1.0f});
+		ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4{0.2f, 0.35f, 0.9f, 1.0f});
+		ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4{0.1f, 0.25f, 0.8f, 1.0f});
+		ImGui::PushFont(boldFont);
+		if (ImGui::Button("z", buttonSize))
+			values.z = resetValue;
+		ImGui::PopStyleColor(3);
+		ImGui::PopFont();
+
+		ImGui::SameLine();
+		ImGui::DragFloat("##z", &values.z, speed, 0.0f, 0.0f, "%.2f");
+		ImGui::PopItemWidth(); 
+
+		ImGui::PopStyleVar();
+		ImGui::Columns(1);
+
+		ImGui::PopID();
+	}
+
 	void SceneHeirarchyPanel::DrawComponents(Entity entity)
 	{
+
+		ImGuiTreeNodeFlags treeNodeFlags = ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_Framed | ImGuiTreeNodeFlags_SpanAvailWidth | ImGuiTreeNodeFlags_FramePadding;
 
 		if(entity.HasComponent<TagComponent>())
 		{
@@ -94,10 +177,17 @@ namespace Turtle {
 
 		if(entity.HasComponent<TransformComponent>())
 		{
-			if (ImGui::TreeNodeEx((void*)typeid(TransformComponent).hash_code(), ImGuiTreeNodeFlags_DefaultOpen, "Transform"))
+			if (ImGui::TreeNodeEx((void*)typeid(TransformComponent).hash_code(), treeNodeFlags, "Transform"))
 			{
-				auto& transform = entity.GetComponent<TransformComponent>().Transform;
-				ImGui::DragFloat3("Position", glm::value_ptr(transform[3]), 0.1f);
+				auto& transformComponent = entity.GetComponent<TransformComponent>();
+				// ImGui::DragFloat3("Translation"     , glm::value_ptr(transformComponent.Translation), 0.1f);
+				// ImGui::DragFloat3("Rotation", glm::value_ptr(transformComponent.Rotation), 0.1f);
+				// ImGui::DragFloat3("Scale", glm::value_ptr(transformComponent.Scale), 0.1f);
+				DrawVec3Control("Translation", transformComponent.Translation, 0.0f);
+				glm::vec3 rotation = glm::degrees(transformComponent.Rotation);
+				DrawVec3Control("Rotation", rotation, 0.0f, 0.5f);
+				transformComponent.Rotation = glm::radians(rotation);
+				DrawVec3Control("Scale", transformComponent.Scale, 1.0f);
 
 				ImGui::TreePop();
 			}
@@ -105,7 +195,7 @@ namespace Turtle {
 
 		if(entity.HasComponent<CameraComponent>())
 		{
-			bool open = ImGui::TreeNodeEx((void*)typeid(CameraComponent).hash_code(), ImGuiTreeNodeFlags_DefaultOpen, "Camera");
+			bool open = ImGui::TreeNodeEx((void*)typeid(CameraComponent).hash_code(), treeNodeFlags, "Camera");
 			bool removed = false;
 			if (ImGui::BeginPopupContextItem("Camera Component Context Menu"))
 			{
@@ -189,7 +279,7 @@ namespace Turtle {
 
 		if(entity.HasComponent<SpriteRendererComponent>())
 		{
-			bool open = ImGui::TreeNodeEx((void*)typeid(SpriteRendererComponent).hash_code(), ImGuiTreeNodeFlags_DefaultOpen, "Sprite");
+			bool open = ImGui::TreeNodeEx((void*)typeid(SpriteRendererComponent).hash_code(), treeNodeFlags, "Sprite");
 			bool removed = false;
 			if (ImGui::BeginPopupContextItem("Sprite Renderer Component Context Menu"))
 			{
@@ -210,7 +300,7 @@ namespace Turtle {
 
 				if (spriteComponent.Textured)
 				{
-					ImGui::Image((void*)spriteComponent.RendererID, ImVec2{ 128, 128 }, ImVec2{ 0, 1 }, ImVec2{ 1, 0 });
+					ImGui::Image((void*)spriteComponent.RendererID, ImVec2{ 100, 100 }, ImVec2{ 0, 1 }, ImVec2{ 1, 0 });
 					if(ImGui::Button("Change Texture"))
 					{
 						m_FileSelector.SetFilter(".png");
@@ -252,7 +342,7 @@ namespace Turtle {
 
 		if(entity.HasComponent<NativeScriptComponent>())
 		{
-			bool open = ImGui::TreeNodeEx((void*)typeid(NativeScriptComponent).hash_code(), ImGuiTreeNodeFlags_DefaultOpen, "Native Script");
+			bool open = ImGui::TreeNodeEx((void*)typeid(NativeScriptComponent).hash_code(), treeNodeFlags, "Native Script");
 			bool removed = false;
 			if (ImGui::BeginPopupContextItem("Camera Component Context Menu"))
 			{
@@ -277,7 +367,7 @@ namespace Turtle {
 
 		if(entity.HasComponent<ParticleSpawnerComponenet>())
 		{
-			bool open = ImGui::TreeNodeEx((void*)typeid(ParticleSpawnerComponenet).hash_code(), ImGuiTreeNodeFlags_DefaultOpen, "Particle Spawner");
+			bool open = ImGui::TreeNodeEx((void*)typeid(ParticleSpawnerComponenet).hash_code(), treeNodeFlags, "Particle Spawner");
 			bool removed = false;
 			if (ImGui::BeginPopupContextItem("Particle Spawner Component Context Menu"))
 			{
@@ -294,27 +384,83 @@ namespace Turtle {
 			{
 				auto& particleSpawnerComponenet = entity.GetComponent<ParticleSpawnerComponenet>();
 				ParticleProps& particle = particleSpawnerComponenet.Particle;
-				ImGui::Checkbox("Random Rotate", &particle.RandomRotate);
-				ImGui::PushItemWidth(ImGui::GetWindowContentRegionWidth() * 0.5f);
-				ImGui::DragFloat2("Velocity", glm::value_ptr(particle.Velocity),  0.03f, -5.0f, 5.0f);
-				ImGui::DragFloat2("Velocity Variation", glm::value_ptr(particle.VelocityVariation),  0.02f, 0.0f, 10.0f);
-				ImGui::ColorEdit4("Color Begin", glm::value_ptr(particle.ColorBegin));
-				ImGui::ColorEdit4("Color End", glm::value_ptr(particle.ColorEnd));
-				ImGui::DragFloat("Size Begin", &particle.SizeBegin, 0.01f, 0.0f, 1.0f);
-				ImGui::DragFloat("Size End", &particle.SizeEnd, 0.01f, 0.0f, 1.0f);
-				ImGui::DragFloat("Size Variation", &particle.SizeVariation, 0.01f, 0.0f, 1.0f);
-				// ImGui::DragFloat("Rotation", &particle.Rotation, 0.03f, 0.0f, 5.0f);
-				ImGui::DragFloat("LifeTime", &particle.LifeTime, 0.03f, 0.0f, 5.0f);
-				ImGui::DragInt("Emission Rate", (int*)(&particleSpawnerComponenet.EmissionRate), 0.03f, 0, 10);
+				ImGui::PushItemWidth(100.0f);
+
+				ImGui::Text("Random Rotate");
+				ImGui::NextColumn();
+				ImGui::Checkbox("##Random Rotate", &particle.RandomRotate);
+				ImGui::NextColumn();
+
+
+				DrawVec3Control("Velocity",  particle.Velocity, 1.0f);
+				DrawVec3Control("Velocity Variation",  particle.VelocityVariation, 1.0f);
+
+				ImGui::Columns(2);
+				ImGui::SetColumnWidth(0, 100.0f);
+
+				ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2{ 0, 0});
+				ImGui::PushStyleVar(ImGuiStyleVar_ItemInnerSpacing, ImVec2{ 0, 0 });
+				ImGui::Text("Color Begin");
+				ImGui::NextColumn();
+				ImGui::PushItemWidth(ImGui::GetContentRegionAvailWidth());
+				ImGui::ColorEdit4("##Color Begin", glm::value_ptr(particle.ColorBegin));
 				ImGui::PopItemWidth();
+				ImGui::NextColumn();
+
+				ImGui::Text("Color End");
+				ImGui::NextColumn();
+				ImGui::PushItemWidth(ImGui::GetContentRegionAvailWidth());
+				ImGui::ColorEdit4("##Color End", glm::value_ptr(particle.ColorEnd));
+				ImGui::PopItemWidth();
+				ImGui::NextColumn();
+
+				ImGui::Text("Size Begin");
+				ImGui::NextColumn();
+				ImGui::PushItemWidth(ImGui::GetContentRegionAvailWidth());
+				ImGui::DragFloat("##Size Begin", &particle.SizeBegin, 0.01f, 0.0f, 1.0f);
+				ImGui::PopItemWidth();
+				ImGui::NextColumn();
+
+				ImGui::Text("Size End");
+				ImGui::NextColumn();
+				ImGui::PushItemWidth(ImGui::GetContentRegionAvailWidth());
+				ImGui::DragFloat("##Size End", &particle.SizeEnd, 0.01f, 0.0f, 1.0f);
+				ImGui::PopItemWidth();
+				ImGui::NextColumn();
+
+				ImGui::Text("Size Variation");
+				ImGui::NextColumn();
+				ImGui::PushItemWidth(ImGui::GetContentRegionAvailWidth());
+				ImGui::DragFloat("##Size Variation", &particle.SizeVariation, 0.01f, 0.0f, 1.0f);
+				ImGui::PopItemWidth();
+				ImGui::NextColumn();
+				// ImGui::DragFloat("Rotation", &particle.Rotation, 0.03f, 0.0f, 5.0f);
+				ImGui::Text("LifeTime");
+				ImGui::NextColumn();
+				ImGui::PushItemWidth(ImGui::GetContentRegionAvailWidth());
+				ImGui::DragFloat("##LifeTime", &particle.LifeTime, 0.03f, 0.0f, 5.0f);
+				ImGui::PopItemWidth();
+				ImGui::NextColumn();
+
+				ImGui::Text("Emission Rate");
+				ImGui::NextColumn();
+				ImGui::PushItemWidth(ImGui::GetContentRegionAvailWidth());
+				ImGui::DragInt("##Emission Rate", (int*)(&particleSpawnerComponenet.EmissionRate), 0.03f, 0, 10);
+				ImGui::PopItemWidth();
+
+	
+				ImGui::PopStyleVar(2);
+				// ImGui::PopItemWidth();
+				ImGui::Columns(1);
+
 				ImGui::TreePop();
 			} 
 		}
 		if(entity.HasComponent<TileSetComponenet>())
 		{
-			bool open = ImGui::TreeNodeEx((void*)typeid(TileSetComponenet).hash_code(), ImGuiTreeNodeFlags_DefaultOpen, "Tile Set");
+			bool open = ImGui::TreeNodeEx((void*)typeid(TileSetComponenet).hash_code(), treeNodeFlags, "Tile Set");
 			bool removed = false;
-			if (ImGui::BeginPopupContextItem("Particle Spawner Component Context Menu"))
+			if (ImGui::BeginPopupContextItem("Tile Set Component Context Menu"))
 			{
 				removed = ImGui::Selectable("Remove Component");
 				if (removed)
@@ -366,7 +512,7 @@ namespace Turtle {
 
 		if(entity.HasComponent<GridComponent>())
 		{
-			if (ImGui::TreeNodeEx((void*)typeid(GridComponent).hash_code(), ImGuiTreeNodeFlags_DefaultOpen, "Grid"))
+			if (ImGui::TreeNodeEx((void*)typeid(GridComponent).hash_code(), treeNodeFlags, "Grid"))
 			{
 				auto& gridComponent = entity.GetComponent<GridComponent>();
 				ImGui::Checkbox("Active", &gridComponent.Active);
@@ -398,6 +544,7 @@ namespace Turtle {
 					}
 					case (int)ComponentTypes::CameraComponent: 
 					{
+						//can be handled by connecting an on camera add function in the future, so it is automatically called on creation
 						entity.AddComponent<CameraComponent>(); 
 						m_Context->OnCameraAdd(entity.GetComponent<CameraComponent>()); 
 						break;

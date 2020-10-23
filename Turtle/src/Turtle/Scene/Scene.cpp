@@ -36,6 +36,11 @@ namespace Turtle {
 		return entity;
 	}
 
+	void Scene::DestroyEntity(Entity entity)
+	{
+		m_Registry.destroy(entity);
+	}
+
 	void Scene::OnUpdate(Timestep ts)
 	{
 		TURT_PROFILE_FUNCTION();
@@ -61,7 +66,7 @@ namespace Turtle {
 
 
 		//Render sprites
-		glm::mat4* cameraTransform = nullptr;
+		glm::mat4 cameraTransform;
 		Camera* primaryCamera = nullptr;
 		{
 			auto view = m_Registry.view<TransformComponent, CameraComponent>();
@@ -72,7 +77,7 @@ namespace Turtle {
 				if(camera.Primary)
 				{
 					primaryCamera = &camera.Camera;
-					cameraTransform = &transform.Transform;
+					cameraTransform = transform.GetTransform();
 					break;
 				}
 			}
@@ -80,7 +85,7 @@ namespace Turtle {
 
 		if (primaryCamera)
 		{
-			Renderer2D::BeginScene(primaryCamera->GetProjection(), *cameraTransform);
+			Renderer2D::BeginScene(primaryCamera->GetProjection(), cameraTransform);
 			
 			{
 				auto group = m_Registry.group<TransformComponent>(entt::get<SpriteRendererComponent>);
@@ -89,9 +94,9 @@ namespace Turtle {
 					auto [transform, sprite] = group.get<TransformComponent, SpriteRendererComponent>(entity);
 
 					if (sprite.Textured)
-						Renderer2D::DrawQuad(transform, AssetManager::GetTexture(sprite.TextureID), sprite.Color);
+						Renderer2D::DrawQuad(transform.GetTransform(), AssetManager::GetTexture(sprite.TextureID), sprite.Color);
 					else
-						Renderer2D::DrawQuad(transform, sprite.Color);
+						Renderer2D::DrawQuad(transform.GetTransform(), sprite.Color);
 
 				}
 			}
@@ -103,7 +108,7 @@ namespace Turtle {
 				{
 					auto [transform, spawner] = view.get<TransformComponent, ParticleSpawnerComponenet>(entity);
 
-					spawner.Particle.Position = {transform.Transform[3][0], transform.Transform[3][1]};
+					spawner.Particle.Position = transform.Translation;
 
 					spawner.ParticleSpawner.OnUpdate(ts);
 					spawner.ParticleSpawner.OnRender();
@@ -135,11 +140,11 @@ namespace Turtle {
 
 						for(int x = -1; x <= orthoSize*aspectRatio/grid.GridSize; x++)
 						{
-							Renderer2D::DrawQuad(glm::vec2( ((x*grid.GridSize) + ((*cameraTransform)[3][0]-fmod((*cameraTransform)[3][0], grid.GridSize)) - (((orthoSize * aspectRatio) / 2) - fmod((orthoSize * aspectRatio) / 2, grid.GridSize))), (*cameraTransform)[3][1]), glm::vec2(.02f, orthoSize), glm::vec4(0.5f, 0.5f, 0.5f, 1.0f));
+							Renderer2D::DrawQuad(glm::vec2( ((x*grid.GridSize) + (cameraTransform[3][0]-fmod(cameraTransform[3][0], grid.GridSize)) - (((orthoSize * aspectRatio) / 2) - fmod((orthoSize * aspectRatio) / 2, grid.GridSize))), cameraTransform[3][1]), glm::vec2(.001f*orthoSize, orthoSize), glm::vec4(0.5f, 0.5f, 0.5f, 1.0f));
 						}
 						for(int y = -1; y <= orthoSize/grid.GridSize ; y++)
 						{
-							Renderer2D::DrawQuad(glm::vec2((*cameraTransform)[3][0],(y*grid.GridSize) + ((*cameraTransform)[3][1]-fmod((*cameraTransform)[3][1], grid.GridSize)) - ((orthoSize/ 2) - fmod(orthoSize/ 2, grid.GridSize))), glm::vec2(orthoSize*aspectRatio, .02f), glm::vec4(0.5f, 0.5f, 0.5f, 1.0f));
+							Renderer2D::DrawQuad(glm::vec2(cameraTransform[3][0],(y*grid.GridSize) + (cameraTransform[3][1]-fmod(cameraTransform[3][1], grid.GridSize)) - ((orthoSize/ 2) - fmod(orthoSize/ 2, grid.GridSize))), glm::vec2(orthoSize*aspectRatio, .001f*orthoSize), glm::vec4(0.5f, 0.5f, 0.5f, 1.0f));
 						}
 
 						break;

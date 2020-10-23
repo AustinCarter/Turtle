@@ -2,6 +2,7 @@
 
 #include <glm/glm.hpp>
 #include <glm/gtx/string_cast.hpp>
+#include <glm/gtc/matrix_transform.hpp>
 
 #include "Turtle/Scene/SceneCamera.h"
 #include "Turtle/Scene/ScriptableEntity.h"
@@ -44,20 +45,28 @@ namespace Turtle {
 
 	struct TransformComponent
 	{
-		glm::mat4 Transform{ 1.0f };
+		glm::vec3 Translation = { 0.0f, 0.0f, 0.0f};
+		glm::vec3 Rotation = { 0.0f, 0.0f, 0.0f};
+		glm::vec3 Scale = { 1.0f, 1.0f, 1.0f};
 
 		TransformComponent() = default;
 		TransformComponent(const TransformComponent&) = default;
-		TransformComponent(const glm::mat4& transform)
-			: Transform(transform) {}
+		TransformComponent(const glm::vec3& translation)
+			: Translation(translation) {}
 
-		operator glm::mat4& () { return Transform; }
-		operator const glm::mat4& () const { return Transform; }
-
+		glm::mat4 GetTransform() const
+		{
+			glm::mat4 rotation = glm::rotate(glm::mat4(1.0f), Rotation.x, {1, 0, 0})
+				* glm::rotate(glm::mat4(1.0f), Rotation.y, {0, 1, 0})
+				* glm::rotate(glm::mat4(1.0f), Rotation.z, {0, 0, 1});
+			return glm::translate(glm::mat4(1.0f), Translation) 
+				* rotation 
+				* glm::scale(glm::mat4(1.0f), Scale);
+		}
 		void Serialize(std::ofstream outputStream)
 		{
 			outputStream << "{";
-			outputStream << "\t\"Transform\":\"" << glm::to_string(Transform) << "\"";
+			outputStream << "\t\"Translation\":\"" << glm::to_string(Translation) << "\"";
 			outputStream << "}";
 			outputStream.flush();
 		}
@@ -142,9 +151,9 @@ namespace Turtle {
 			Particle.ColorEnd = { 254 / 255.0f, 109 / 255.0f, 41 / 255.0f, 0.9f };
 			Particle.SizeBegin = 0.3f, Particle.SizeVariation = 0.2f, Particle.SizeEnd = 0.0f;
 			Particle.LifeTime = 2.0f;
-			Particle.Velocity = { 0.0f, 2.0f };
-			Particle.VelocityVariation = { 3.0f, 2.0f };
-			Particle.Position = { 0.0f, 0.0f };
+			Particle.Velocity = { 0.0f, 2.0f, 0.0f };
+			Particle.VelocityVariation = { 3.0f, 2.0f, 0.0f };
+			Particle.Position = { 0.0f, 0.0f, 0.0f };
 		}
 		ParticleSpawnerComponenet(const ParticleSpawnerComponenet&) = default;
 		ParticleSpawnerComponenet(const ParticleProps& particle) :  Particle(particle) {}

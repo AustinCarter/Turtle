@@ -53,8 +53,9 @@ namespace Turtle {
         ImGui_ImplGlfw_InitForOpenGL(window, true);
         ImGui_ImplOpenGL3_Init("#version 410");
 
-        // io.Fonts->AddFontFromFileTTF("../data/Fonts/Ruda-Bold.ttf", 15.0f, &config);
-        ImGui::GetStyle().FrameRounding = 6.0f;
+        io.Fonts->AddFontFromFileTTF("assets/fonts/ptsans/PTSans-Bold.ttf", 18.0f);
+        io.FontDefault = io.Fonts->AddFontFromFileTTF("assets/fonts/ptsans/PTSans-Regular.ttf", 18.0f);
+        // ImGui::GetStyle().FrameRounding = 6.0f;
         ImGui::GetStyle().GrabRounding = 6.0f;
         
         ImVec4* colors = ImGui::GetStyle().Colors;
@@ -109,7 +110,7 @@ namespace Turtle {
         colors[ImGuiCol_NavWindowingDimBg] = ImVec4(0.00f, 0.00f, 0.80f, 0.20f);
         colors[ImGuiCol_ModalWindowDimBg] = ImVec4(0.80f, 0.00f, 0.00f, 0.35f);
 
-        ImGui::GetIO().FontGlobalScale = 2.5; 
+        ImGui::GetIO().FontGlobalScale = 1.0; 
 
 
     }

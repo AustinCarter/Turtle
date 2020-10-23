@@ -32,7 +32,7 @@ namespace Turtle {
 
 		auto square2 = m_ActiveScene->CreateEntity("Square Entity 2");
 		square2.AddComponent<SpriteRendererComponent>(glm::vec4{0.6f, 0.2f, 0.5f, 1.0f});
-		square2.GetComponent<TransformComponent>().Transform[3][0] = rand() % 10  - 5.0f;
+		square2.GetComponent<TransformComponent>().Translation.x = rand() % 10  - 5.0f;
 
 		// m_SquareEntity = square;
 
@@ -44,8 +44,8 @@ namespace Turtle {
 		public:
 			void OnCreate()
 			{
-				auto& transform = GetComponent<TransformComponent>().Transform;
-				// transform[3][0] = rand() % 10  - 5.0f;
+				// auto& translation = GetComponent<TransformComponent>().Translation;
+				// translation.x = rand() % 10  - 5.0f;
 			}
 
 			void OnDestroy()
@@ -55,17 +55,17 @@ namespace Turtle {
 
 			void OnUpdate(Timestep ts)
 			{
-				auto& transform = GetComponent<TransformComponent>().Transform;
+				auto& translation = GetComponent<TransformComponent>().Translation;
 				float speed = 5.0f;
 
 				if (Input::IsKeyPressed(TURT_KEY_A))
-					transform[3][0] -= speed * ts;
+					translation.x -= speed * ts;
 				if (Input::IsKeyPressed(TURT_KEY_D))
-					transform[3][0] += speed * ts;
+					translation.x += speed * ts;
 				if (Input::IsKeyPressed(TURT_KEY_W))
-					transform[3][1] += speed * ts;
+					translation.y += speed * ts;
 				if (Input::IsKeyPressed(TURT_KEY_S))
-					transform[3][1] -= speed * ts;
+					translation.y -= speed * ts;
 			}
 		};
 
@@ -144,7 +144,7 @@ namespace Turtle {
 	    }
 
 	    // When using ImGuiDockNodeFlags_PassthruDockspace, DockSpace() will render our background and handle the pass-thru hole, so we ask Begin() to not render a background.
-	    if (opt_flags & ImGuiDockNodeFlags_PassthruDockspace)
+	    if (opt_flags & ImGuiDockNodeFlags_PassthruCentralNode)
 	        window_flags |= ImGuiWindowFlags_NoBackground;
 
 	    ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0.0f, 0.0f));

@@ -8,8 +8,8 @@
 namespace Turtle {
 	struct ParticleProps
 	{
-		glm::vec2 Position;
-		glm::vec2 Velocity, VelocityVariation;
+		glm::vec3 Position;
+		glm::vec3 Velocity, VelocityVariation;
 		glm::vec4 ColorBegin, ColorEnd;
 		float SizeBegin, SizeEnd, SizeVariation;
 		// float Rotation = 0;
@@ -30,8 +30,8 @@ namespace Turtle {
 	private:
 		struct Particle
 		{
-			glm::vec2 Position;
-			glm::vec2 Velocity;
+			glm::vec3 Position;
+			glm::vec3 Velocity;
 			glm::vec4 ColorBegin, ColorEnd;
 			float Rotation = 0.0f;
 			float SizeBegin, SizeEnd;

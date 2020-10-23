@@ -11,6 +11,7 @@ Engine:
 	- Physics
 	- UI system
 	- Stretch: Non-native scripting (lua?)
+	- Auto Scale IMGUI UI for different screen sizes
 Editor:
 	- Tile Map/Grid Import and Placement UI
 		- import tileset/tileset component
@@ -32,3 +33,4 @@ mousepos
 CameraTransform + ((MousePos.x/ScreenWidth) * (orthoSize*aspectRatio) - (orthoSize * aspectRatio * 0.5f))
 
 CameraTransform
+
