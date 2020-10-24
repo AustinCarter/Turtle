@@ -118,6 +118,8 @@ namespace Turtle {
 		out << YAML::BeginMap; // SpriteRendererComponent
 
 		out << YAML::Key << "Color" << YAML::Value << Color;
+		out << YAML::Key << "Textured" << YAML::Value << Textured;
+		out << YAML::Key << "TextureID" << YAML::Value << TextureID;
 
 		out << YAML::EndMap; // SpriteRendererComponent
 	}
@@ -127,6 +129,10 @@ namespace Turtle {
 
 		auto& comp = entity.GetComponent<SpriteRendererComponent>();
 		comp.Color = data["Color"].as<glm::vec4>();
+		comp.Textured = data["Textured"].as<bool>();
+		comp.TextureID = data["TextureID"].as<uint32_t>();
+		if(comp.Textured)
+			comp.RendererID = AssetManager::GetTexture(comp.TextureID)->GetRendererID();
 	}
 
 	void CameraComponent::Serialize(YAML::Emitter& out)
@@ -235,8 +241,9 @@ namespace Turtle {
 
 	void TileSetComponent::Deserialize(YAML::Node& data, Entity entity)
 	{
-		TileWidth = data["TileWidth"].as<uint32_t>();
-		TileHeight = data["TileHeight"].as<uint32_t>();
+		auto& comp = entity.GetComponent < TileSetComponent >();
+		comp.TileWidth = data["TileWidth"].as<uint32_t>();
+		comp.TileHeight = data["TileHeight"].as<uint32_t>();
 	}
 
 	void GridComponent::Serialize(YAML::Emitter& out)
@@ -252,7 +259,9 @@ namespace Turtle {
 
 	void GridComponent::Deserialize(YAML::Node& data, Entity entity)
 	{
-
+		auto& comp = entity.GetComponent < GridComponent >();
+		comp.GridSize = data["GridSize"].as<float>();
+		comp.Active = data["Active"].as<bool>();
 	}
 
 	void TileMapComponent::Serialize(YAML::Emitter& out)

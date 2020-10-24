@@ -1,7 +1,8 @@
 Engine:
 	- Seralization
 		- want to move serialization out of scene so that yaml doesn't need to be include of sandbox and tortuga
-		- deserializaton
+		- deserializaton*
+		- Try to remove need for InitComponentMeta as a function. 
 	- Particles*
 	- lighting	
 	- Animation : Not sure if I want to do this engine side
@@ -23,7 +24,7 @@ Editor:
 		- add tiles to map
 	- Load/Save Scenes (Re: Seralization)
 		- save*
-		- load
+		- load*
 	- Scene play
 	- Bindable Scripts
 	- Select Shader	(RE: Materials)
