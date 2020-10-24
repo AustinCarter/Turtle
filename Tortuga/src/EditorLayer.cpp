@@ -18,6 +18,7 @@ namespace Turtle {
 	{
 		TURT_PROFILE_FUNCTION();
 
+
 		m_CheckerboardTexture = AssetManager::CreateTexture("assets/textures/Checkerboard.png");
 
 		FramebufferSpecification fbSpec;
@@ -186,7 +187,7 @@ namespace Turtle {
 			AssetManager::Unload();
 
 		if(ImGui::Button("SerializeScene()"))
-			m_ActiveScene->SerializeScene();
+			m_ActiveScene->SerializeScene("SceneDump.yaml");
 
 		ImGui::End();
 

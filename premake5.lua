@@ -9,10 +9,16 @@ workspace "Turtle"
 		"Dist"
 	}
 
+	flags
+	{
+		"MultiProcessorCompile"
+	}
+
 outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 
 -- Include directories relative to root folder (solution directory)
 IncludeDir = {}
+IncludeDir["yaml_cpp"] = "Turtle/vendor/yaml-cpp/include"
 IncludeDir["GLFW"] = "Turtle/vendor/GLFW/include"
 IncludeDir["Glad"] = "Turtle/vendor/Glad/include"
 IncludeDir["ImGui"] = "Turtle/vendor/imgui"
@@ -24,6 +30,7 @@ group "Dependencies"
 	include "Turtle/vendor/GLFW"
 	include "Turtle/vendor/Glad"
 	include "Turtle/vendor/imgui"
+	include "Turtle/vendor/yaml-cpp"
 group ""
 
 project "Turtle"
@@ -63,6 +70,7 @@ project "Turtle"
 		"%{IncludeDir.ImGui}",
 		"%{IncludeDir.glm}",
 		"%{IncludeDir.stb_image}",
+		"%{IncludeDir.yaml_cpp}",
 		"%{IncludeDir.entt}"
 	}
 
@@ -71,6 +79,7 @@ project "Turtle"
 		"GLFW",
 		"Glad",
 		"ImGui",
+		"yaml-cpp",
 		"opengl32.lib"
 	}
 
@@ -121,7 +130,8 @@ project "Tortuga"
 		"Turtle/src",
 		"Turtle/vendor",
 		"%{IncludeDir.glm}",
-		"%{IncludeDir.entt}"
+		"%{IncludeDir.entt}",
+		"%{IncludeDir.yaml_cpp}"
 	}
 
 	links
@@ -174,7 +184,8 @@ project "Sandbox"
 		"Turtle/src",
 		"Turtle/vendor",
 		"%{IncludeDir.glm}",
-		"%{IncludeDir.entt}"
+		"%{IncludeDir.entt}",
+		"%{IncludeDir.yaml_cpp}"
 	}
 
 	links

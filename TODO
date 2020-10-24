@@ -1,7 +1,7 @@
 Engine:
 	- Seralization
-		might be able to use entt meta/visit to run through all components/component types
-				could also be useful for things such as scene heirarchy panel and I think I can avoid the need to maintain the ComponentTypes struct
+		- want to move serialization out of scene so that yaml doesn't need to be include of sandbox and tortuga
+		- need to figure out why it isn't detecting our encode/decode/write op
 	- Particles*
 	- lighting	
 	- Animation : Not sure if I want to do this engine side
@@ -14,11 +14,13 @@ Engine:
 	- Auto Scale IMGUI UI for different screen sizes
 Editor:
 	- Tile Map/Grid Import and Placement UI
-		- import tileset/tileset component
-		- set tileset active
-		- display grid viewport panel
-		- select place tiles
-		- conversion from opengl size to pixels
+		- import tileset/tileset component*
+		- set tileset active*
+		- display grid viewport panel*
+		- select place tiles*
+		- conversion from opengl size to pixels*
+		- mouse transform conversion to world space
+		- add tiles to map
 	- Load/Save Scenes (Re: Seralization)
 	- Scene play
 	- Bindable Scripts

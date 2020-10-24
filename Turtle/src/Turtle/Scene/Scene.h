@@ -22,7 +22,7 @@ namespace Turtle {
 
 		void OnCameraAdd(CameraComponent& cameraComponent);
 
-		void SerializeScene();
+		void SerializeScene(const std::string& filepath);
 
 	private:
 		entt::registry m_Registry;

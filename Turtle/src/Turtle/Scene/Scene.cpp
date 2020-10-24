@@ -9,6 +9,8 @@
 
 #include "Turtle/Core/Log.h"
 
+#include <yaml-cpp/yaml.h>
+
 #include <glm/glm.hpp>
 
 #include <fstream>
@@ -81,7 +83,7 @@ namespace Turtle {
 					primaryCamera = &camera.Camera;
 					cameraTransform = transform.GetTransform();
 					break;
-				}
+				} 
 			}
 		}
 
@@ -184,29 +186,36 @@ namespace Turtle {
 		cameraComponent.Camera.SetViewportSize(m_ViewportWidth, m_ViewportHeight);	
 	}
 
-	void Scene::SerializeScene()
+	void Scene::SerializeScene(const std::string& filepath)
 	{
-		std::ofstream outputStream;
-		outputStream.open("SceneDump.json");
-		outputStream << "{";
-		m_Registry.each([&](auto entity)
+		YAML::Emitter out;
+		out << YAML::BeginMap;
+		out << YAML::Key << "Scene" << YAML::Value << "Untitled";
+		out << YAML::Key << "Entities" << YAML::Value << YAML::BeginSeq;
+
+		 m_Registry.each([&](auto entityID)
 		{
-			//TODO: FIGURE OUT AN EFFICENT WAY TO VISIT EACH COMPONENT
-			m_Registry.visit(entity, [&](const auto component) {
-				TURT_CORE_INFO("Serializing type: {0}", component);
+			Entity entity = { entityID, this };
+			if (!entity)
+				return;
+
+			out << YAML::BeginMap; // Entity
+			out << YAML::Key << "Entity" << YAML::Value << "12837192831273"; // TODO: Entity ID goes here
+
+			m_Registry.visit(entityID, [&](const auto component) {
 				auto type = entt::resolve_id(component);
-				auto func = type.func("Serialize"_hs);
-				auto ctor = type.ctor<decltype(m_Registry), entt::entity>(); //type.ctor(std::ref(m_Registry), entity);
-				auto instance = ctor.invoke(std::ref(m_Registry), entity);
-				if(func)
-				{
-					func.invoke(instance, outputStream);
-				}
-				// auto func = entt::resolve_type(component).func("Serialize"_hs);
+				auto instance = type.ctor<decltype(m_Registry), entt::entity>().invoke(std::ref(m_Registry), entityID);
+				type.func("Serialize"_hs).invoke(instance, std::ref(out));
 			});
+
+			out << YAML::EndMap; // Entity
 		});
-		outputStream << "}";
-		outputStream.close();
+
+	 	out << YAML::EndSeq;
+		out << YAML::EndMap;
+
+		std::ofstream fout(filepath);
+		fout << out.c_str();
 	}
 
 }

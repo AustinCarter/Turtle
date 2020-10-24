@@ -15,6 +15,8 @@
 
 #include <fstream>
 
+#include <yaml-cpp/yaml.h>
+
 
 namespace Turtle {
 
@@ -37,7 +39,7 @@ namespace Turtle {
 		TagComponent(const std::string& tag)
 			: Tag(tag) {}
 
-		void Serialize(std::ofstream outputStream);
+		void Serialize(YAML::Emitter& out);
 	};
 
 	struct TransformComponent
@@ -60,7 +62,7 @@ namespace Turtle {
 				* rotation 
 				* glm::scale(glm::mat4(1.0f), Scale);
 		}
-		void Serialize(std::ofstream outputStream);
+		void Serialize(YAML::Emitter& out);
 	};
 
 	struct SpriteRendererComponent
@@ -80,7 +82,7 @@ namespace Turtle {
 				RendererID = AssetManager::GetTexture(texture).get()->GetRendererID();
 			}
 
-		void Serialize(std::ofstream outputStream);
+		void Serialize(YAML::Emitter& out);
 
 	};
 
@@ -93,7 +95,7 @@ namespace Turtle {
 		CameraComponent() = default;
 		CameraComponent(const CameraComponent&) = default;
 
-		void Serialize(std::ofstream outputStream);
+		void Serialize(YAML::Emitter& out);
 	};
 
 
@@ -112,7 +114,7 @@ namespace Turtle {
 			DestroyScript = [](NativeScriptComponent* nsc) {delete nsc->Instance; nsc->Instance = nullptr; };
 			Bound = true; 
 		}
-		void Serialize(std::ofstream outputStream);
+		void Serialize(YAML::Emitter& out);
 	};
 
 	struct ParticleSpawnerComponenet
@@ -134,7 +136,7 @@ namespace Turtle {
 		ParticleSpawnerComponenet(const ParticleSpawnerComponenet&) = default;
 		ParticleSpawnerComponenet(const ParticleProps& particle) :  Particle(particle) {}
 
-		void Serialize(std::ofstream outputStream);
+		void Serialize(YAML::Emitter& out);
 
 	};
 
@@ -147,7 +149,7 @@ namespace Turtle {
 		TileSetComponenet() = default;
 		TileSetComponenet(const TileSetComponenet&) = default;
 
-		void Serialize(std::ofstream outputStream);
+		void Serialize(YAML::Emitter& out);
 	};
 
 	struct GridComponent
@@ -159,7 +161,7 @@ namespace Turtle {
 		GridComponent() = default;
 		GridComponent(const GridComponent&) = default;
 
-		void Serialize(std::ofstream outputStream);
+		void Serialize(YAML::Emitter& out);
 	};
 
 	struct TileMapComponent
@@ -174,12 +176,14 @@ namespace Turtle {
 		TileMapComponent() = default;
 		TileMapComponent(const TileMapComponent&) = default;
 
-		void Serialize(std::ofstream outputStream);
+		void Serialize(YAML::Emitter& out);
 	};
 
+	
 	template<typename Component>
 	static Component & get(entt::registry &registry, const entt::entity entity) 
 	{
     	return registry.get<Component>(entity);
 	}
+
 }

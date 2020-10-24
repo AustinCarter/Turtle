@@ -10,3 +10,6 @@
 [submodule "Turtle/vendor/imgui"]	
 	path = Turtle/vendor/imgui
 	url = https://github.com/TheCherno/imgui
+[submodule "Turtle/vendor/yaml-cpp"]
+	path = Turtle/vendor/yaml-cpp
+	url = https://github.com/thecherno/yaml-cpp

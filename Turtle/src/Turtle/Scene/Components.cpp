@@ -6,35 +6,9 @@
 //Register types and functions to ECS (entt) meta system
 
 namespace Turtle {
+	
 	void InitComponentMeta()
 	{
-		// entt::meta<TagComponent>().type()
-		// 	.func<&TagComponent::Serialize>("Serialize"_hs);
-
-		// entt::meta<TransformComponent>().type()
-		// 	.func<&TransformComponent::Serialize>("Serialize"_hs);
-
-		// entt::meta<SpriteRendererComponent>().type()
-		// 	.func<&SpriteRendererComponent::Serialize>("Serialize"_hs);
-
-		// entt::meta<CameraComponent>().type()
-		// 	.func<&CameraComponent::Serialize>("Serialize"_hs);
-
-		// entt::meta<NativeScriptComponent>().type()
-		// 	.func<&NativeScriptComponent::Serialize>("Serialize"_hs);
-
-		// entt::meta<ParticleSpawnerComponenet>().type()
-		// 	.func<&ParticleSpawnerComponenet::Serialize>("Serialize"_hs);
-
-		// entt::meta<TileSetComponenet>().type()
-		// 	.func<&TileSetComponenet::Serialize>("Serialize"_hs);
-
-		// entt::meta<GridComponent>().type()
-		// 	.func<&GridComponent::Serialize>("Serialize"_hs);
-
-		// entt::meta<TileMapComponent>().type()
-		// 	.func<&TileMapComponent::Serialize>("Serialize"_hs);
-
 		entt::meta<TagComponent>().type()
 			.ctor<&get<TagComponent>>()
 			.func<&TagComponent::Serialize>("Serialize"_hs);
@@ -43,19 +17,33 @@ namespace Turtle {
 			.ctor<&get<TransformComponent>>()
 			.func<&TransformComponent::Serialize>("Serialize"_hs);
 
-		entt::meta<SpriteRendererComponent>().type();
+		entt::meta<SpriteRendererComponent>().type()
+			.ctor<&get<SpriteRendererComponent>>()
+			.func<&SpriteRendererComponent::Serialize>("Serialize"_hs);
 
-		entt::meta<CameraComponent>().type();
+		entt::meta<CameraComponent>().type()
+			.ctor<&get<CameraComponent>>()
+			.func<&CameraComponent::Serialize>("Serialize"_hs);
 
-		entt::meta<NativeScriptComponent>().type();
+		entt::meta<NativeScriptComponent>().type()
+			.ctor<&get<NativeScriptComponent>>()
+			.func<&NativeScriptComponent::Serialize>("Serialize"_hs);
 
-		entt::meta<ParticleSpawnerComponenet>().type();
+		entt::meta<ParticleSpawnerComponenet>().type()
+			.ctor<&get<ParticleSpawnerComponenet>>()
+			.func<&ParticleSpawnerComponenet::Serialize>("Serialize"_hs);
 
-		entt::meta<TileSetComponenet>().type();
+		entt::meta<TileSetComponenet>().type()
+			.ctor<&get<TileSetComponenet>>()
+			.func<&TileSetComponenet::Serialize>("Serialize"_hs);
 
-		entt::meta<GridComponent>().type();
+		entt::meta<GridComponent>().type()
+			.ctor<&get<GridComponent>>()
+			.func<&GridComponent::Serialize>("Serialize"_hs);
 
-		entt::meta<TileMapComponent>().type();
+		entt::meta<TileMapComponent>().type()
+			.ctor<&get<TileMapComponent>>()
+			.func<&TileMapComponent::Serialize>("Serialize"_hs);
 	}
 
 }
