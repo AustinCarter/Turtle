@@ -188,6 +188,8 @@ namespace Turtle {
 
 		if(ImGui::Button("SerializeScene()"))
 			m_ActiveScene->SerializeScene("SceneDump.yaml");
+		if(ImGui::Button("DeserializeScene()"))
+			m_ActiveScene->DeserializeScene("SceneDump.yaml");
 
 		ImGui::End();
 

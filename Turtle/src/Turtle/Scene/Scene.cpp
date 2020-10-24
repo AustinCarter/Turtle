@@ -106,11 +106,11 @@ namespace Turtle {
 			}
 
 			{
-				auto view = m_Registry.view<TransformComponent, ParticleSpawnerComponenet>();
+				auto view = m_Registry.view<TransformComponent, ParticleSpawnerComponent>();
 
 				for (auto entity : view)
 				{
-					auto [transform, spawner] = view.get<TransformComponent, ParticleSpawnerComponenet>(entity);
+					auto [transform, spawner] = view.get<TransformComponent, ParticleSpawnerComponent>(entity);
 
 					spawner.Particle.Position = transform.Translation;
 
@@ -203,7 +203,7 @@ namespace Turtle {
 			out << YAML::Key << "Entity" << YAML::Value << "12837192831273"; // TODO: Entity ID goes here
 
 			m_Registry.visit(entityID, [&](const auto component) {
-				auto type = entt::resolve_id(component);
+				auto type = entt::resolve_type(component);
 				auto instance = type.ctor<decltype(m_Registry), entt::entity>().invoke(std::ref(m_Registry), entityID);
 				type.func("Serialize"_hs).invoke(instance, std::ref(out));
 			});
@@ -216,6 +216,45 @@ namespace Turtle {
 
 		std::ofstream fout(filepath);
 		fout << out.c_str();
+	}
+
+	void Scene::DeserializeScene(const std::string& filepath)
+	{
+		std::ifstream stream(filepath);
+		std::stringstream strStream;
+		strStream << stream.rdbuf();
+
+		YAML::Node data = YAML::Load(strStream.str());
+		if (!data["Scene"])
+			return;
+
+		std::string sceneName = data["Scene"].as<std::string>();
+		TURT_CORE_TRACE("Deserializing scene '{0}'", sceneName);
+
+		YAML::Node entities = data["Entities"];
+		if(entities)
+		{
+			for (YAML::Node entity : entities)
+			{
+				uint64_t uuid = entity["Entity"].as<uint64_t>(); //TODO
+				Entity deserializedEntity = CreateEntity();
+
+				 for(auto component : entity)
+				 {
+					entt::hashed_string hs{ component.first.as<std::string>().c_str() };
+					//auto comp = component.second.as<YAML::Node>();
+					auto type = entt::resolve_id(hs);
+					if(type)
+					{
+						auto instance = type.ctor<Entity>().invoke(deserializedEntity);
+						type.func("Deserialize"_hs).invoke(instance, std::ref(component.second), deserializedEntity);
+					}
+				 }
+
+			}
+		}
+
+
 	}
 
 }

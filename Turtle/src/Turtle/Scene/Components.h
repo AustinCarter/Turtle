@@ -26,7 +26,7 @@ namespace Turtle {
 	//NOTE: Tag and Transform component should be after any newly added  components
 	enum class ComponentTypes { 
 		SpriteRendererComponent = 0, CameraComponent = 1, NativeScriptComponent = 2, 
-		ParticleSpawnerComponenet = 3, TileSetComponenet = 4,
+		ParticleSpawnerComponent = 3, TileSetComponent = 4,
 		TagComponent, TransformComponent
 	};
 
@@ -40,6 +40,7 @@ namespace Turtle {
 			: Tag(tag) {}
 
 		void Serialize(YAML::Emitter& out);
+		void Deserialize(YAML::Node& out, Entity entity);
 	};
 
 	struct TransformComponent
@@ -63,6 +64,7 @@ namespace Turtle {
 				* glm::scale(glm::mat4(1.0f), Scale);
 		}
 		void Serialize(YAML::Emitter& out);
+		void Deserialize(YAML::Node& out, Entity entity);
 	};
 
 	struct SpriteRendererComponent
@@ -83,6 +85,7 @@ namespace Turtle {
 			}
 
 		void Serialize(YAML::Emitter& out);
+		void Deserialize(YAML::Node& out, Entity entity);
 
 	};
 
@@ -96,6 +99,7 @@ namespace Turtle {
 		CameraComponent(const CameraComponent&) = default;
 
 		void Serialize(YAML::Emitter& out);
+		void Deserialize(YAML::Node& out, Entity entity);
 	};
 
 
@@ -115,15 +119,16 @@ namespace Turtle {
 			Bound = true; 
 		}
 		void Serialize(YAML::Emitter& out);
+		void Deserialize(YAML::Node& out, Entity entity);
 	};
 
-	struct ParticleSpawnerComponenet
+	struct ParticleSpawnerComponent
 	{
 		ParticleSpawner ParticleSpawner;
 		ParticleProps Particle;
 		uint32_t EmissionRate = 1;
 
-		ParticleSpawnerComponenet()
+		ParticleSpawnerComponent()
 		{
 			Particle.ColorBegin = { 254 / 255.0f, 212 / 255.0f, 123 / 255.0f, 1.0f };
 			Particle.ColorEnd = { 254 / 255.0f, 109 / 255.0f, 41 / 255.0f, 0.9f };
@@ -133,23 +138,25 @@ namespace Turtle {
 			Particle.VelocityVariation = { 3.0f, 2.0f, 0.0f };
 			Particle.Position = { 0.0f, 0.0f, 0.0f };
 		}
-		ParticleSpawnerComponenet(const ParticleSpawnerComponenet&) = default;
-		ParticleSpawnerComponenet(const ParticleProps& particle) :  Particle(particle) {}
+		ParticleSpawnerComponent(const ParticleSpawnerComponent&) = default;
+		ParticleSpawnerComponent(const ParticleProps& particle) :  Particle(particle) {}
 
 		void Serialize(YAML::Emitter& out);
+		void Deserialize(YAML::Node& out, Entity entity);
 
 	};
 
 	//NOTE: if an Entity has a tile set, it is expected to also have a grid and tile map at the moment
-	struct TileSetComponenet
+	struct TileSetComponent
 	{
 		Ref<Texture2D> TileSet;
 		uint32_t TileWidth = 64, TileHeight = 64;
 
-		TileSetComponenet() = default;
-		TileSetComponenet(const TileSetComponenet&) = default;
+		TileSetComponent() = default;
+		TileSetComponent(const TileSetComponent&) = default;
 
 		void Serialize(YAML::Emitter& out);
+		void Deserialize(YAML::Node& out, Entity entity);
 	};
 
 	struct GridComponent
@@ -162,13 +169,14 @@ namespace Turtle {
 		GridComponent(const GridComponent&) = default;
 
 		void Serialize(YAML::Emitter& out);
+		void Deserialize(YAML::Node& out, Entity entity);
 	};
 
 	struct TileMapComponent
 	{
 		//NOTE: ON SERIALIZATION COULD STORE THE SIZE OF THE VECTORS TO ALLOW FOR ONLY
 		//ALLOCATION DURING DESERIALIZATION
-		Ref<TileSetComponenet> TileSet;
+		Ref<TileSetComponent> TileSet;
 		glm::vec4 Tint {1.0f, 1.0f, 1.0f, 1.0f};
 		std::vector<glm::vec2> Positions;
 		std::vector<Ref<SubTexture2D>> Textures;
@@ -177,13 +185,22 @@ namespace Turtle {
 		TileMapComponent(const TileMapComponent&) = default;
 
 		void Serialize(YAML::Emitter& out);
+		void Deserialize(YAML::Node& out, Entity entity);
 	};
 
 	
 	template<typename Component>
-	static Component & get(entt::registry &registry, const entt::entity entity) 
+	static Component & Get(entt::registry &registry, const entt::entity entity) 
 	{
     	return registry.get<Component>(entity);
+	}
+
+	template<typename Component>
+	static Component& Add(Entity entity) 
+	{
+		if(entity.HasComponent<Component>())
+			return entity.GetComponent<Component>();
+		return entity.AddComponent<Component>();
 	}
 
 }

@@ -365,16 +365,16 @@ namespace Turtle {
 			} 
 		}
 
-		if(entity.HasComponent<ParticleSpawnerComponenet>())
+		if(entity.HasComponent<ParticleSpawnerComponent>())
 		{
-			bool open = ImGui::TreeNodeEx((void*)typeid(ParticleSpawnerComponenet).hash_code(), treeNodeFlags, "Particle Spawner");
+			bool open = ImGui::TreeNodeEx((void*)typeid(ParticleSpawnerComponent).hash_code(), treeNodeFlags, "Particle Spawner");
 			bool removed = false;
 			if (ImGui::BeginPopupContextItem("Particle Spawner Component Context Menu"))
 			{
 				removed = ImGui::Selectable("Remove Component");
 				if (removed)
 				{
-					entity.RemoveComponent<ParticleSpawnerComponenet>();
+					entity.RemoveComponent<ParticleSpawnerComponent>();
 					// open = false;
 				}
 				ImGui::EndPopup();
@@ -382,8 +382,8 @@ namespace Turtle {
 			}
 			if (open && !removed)
 			{
-				auto& particleSpawnerComponenet = entity.GetComponent<ParticleSpawnerComponenet>();
-				ParticleProps& particle = particleSpawnerComponenet.Particle;
+				auto& particleSpawnerComponent = entity.GetComponent<ParticleSpawnerComponent>();
+				ParticleProps& particle = particleSpawnerComponent.Particle;
 				ImGui::PushItemWidth(100.0f);
 
 				ImGui::Text("Random Rotate");
@@ -445,7 +445,7 @@ namespace Turtle {
 				ImGui::Text("Emission Rate");
 				ImGui::NextColumn();
 				ImGui::PushItemWidth(ImGui::GetContentRegionAvailWidth()*0.8f);
-				ImGui::DragInt("##Emission Rate", (int*)(&particleSpawnerComponenet.EmissionRate), 0.03f, 0, 10);
+				ImGui::DragInt("##Emission Rate", (int*)(&particleSpawnerComponent.EmissionRate), 0.03f, 0, 10);
 				ImGui::PopItemWidth();
 
 	
@@ -456,16 +456,16 @@ namespace Turtle {
 				ImGui::TreePop();
 			} 
 		}
-		if(entity.HasComponent<TileSetComponenet>())
+		if(entity.HasComponent<TileSetComponent>())
 		{
-			bool open = ImGui::TreeNodeEx((void*)typeid(TileSetComponenet).hash_code(), treeNodeFlags, "Tile Set");
+			bool open = ImGui::TreeNodeEx((void*)typeid(TileSetComponent).hash_code(), treeNodeFlags, "Tile Set");
 			bool removed = false;
 			if (ImGui::BeginPopupContextItem("Tile Set Component Context Menu"))
 			{
 				removed = ImGui::Selectable("Remove Component");
 				if (removed)
 				{
-					entity.RemoveComponent<TileSetComponenet>();
+					entity.RemoveComponent<TileSetComponent>();
 					entity.RemoveComponent<GridComponent>();
 					// open = false;
 				}
@@ -474,21 +474,21 @@ namespace Turtle {
 			}
 			if (open && !removed)
 			{
-				auto& tileSetComponenet = entity.GetComponent<TileSetComponenet>();
+				auto& tileSetComponent = entity.GetComponent<TileSetComponent>();
 				if(ImGui::Button("Use Pallette"))
 				{
-					m_TilePallette.SetTexture(tileSetComponenet.TileSet);
-					m_TilePallette.SetTileSize(tileSetComponenet.TileWidth, tileSetComponenet.TileHeight);
+					m_TilePallette.SetTexture(tileSetComponent.TileSet);
+					m_TilePallette.SetTileSize(tileSetComponent.TileWidth, tileSetComponent.TileHeight);
 					m_TilePallette.Open();
 				}
 				ImGui::PushItemWidth(ImGui::GetContentRegionAvailWidth() * 0.5f);
-				if(ImGui::InputScalar("Tile Width", ImGuiDataType_S32, &tileSetComponenet.TileWidth))
+				if(ImGui::InputScalar("Tile Width", ImGuiDataType_S32, &tileSetComponent.TileWidth))
 				{
-					m_TilePallette.SetTileSize(tileSetComponenet.TileWidth, tileSetComponenet.TileHeight);
+					m_TilePallette.SetTileSize(tileSetComponent.TileWidth, tileSetComponent.TileHeight);
 				}
-				if(ImGui::InputScalar("Tile Height", ImGuiDataType_S32, &tileSetComponenet.TileHeight))
+				if(ImGui::InputScalar("Tile Height", ImGuiDataType_S32, &tileSetComponent.TileHeight))
 				{
-					m_TilePallette.SetTileSize(tileSetComponenet.TileWidth, tileSetComponenet.TileHeight);
+					m_TilePallette.SetTileSize(tileSetComponent.TileWidth, tileSetComponent.TileHeight);
 				}
 				ImGui::PopItemWidth();
 
@@ -496,15 +496,15 @@ namespace Turtle {
 				{	
 					m_TilePallette.Display();
 					int* selection = m_TilePallette.GetSelection();
-					uint32_t width = tileSetComponenet.TileSet.get()->GetWidth();
-					uint32_t height = tileSetComponenet.TileSet.get()->GetHeight();
+					uint32_t width = tileSetComponent.TileSet.get()->GetWidth();
+					uint32_t height = tileSetComponent.TileSet.get()->GetHeight();
 
-					ImVec2 min = ImVec2((float)(selection[0] * tileSetComponenet.TileWidth)/width, 
-						1.0f - (float)(selection[1] * tileSetComponenet.TileHeight)/height);
-					ImVec2 max = ImVec2((float)((selection[0] + 1) * tileSetComponenet.TileWidth)/width, 
-						1.0f - (float)((selection[1] + 1) * tileSetComponenet.TileHeight)/height);
+					ImVec2 min = ImVec2((float)(selection[0] * tileSetComponent.TileWidth)/width, 
+						1.0f - (float)(selection[1] * tileSetComponent.TileHeight)/height);
+					ImVec2 max = ImVec2((float)((selection[0] + 1) * tileSetComponent.TileWidth)/width, 
+						1.0f - (float)((selection[1] + 1) * tileSetComponent.TileHeight)/height);
 
-					ImGui::Image((void*)tileSetComponenet.TileSet->GetRendererID(),  ImVec2{ (float)tileSetComponenet.TileWidth, (float)tileSetComponenet.TileHeight}, min, max);
+					ImGui::Image((void*)tileSetComponent.TileSet->GetRendererID(),  ImVec2{ (float)tileSetComponent.TileWidth, (float)tileSetComponent.TileHeight}, min, max);
 				}
 				ImGui::TreePop();
 			} 
@@ -554,17 +554,17 @@ namespace Turtle {
 						entity.AddComponent<NativeScriptComponent>(); 
 						break;
 					}
-					case (int)ComponentTypes::ParticleSpawnerComponenet:
+					case (int)ComponentTypes::ParticleSpawnerComponent:
 					{
-						entity.AddComponent<ParticleSpawnerComponenet>(); 
+						entity.AddComponent<ParticleSpawnerComponent>();
 						break;
 					}
-					case (int)ComponentTypes::TileSetComponenet:
+					case (int)ComponentTypes::TileSetComponent:
 					{
-						entity.AddComponent<TileSetComponenet>(); 
+						entity.AddComponent<TileSetComponent>();
 						entity.AddComponent<GridComponent>();
 						entity.AddComponent<TileMapComponent>();
-						auto& tileSet = entity.GetComponent<TileSetComponenet>();
+						auto& tileSet = entity.GetComponent<TileSetComponent>();
 						tileSet.TileSet = AssetManager::CreateTexture("assets/textures/RPGpack_sheet_2X.png");
 						auto& tileMap = entity.GetComponent<TileMapComponent>();
 						tileMap.Positions.emplace_back(glm::vec2(2.5f, 2.5f));
