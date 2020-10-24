@@ -7,6 +7,8 @@
 #include "Turtle/Core/AssetManager.h"
 #include "Turtle/Scene/Components.h"
 
+#include "Turtle/Core/Log.h"
+
 #include <glm/glm.hpp>
 
 #include <fstream>
@@ -191,6 +193,16 @@ namespace Turtle {
 		{
 			//TODO: FIGURE OUT AN EFFICENT WAY TO VISIT EACH COMPONENT
 			m_Registry.visit(entity, [&](const auto component) {
+				TURT_CORE_INFO("Serializing type: {0}", component);
+				auto type = entt::resolve_id(component);
+				auto func = type.func("Serialize"_hs);
+				auto ctor = type.ctor<decltype(m_Registry), entt::entity>(); //type.ctor(std::ref(m_Registry), entity);
+				auto instance = ctor.invoke(std::ref(m_Registry), entity);
+				if(func)
+				{
+					func.invoke(instance, outputStream);
+				}
+				// auto func = entt::resolve_type(component).func("Serialize"_hs);
 			});
 		});
 		outputStream << "}";

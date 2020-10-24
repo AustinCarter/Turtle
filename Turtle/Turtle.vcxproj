@@ -633,6 +633,8 @@
     <ClCompile Include="src\Turtle\Renderer\SubTexture2D.cpp" />
     <ClCompile Include="src\Turtle\Renderer\Texture.cpp" />
     <ClCompile Include="src\Turtle\Renderer\VertexArray.cpp" />
+    <ClCompile Include="src\Turtle\Scene\ComponentSerializers.cpp" />
+    <ClCompile Include="src\Turtle\Scene\Components.cpp" />
     <ClCompile Include="src\Turtle\Scene\Entity.cpp" />
     <ClCompile Include="src\Turtle\Scene\Scene.cpp" />
     <ClCompile Include="src\Turtle\Scene\SceneCamera.cpp" />

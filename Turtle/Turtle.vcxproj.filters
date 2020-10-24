@@ -1535,6 +1535,12 @@
     <ClCompile Include="src\Turtle\Renderer\VertexArray.cpp">
       <Filter>src\Turtle\Renderer</Filter>
     </ClCompile>
+    <ClCompile Include="src\Turtle\Scene\ComponentSerializers.cpp">
+      <Filter>src\Turtle\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Turtle\Scene\Components.cpp">
+      <Filter>src\Turtle\Scene</Filter>
+    </ClCompile>
     <ClCompile Include="src\Turtle\Scene\Entity.cpp">
       <Filter>src\Turtle\Scene</Filter>
     </ClCompile>

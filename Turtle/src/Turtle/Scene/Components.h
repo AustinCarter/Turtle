@@ -18,6 +18,9 @@
 
 namespace Turtle {
 
+
+	void InitComponentMeta();
+
 	//NOTE: Tag and Transform component should be after any newly added  components
 	enum class ComponentTypes { 
 		SpriteRendererComponent = 0, CameraComponent = 1, NativeScriptComponent = 2, 
@@ -34,13 +37,7 @@ namespace Turtle {
 		TagComponent(const std::string& tag)
 			: Tag(tag) {}
 
-		void Serialize(std::ofstream outputStream)
-		{
-			outputStream << "{";
-			outputStream << "\t\"Tag\":\"" << Tag << "\"";
-			outputStream << "}";
-			outputStream.flush();
-		}
+		void Serialize(std::ofstream outputStream);
 	};
 
 	struct TransformComponent
@@ -63,13 +60,7 @@ namespace Turtle {
 				* rotation 
 				* glm::scale(glm::mat4(1.0f), Scale);
 		}
-		void Serialize(std::ofstream outputStream)
-		{
-			outputStream << "{";
-			outputStream << "\t\"Translation\":\"" << glm::to_string(Translation) << "\"";
-			outputStream << "}";
-			outputStream.flush();
-		}
+		void Serialize(std::ofstream outputStream);
 	};
 
 	struct SpriteRendererComponent
@@ -89,16 +80,7 @@ namespace Turtle {
 				RendererID = AssetManager::GetTexture(texture).get()->GetRendererID();
 			}
 
-		void Serialize(std::ofstream outputStream)
-		{
-			outputStream << "{";
-			outputStream << "\t\"Color\":\"" << glm::to_string(Color) << "\"";
-			outputStream << "\t\"TextureID\":\"" << TextureID << "\"";
-			outputStream << "\t\"RendererID\":\"" << RendererID << "\"";
-			outputStream << "\t\"TexturedID\":\"" << (Textured ? "True" : "False") << "\"";
-			outputStream << "}";
-			outputStream.flush();
-		}
+		void Serialize(std::ofstream outputStream);
 
 	};
 
@@ -111,14 +93,7 @@ namespace Turtle {
 		CameraComponent() = default;
 		CameraComponent(const CameraComponent&) = default;
 
-		void Serialize(std::ofstream outputStream)
-		{
-			outputStream << "{";
-			outputStream << "\t\"Primary\":\"" <<  (Primary ? "True" : "False") << "\"";
-			outputStream << "\t\"FixedAspectRatio\":\"" <<  (FixedAspectRatio ? "True" : "False") << "\"";
-			outputStream << "}";
-			outputStream.flush();
-		}
+		void Serialize(std::ofstream outputStream);
 	};
 
 
@@ -137,6 +112,7 @@ namespace Turtle {
 			DestroyScript = [](NativeScriptComponent* nsc) {delete nsc->Instance; nsc->Instance = nullptr; };
 			Bound = true; 
 		}
+		void Serialize(std::ofstream outputStream);
 	};
 
 	struct ParticleSpawnerComponenet
@@ -158,6 +134,8 @@ namespace Turtle {
 		ParticleSpawnerComponenet(const ParticleSpawnerComponenet&) = default;
 		ParticleSpawnerComponenet(const ParticleProps& particle) :  Particle(particle) {}
 
+		void Serialize(std::ofstream outputStream);
+
 	};
 
 	//NOTE: if an Entity has a tile set, it is expected to also have a grid and tile map at the moment
@@ -168,6 +146,8 @@ namespace Turtle {
 
 		TileSetComponenet() = default;
 		TileSetComponenet(const TileSetComponenet&) = default;
+
+		void Serialize(std::ofstream outputStream);
 	};
 
 	struct GridComponent
@@ -178,6 +158,8 @@ namespace Turtle {
 
 		GridComponent() = default;
 		GridComponent(const GridComponent&) = default;
+
+		void Serialize(std::ofstream outputStream);
 	};
 
 	struct TileMapComponent
@@ -191,5 +173,13 @@ namespace Turtle {
 
 		TileMapComponent() = default;
 		TileMapComponent(const TileMapComponent&) = default;
+
+		void Serialize(std::ofstream outputStream);
 	};
+
+	template<typename Component>
+	static Component & get(entt::registry &registry, const entt::entity entity) 
+	{
+    	return registry.get<Component>(entity);
+	}
 }

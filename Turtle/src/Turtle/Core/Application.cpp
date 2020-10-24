@@ -6,7 +6,9 @@
 #include "Turtle/Core/input.h"
 #include "Turtle/Renderer/Renderer.h"
 #include "Turtle/Core/AssetManager.h"
-#include  "Turtle/Core/Random.h"
+#include "Turtle/Core/Random.h"
+
+#include "Turtle/Scene/Components.h"
 
 
 #include "glfw/glfw3.h"
@@ -31,6 +33,7 @@ namespace Turtle {
 		AssetManager::Init();
 		Renderer::Init();
 		Random::Init();
+		InitComponentMeta();
 
 		m_ImGuiLayer = new ImGuiLayer();
 		PushOverlay(m_ImGuiLayer);

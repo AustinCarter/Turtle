@@ -402,49 +402,49 @@ namespace Turtle {
 				ImGui::PushStyleVar(ImGuiStyleVar_ItemInnerSpacing, ImVec2{ 0, 0 });
 				ImGui::Text("Color Begin");
 				ImGui::NextColumn();
-				ImGui::PushItemWidth(ImGui::GetContentRegionAvailWidth());
+				ImGui::PushItemWidth(ImGui::GetContentRegionAvailWidth()*0.8f);
 				ImGui::ColorEdit4("##Color Begin", glm::value_ptr(particle.ColorBegin));
 				ImGui::PopItemWidth();
 				ImGui::NextColumn();
 
 				ImGui::Text("Color End");
 				ImGui::NextColumn();
-				ImGui::PushItemWidth(ImGui::GetContentRegionAvailWidth());
+				ImGui::PushItemWidth(ImGui::GetContentRegionAvailWidth()*0.8f);
 				ImGui::ColorEdit4("##Color End", glm::value_ptr(particle.ColorEnd));
 				ImGui::PopItemWidth();
 				ImGui::NextColumn();
 
 				ImGui::Text("Size Begin");
 				ImGui::NextColumn();
-				ImGui::PushItemWidth(ImGui::GetContentRegionAvailWidth());
+				ImGui::PushItemWidth(ImGui::GetContentRegionAvailWidth()*0.8f);
 				ImGui::DragFloat("##Size Begin", &particle.SizeBegin, 0.01f, 0.0f, 1.0f);
 				ImGui::PopItemWidth();
 				ImGui::NextColumn();
 
 				ImGui::Text("Size End");
 				ImGui::NextColumn();
-				ImGui::PushItemWidth(ImGui::GetContentRegionAvailWidth());
+				ImGui::PushItemWidth(ImGui::GetContentRegionAvailWidth()*0.8f);
 				ImGui::DragFloat("##Size End", &particle.SizeEnd, 0.01f, 0.0f, 1.0f);
 				ImGui::PopItemWidth();
 				ImGui::NextColumn();
 
 				ImGui::Text("Size Variation");
 				ImGui::NextColumn();
-				ImGui::PushItemWidth(ImGui::GetContentRegionAvailWidth());
+				ImGui::PushItemWidth(ImGui::GetContentRegionAvailWidth()*0.8f);
 				ImGui::DragFloat("##Size Variation", &particle.SizeVariation, 0.01f, 0.0f, 1.0f);
 				ImGui::PopItemWidth();
 				ImGui::NextColumn();
 				// ImGui::DragFloat("Rotation", &particle.Rotation, 0.03f, 0.0f, 5.0f);
 				ImGui::Text("LifeTime");
 				ImGui::NextColumn();
-				ImGui::PushItemWidth(ImGui::GetContentRegionAvailWidth());
+				ImGui::PushItemWidth(ImGui::GetContentRegionAvailWidth()*0.8f);
 				ImGui::DragFloat("##LifeTime", &particle.LifeTime, 0.03f, 0.0f, 5.0f);
 				ImGui::PopItemWidth();
 				ImGui::NextColumn();
 
 				ImGui::Text("Emission Rate");
 				ImGui::NextColumn();
-				ImGui::PushItemWidth(ImGui::GetContentRegionAvailWidth());
+				ImGui::PushItemWidth(ImGui::GetContentRegionAvailWidth()*0.8f);
 				ImGui::DragInt("##Emission Rate", (int*)(&particleSpawnerComponenet.EmissionRate), 0.03f, 0, 10);
 				ImGui::PopItemWidth();
 

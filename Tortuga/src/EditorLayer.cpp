@@ -17,7 +17,7 @@ namespace Turtle {
 	void EditorLayer::OnAttach()
 	{
 		TURT_PROFILE_FUNCTION();
-			
+
 		m_CheckerboardTexture = AssetManager::CreateTexture("assets/textures/Checkerboard.png");
 
 		FramebufferSpecification fbSpec;
@@ -28,11 +28,11 @@ namespace Turtle {
 		m_ActiveScene = CreateRef<Scene>();
 
 		auto square = m_ActiveScene->CreateEntity("Square Entity");
-		square.AddComponent<SpriteRendererComponent>(m_CheckerboardTexture.get()->GetAssetID(), glm::vec4{1.0f, 1.0f, 1.0f, 1.0f});
+		square.AddComponent<SpriteRendererComponent>(m_CheckerboardTexture.get()->GetAssetID(), glm::vec4{ 1.0f, 1.0f, 1.0f, 1.0f });
 
 		auto square2 = m_ActiveScene->CreateEntity("Square Entity 2");
-		square2.AddComponent<SpriteRendererComponent>(glm::vec4{0.6f, 0.2f, 0.5f, 1.0f});
-		square2.GetComponent<TransformComponent>().Translation.x = rand() % 10  - 5.0f;
+		square2.AddComponent<SpriteRendererComponent>(glm::vec4{ 0.6f, 0.2f, 0.5f, 1.0f });
+		square2.GetComponent<TransformComponent>().Translation.x = rand() % 10 - 5.0f;
 
 		// m_SquareEntity = square;
 
@@ -72,16 +72,8 @@ namespace Turtle {
 		m_CameraEntity.AddComponent<NativeScriptComponent>().Bind<CameraController>();
 
 		m_SceneHeirarchy.SetContext(m_ActiveScene);
-
-		// m_Particle.ColorBegin = { 254 / 255.0f, 212 / 255.0f, 123 / 255.0f, 1.0f };
-		// m_Particle.ColorEnd = { 254 / 255.0f, 109 / 255.0f, 41 / 255.0f, 0.9f };
-		// m_Particle.SizeBegin = 0.3f, m_Particle.SizeVariation = 0.2f, m_Particle.SizeEnd = 0.0f;
-		// m_Particle.LifeTime = 2.0f;
-		// m_Particle.Velocity = { 0.0f, 2.0f };
-		// m_Particle.VelocityVariation = { 3.0f, 2.0f };
-		// m_Particle.Position = { 0.0f, 0.0f };	
-		square2.AddComponent<ParticleSpawnerComponenet>();
 	}
+
 
 	void EditorLayer::OnDetach()
 	{
@@ -192,6 +184,9 @@ namespace Turtle {
 		ImGui::Text("Textures Loaded: %d", assetStats.TexturesLoaded);
 		if(ImGui::Button("AssetManager::Unload()"))
 			AssetManager::Unload();
+
+		if(ImGui::Button("SerializeScene()"))
+			m_ActiveScene->SerializeScene();
 
 		ImGui::End();
 
