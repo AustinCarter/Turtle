@@ -346,7 +346,6 @@ namespace Turtle {
 		auto Positions = data["Positions"];
 		for(YAML::Node position : Positions)
 		{
-			TURT_CORE_WARN("POS");
 			comp.Positions.emplace_back(position.as<glm::vec2>());
 		}
 		auto Textures = data["Textures"];
@@ -354,7 +353,6 @@ namespace Turtle {
 		Ref<Texture2D> tex = AssetManager::CreateTexture(path);
 		for(YAML::Node texture : Textures["TextureBounds"])
 		{
-			TURT_CORE_WARN("TEX");
 			glm::vec2 bounds[4];
 			int index = 0;
 			for(YAML::Node bound : texture)

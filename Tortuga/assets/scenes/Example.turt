@@ -3,20 +3,20 @@ Entities:
   - Entity: 12837192831273
     ParticleSpawnerComponent:
       Particle:
-        ColorBegin: [0.982405066, 0.482352883, 0.996078432, 1]
-        ColorEnd: [0.573667288, 0.160784289, 0.996078432, 0.899999976]
+        ColorBegin: [0.482352883, 0.556579411, 0.996078432, 1]
+        ColorEnd: [0.192544281, 0.160784289, 0.996078432, 0.899999976]
         SizeBegin: 0.129999995
         SizeEnd: 0.239999995
         SizeVariation: 0.400000006
-        LifeTime: 1.54999995
+        LifeTime: 2.01999998
         Velocity: [0, 2, 0]
         VelocityVariation: [3, 2, 0]
-        Position: [0, -3.70000005, 0]
-      EmissionRate: 2
+        Position: [4.5, -3.5999999, 0.600000024]
+      EmissionRate: 1
     TagComponent:
       Tag: Particles
     TransformComponent:
-      Translation: [0, -3.70000005, 0]
+      Translation: [4.5, -3.5999999, 0.600000024]
       Rotation: [0, 0, 0]
       Scale: [1, 1, 1]
   - Entity: 12837192831273
@@ -31,6 +31,12 @@ Entities:
       Rotation: [0, 0, 0]
       Scale: [1, 1, 1]
   - Entity: 12837192831273
+    TagComponent:
+      Tag: Camera
+    TransformComponent:
+      Translation: [0, 0, 0]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
     CameraComponent:
       Camera:
         ProjectionType: 1
@@ -42,9 +48,3 @@ Entities:
         OrthographicFar: 1
       Primary: true
       FixedAspectRatio: false
-    TagComponent:
-      Tag: Camera
-    TransformComponent:
-      Translation: [0, 0, 0]
-      Rotation: [0, 0, 0]
-      Scale: [1, 1, 1]
