@@ -193,6 +193,7 @@
     <ClInclude Include="src\Turtle\Scene\Scene.h" />
     <ClInclude Include="src\Turtle\Scene\SceneCamera.h" />
     <ClInclude Include="src\Turtle\Scene\ScriptableEntity.h" />
+    <ClInclude Include="src\Turtle\Utils\PlatformUtils.h" />
     <ClInclude Include="src\turtpch.h" />
     <ClInclude Include="vendor\glm\glm\common.hpp" />
     <ClInclude Include="vendor\glm\glm\detail\_features.hpp" />
@@ -613,6 +614,7 @@
     <ClCompile Include="src\Platform\OpenGL\OpenGLTexture.cpp" />
     <ClCompile Include="src\Platform\OpenGL\OpenGLVertexArray.cpp" />
     <ClCompile Include="src\Platform\Windows\WindowsInput.cpp" />
+    <ClCompile Include="src\Platform\Windows\WindowsPlatformUtils.cpp" />
     <ClCompile Include="src\Platform\Windows\WindowsWindow.cpp" />
     <ClCompile Include="src\Turtle\Core\Application.cpp" />
     <ClCompile Include="src\Turtle\Core\AssetManager.cpp" />

@@ -5,6 +5,9 @@
 #include "glm/gtc/matrix_transform.hpp"
 #include <glm/gtc/type_ptr.hpp>
 
+
+#include "Turtle/Utils/PlatformUtils.h"
+
 #include <chrono>
 
 namespace Turtle {
@@ -28,8 +31,9 @@ namespace Turtle {
 
 		m_ActiveScene = CreateRef<Scene>();
 
+#if 0
 		auto square = m_ActiveScene->CreateEntity("Square Entity");
-		square.AddComponent<SpriteRendererComponent>(m_CheckerboardTexture.get()->GetAssetID(), glm::vec4{ 1.0f, 1.0f, 1.0f, 1.0f });
+		square.AddComponent<SpriteRendererComponent>(m_CheckerboardTexture, glm::vec4{ 1.0f, 1.0f, 1.0f, 1.0f });
 
 		auto square2 = m_ActiveScene->CreateEntity("Square Entity 2");
 		square2.AddComponent<SpriteRendererComponent>(glm::vec4{ 0.6f, 0.2f, 0.5f, 1.0f });
@@ -71,8 +75,9 @@ namespace Turtle {
 		};
 
 		m_CameraEntity.AddComponent<NativeScriptComponent>().Bind<CameraController>();
+#endif
 
-		m_SceneHeirarchy.SetContext(m_ActiveScene);
+		m_SceneHierarchyPanel.SetContext(m_ActiveScene);
 	}
 
 
@@ -123,7 +128,7 @@ namespace Turtle {
 	    // We are using the ImGuiWindowFlags_NoDocking flag to make the parent window not dockable into,
 	    // because it would be confusing to have two docking targets within each others.
 	    //  ImGuiWindowFlags_MenuBar to re-enable menu bar 
-	    ImGuiWindowFlags window_flags = ImGuiWindowFlags_NoDocking;
+	    ImGuiWindowFlags window_flags = ImGuiWindowFlags_MenuBar | ImGuiWindowFlags_NoDocking;
 	    if (opt_fullscreen)
 	    {
 	        ImGuiViewport* viewport = ImGui::GetMainViewport();
@@ -157,20 +162,27 @@ namespace Turtle {
 
 	    if (ImGui::BeginMenuBar())
 	    {
-	        if (ImGui::BeginMenu("File"))
-	        {
-	            // Disabling fullscreen would allow the window to be moved to the front of other windows, 
-	            // which we can't undo at the moment without finer window depth/z control.
-	            //ImGui::MenuItem("Fullscreen", NULL, &opt_fullscreen_persistant);
+	       if (ImGui::BeginMenu("File"))
+			{
+				// Disabling fullscreen would allow the window to be moved to the front of other windows, 
+				// which we can't undo at the moment without finer window depth/z control.
+				//ImGui::MenuItem("Fullscreen", NULL, &opt_fullscreen_persistant);1
+				if (ImGui::MenuItem("New", "Ctrl+N"))
+					NewScene();
+				if(ImGui::MenuItem("Open...", "Ctrl+O"))
+					OpenSceneFile();
+				if (ImGui::MenuItem("Save As...", "Ctrl+Shift+S"))
+					SaveSceneFileAs();
+				
 
-	            if (ImGui::MenuItem("Exit")) Application::Get().Close();
-	            ImGui::EndMenu();
-	        }
+				if (ImGui::MenuItem("Exit")) Application::Get().Close();
+				ImGui::EndMenu();
+			}
 
 	        ImGui::EndMenuBar();
 	    }
 
-	    m_SceneHeirarchy.OnImGuiRender();
+	    m_SceneHierarchyPanel.OnImGuiRender();
 
 		ImGui::Begin("Info");
 
@@ -185,11 +197,6 @@ namespace Turtle {
 		ImGui::Text("Textures Loaded: %d", assetStats.TexturesLoaded);
 		if(ImGui::Button("AssetManager::Unload()"))
 			AssetManager::Unload();
-
-		if(ImGui::Button("SerializeScene()"))
-			m_ActiveScene->SerializeScene("SceneDump.yaml");
-		if(ImGui::Button("DeserializeScene()"))
-			m_ActiveScene->DeserializeScene("SceneDump.yaml");
 
 		ImGui::End();
 
@@ -215,6 +222,73 @@ namespace Turtle {
 	void EditorLayer::OnEvent(Event& event)
 	{
 		m_CameraController.OnEvent(event);
+
+		EventDispatcher dispatcher(event);
+		dispatcher.Dispatch<KeyPressedEvent>(TURT_BIND_EVENT_FN(EditorLayer::OnKeyPressed));
+	}
+
+	bool EditorLayer::OnKeyPressed(KeyPressedEvent& event)
+	{
+		// Shortcuts
+		if (event.GetRepeatCount() > 0)
+			return false;
+
+		bool control = Input::IsKeyPressed(TURT_KEY_LEFT_CONTROL) || Input::IsKeyPressed(TURT_KEY_RIGHT_CONTROL);
+		bool shift = Input::IsKeyPressed(TURT_KEY_LEFT_SHIFT) || Input::IsKeyPressed(TURT_KEY_RIGHT_SHIFT);
+		switch (event.GetKeyCode())
+		{
+			case TURT_KEY_N:
+			{
+				if (control)
+					NewScene();
+
+				break;
+			}
+			case TURT_KEY_O:
+			{
+				if (control)
+					OpenSceneFile();
+
+				break;
+			}
+			case TURT_KEY_S:
+			{
+				if (control && shift)
+					SaveSceneFileAs();
+
+				break;
+			}
+		}
+	}
+
+	void EditorLayer::OpenSceneFile()
+	{
+		std::string filepath = FileDialogs::OpenFile("Turtle Scene (*.turt)\0*.turt\0");
+		if (!filepath.empty())
+		{
+			m_ActiveScene = CreateRef<Scene>();
+			m_ActiveScene->OnViewportResize((uint32_t)m_ViewportSize.x, (uint32_t)m_ViewportSize.y);
+			m_SceneHierarchyPanel.SetContext(m_ActiveScene);
+			
+			m_ActiveScene->DeserializeScene(filepath);
+			m_ActiveScene->OnViewportResize((uint32_t)m_ViewportSize.x, (uint32_t)m_ViewportSize.y);
+		}
+	}
+
+	void EditorLayer::SaveSceneFileAs()
+	{
+		std::string filepath = FileDialogs::OpenFile("");
+		if (!filepath.empty())
+		{
+			m_ActiveScene->SerializeScene(filepath);
+		}
+	}
+
+	void EditorLayer::NewScene()
+	{
+		m_ActiveScene = CreateRef<Scene>();
+		m_ActiveScene->OnViewportResize((uint32_t)m_ViewportSize.x, (uint32_t)m_ViewportSize.y);
+		m_SceneHierarchyPanel.SetContext(m_ActiveScene);
 	}
 
 }

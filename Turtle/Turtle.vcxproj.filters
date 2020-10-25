@@ -34,6 +34,9 @@
     <Filter Include="src\Turtle\Scene">
       <UniqueIdentifier>{D9EE4C82-C5E7-6BD4-EE19-5159DA714BE0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\Turtle\Utils">
+      <UniqueIdentifier>{1C837A82-087C-99D4-31AE-7E591D0679E0}</UniqueIdentifier>
+    </Filter>
     <Filter Include="vendor">
       <UniqueIdentifier>{B3738122-9F15-ACF8-88D0-BF4C74113349}</UniqueIdentifier>
     </Filter>
@@ -206,6 +209,9 @@
     </ClInclude>
     <ClInclude Include="src\Turtle\Scene\ScriptableEntity.h">
       <Filter>src\Turtle\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Turtle\Utils\PlatformUtils.h">
+      <Filter>src\Turtle\Utils</Filter>
     </ClInclude>
     <ClInclude Include="src\turtpch.h">
       <Filter>src</Filter>
@@ -1461,6 +1467,9 @@
       <Filter>src\Platform\OpenGL</Filter>
     </ClCompile>
     <ClCompile Include="src\Platform\Windows\WindowsInput.cpp">
+      <Filter>src\Platform\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\Windows\WindowsPlatformUtils.cpp">
       <Filter>src\Platform\Windows</Filter>
     </ClCompile>
     <ClCompile Include="src\Platform\Windows\WindowsWindow.cpp">

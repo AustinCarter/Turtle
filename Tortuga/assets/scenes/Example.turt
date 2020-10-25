@@ -1,0 +1,50 @@
+Scene: Untitled
+Entities:
+  - Entity: 12837192831273
+    ParticleSpawnerComponent:
+      Particle:
+        ColorBegin: [0.982405066, 0.482352883, 0.996078432, 1]
+        ColorEnd: [0.573667288, 0.160784289, 0.996078432, 0.899999976]
+        SizeBegin: 0.129999995
+        SizeEnd: 0.239999995
+        SizeVariation: 0.400000006
+        LifeTime: 1.54999995
+        Velocity: [0, 2, 0]
+        VelocityVariation: [3, 2, 0]
+        Position: [0, -3.70000005, 0]
+      EmissionRate: 2
+    TagComponent:
+      Tag: Particles
+    TransformComponent:
+      Translation: [0, -3.70000005, 0]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+  - Entity: 12837192831273
+    SpriteRendererComponent:
+      Color: [1, 0.999989986, 0.999997497, 1]
+      Textured: true
+      Texture: assets/textures/ChernoLogo.png
+    TagComponent:
+      Tag: Square
+    TransformComponent:
+      Translation: [-4, 0, 0]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+  - Entity: 12837192831273
+    CameraComponent:
+      Camera:
+        ProjectionType: 1
+        PerspectiveFOV: 0.785398185
+        PerspectiveNear: 0.00999999978
+        PerspectiveFar: 1000
+        OrthographicSize: 17.2000008
+        OrthographicNear: -1
+        OrthographicFar: 1
+      Primary: true
+      FixedAspectRatio: false
+    TagComponent:
+      Tag: Camera
+    TransformComponent:
+      Translation: [0, 0, 0]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]

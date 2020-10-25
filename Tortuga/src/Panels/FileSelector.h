@@ -24,6 +24,8 @@ namespace Turtle {
 		void Open() {m_Active = true; m_HasSelected = false;}
 		void Close() {m_Active = false;}
 
+		const std::string& SelectFileBlocking();
+
 		void SetFilter(const std::string& filter);
 	private:
 		std::filesystem::path m_CurrentDirectory;

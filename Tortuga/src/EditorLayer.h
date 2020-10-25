@@ -19,6 +19,12 @@ namespace Turtle {
 		virtual void OnImGuiRender() override;
 		virtual void OnEvent(Event& event) override;
 	private:
+		bool OnKeyPressed(KeyPressedEvent& event);
+
+		void NewScene();
+		void OpenSceneFile();
+		void SaveSceneFileAs();
+	private:
 		OrthographicCameraController m_CameraController;
 		Ref<Framebuffer> m_Framebuffer;
 
@@ -36,11 +42,12 @@ namespace Turtle {
 		bool m_ViewportFocused = false;
 		bool m_ViewportHovered = false;
 
-		SceneHeirarchyPanel m_SceneHeirarchy;
+		SceneHeirarchyPanel m_SceneHierarchyPanel;
+		FileSelector m_FileDialogue;
 
 		ParticleSpawner m_Particles;
 		ParticleProps m_Particle;
+
 	};
 
 }
-

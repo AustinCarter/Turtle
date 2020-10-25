@@ -120,4 +120,19 @@ namespace Turtle {
 		strcpy(m_Filter.InputBuf, filter.c_str());
 		m_Filter.Build();
 	}
+
+	const std::string& FileSelector::SelectFileBlocking()
+	{
+		m_Active = true;
+		while(m_Active)
+		{
+			Display();
+			if(m_HasSelected)
+			{
+				Close();
+				return m_SelectedFile;
+			}
+		}
+		return "";
+	}
 }

@@ -70,7 +70,8 @@ namespace Turtle {
 	struct SpriteRendererComponent
 	{
 		glm::vec4 Color { 1.0f, 1.0f, 1.0f, 1.0f };
-		uint32_t TextureID, RendererID; 
+		Ref<Texture2D> Texture;
+		uint32_t RendererID; 
 		bool Textured = false; 
 
 
@@ -78,10 +79,10 @@ namespace Turtle {
 		SpriteRendererComponent(const SpriteRendererComponent&) = default;
 		SpriteRendererComponent(const glm::vec4& color)
 			: Color(color) {}
-		SpriteRendererComponent(uint32_t texture, const glm::vec4& color)
-			: TextureID(texture), Color(color), Textured(true) 
+		SpriteRendererComponent(Ref<Texture2D> texture, const glm::vec4& color)
+			: Texture(texture), Color(color), Textured(true) 
 			{
-				RendererID = AssetManager::GetTexture(texture).get()->GetRendererID();
+				RendererID = texture->GetRendererID();
 			}
 
 		void Serialize(YAML::Emitter& out);

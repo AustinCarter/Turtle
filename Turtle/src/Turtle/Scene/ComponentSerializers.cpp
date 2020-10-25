@@ -119,7 +119,8 @@ namespace Turtle {
 
 		out << YAML::Key << "Color" << YAML::Value << Color;
 		out << YAML::Key << "Textured" << YAML::Value << Textured;
-		out << YAML::Key << "TextureID" << YAML::Value << TextureID;
+		if(Textured)
+			out << YAML::Key << "Texture" << YAML::Value << Texture->GetPath();
 
 		out << YAML::EndMap; // SpriteRendererComponent
 	}
@@ -130,9 +131,12 @@ namespace Turtle {
 		auto& comp = entity.GetComponent<SpriteRendererComponent>();
 		comp.Color = data["Color"].as<glm::vec4>();
 		comp.Textured = data["Textured"].as<bool>();
-		comp.TextureID = data["TextureID"].as<uint32_t>();
 		if(comp.Textured)
-			comp.RendererID = AssetManager::GetTexture(comp.TextureID)->GetRendererID();
+		{
+			std::string path = data["Texture"].as<std::string>();
+			comp.Texture = AssetManager::CreateTexture(path);
+			comp.RendererID = comp.Texture->GetRendererID();
+		}
 	}
 
 	void CameraComponent::Serialize(YAML::Emitter& out)
@@ -234,7 +238,7 @@ namespace Turtle {
 
 		out << YAML::Key << "TileWidth" << YAML::Value << TileWidth;
 		out << YAML::Key << "TileHeight" << YAML::Value << TileHeight;
-		// out << YAML::Key << "Texture" << YAML::Value << Texture->GetPath();
+		out << YAML::Key << "TileSet" << YAML::Value << TileSet->GetPath();
 
 		out << YAML::EndMap; // TileSetComponent
 	}
@@ -244,6 +248,9 @@ namespace Turtle {
 		auto& comp = entity.GetComponent < TileSetComponent >();
 		comp.TileWidth = data["TileWidth"].as<uint32_t>();
 		comp.TileHeight = data["TileHeight"].as<uint32_t>();
+		std::string path = data["TileSet"].as<std::string>();
+		if (!path.empty())
+			comp.TileSet = AssetManager::CreateTexture(path);
 	}
 
 	void GridComponent::Serialize(YAML::Emitter& out)

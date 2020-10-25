@@ -131,6 +131,7 @@ project "Tortuga"
 		"Turtle/vendor",
 		"%{IncludeDir.glm}",
 		"%{IncludeDir.entt}",
+		"%{IncludeDir.ImGui}",
 		"%{IncludeDir.yaml_cpp}"
 	}
 

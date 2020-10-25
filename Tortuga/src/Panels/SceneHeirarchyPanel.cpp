@@ -7,6 +7,7 @@
 
 #include "Turtle/Scene/Components.h"
 #include "Turtle/Core/AssetManager.h"
+#include "Turtle/Utils/PlatformUtils.h"
 
 namespace Turtle {
 	SceneHeirarchyPanel::SceneHeirarchyPanel(const Ref<Scene>& scene)
@@ -317,22 +318,14 @@ namespace Turtle {
 				
 				else if(ImGui::Button("Add Texture"))
 				{
+					std::string path = FileDialogs::OpenFile("*.png\0*.png\0");
+					Ref<Texture2D> tex = AssetManager::CreateTexture(path);
+					spriteComponent.Texture = tex;
+					spriteComponent.RendererID = tex->GetRendererID();
+					spriteComponent.Textured = true;
+
 					m_FileSelector.SetFilter(".png");
 					m_FileSelector.Open();
-				}
-
-				if(m_FileSelector.Active())
-				{
-					m_FileSelector.Display();
-					if(m_FileSelector.HasSelected())
-					{
-						std::string path = m_FileSelector.GetSelection();
-						m_FileSelector.Close();
-						Ref<Texture2D> tex = AssetManager::CreateTexture(path);
-						spriteComponent.TextureID = tex->GetAssetID();
-						spriteComponent.RendererID = tex->GetRendererID();
-						spriteComponent.Textured = true;
-					}
 				}
 
 				ImGui::TreePop();
@@ -566,9 +559,9 @@ namespace Turtle {
 						entity.AddComponent<TileMapComponent>();
 						auto& tileSet = entity.GetComponent<TileSetComponent>();
 						tileSet.TileSet = AssetManager::CreateTexture("assets/textures/RPGpack_sheet_2X.png");
-						auto& tileMap = entity.GetComponent<TileMapComponent>();
-						tileMap.Positions.emplace_back(glm::vec2(2.5f, 2.5f));
-						tileMap.Textures.emplace_back(SubTexture2D::CreateFromCoords(tileSet.TileSet, {1.0f, 1.0f}, {128.0f, 128.0f}));
+						// auto& tileMap = entity.GetComponent<TileMapComponent>();
+						// tileMap.Positions.emplace_back(glm::vec2(2.5f, 2.5f));
+						// tileMap.Textures.emplace_back(SubTexture2D::CreateFromCoords(tileSet.TileSet, {1.0f, 1.0f}, {128.0f, 128.0f}));
 						break;
 					}
 					case -1:
