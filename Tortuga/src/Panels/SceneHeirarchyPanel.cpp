@@ -313,6 +313,7 @@ namespace Turtle {
 
 					if(ImGui::Button("Remove Texture"))
 						spriteComponent.Textured = false;
+					
 
 					
 				}
@@ -518,62 +519,20 @@ namespace Turtle {
 		}
 
 		if (ImGui::Button("+ Add Component"))
+			ImGui::OpenPopup("AddComponent");
+		
+		if (ImGui::BeginPopup("AddComponent"))
 		{
-			m_ComponentDialogue.Open();
-		}
+			m_Context->m_Registry.visit([&](const auto component){
+				auto type = entt::resolve_type(component);	
+				auto typeString = type.prop("Name"_hs).value().try_cast<char const*>();
 
-		if(m_ComponentDialogue.Active())
-		{
-			m_ComponentDialogue.Display();
-			if(m_ComponentDialogue.HasSelected())
-			{
-				int compType = m_ComponentDialogue.GetComponentSelection();
-				m_ComponentDialogue.Close();
-
-				switch (compType)
+				if(ImGui::MenuItem(*typeString))
 				{
-					case (int)ComponentTypes::SpriteRendererComponent: 
-					{
-						entity.AddComponent<SpriteRendererComponent>(); 
-						break;
-					}
-					case (int)ComponentTypes::CameraComponent: 
-					{
-						//can be handled by connecting an on camera add function in the future, so it is automatically called on creation
-						entity.AddComponent<CameraComponent>(); 
-						m_Context->OnCameraAdd(entity.GetComponent<CameraComponent>()); 
-						break;
-					}
-					case (int)ComponentTypes::NativeScriptComponent:
-					{
-						entity.AddComponent<NativeScriptComponent>(); 
-						break;
-					}
-					case (int)ComponentTypes::ParticleSpawnerComponent:
-					{
-						entity.AddComponent<ParticleSpawnerComponent>();
-						break;
-					}
-					case (int)ComponentTypes::TileSetComponent:
-					{
-						entity.AddComponent<TileSetComponent>();
-						entity.AddComponent<GridComponent>();
-						entity.AddComponent<TileMapComponent>();
-						auto& tileSet = entity.GetComponent<TileSetComponent>();
-						tileSet.TileSet = AssetManager::CreateTexture("assets/textures/RPGpack_sheet_2X.png");
-						auto& tileMap = entity.GetComponent<TileMapComponent>();
-						tileMap.Positions.emplace_back(glm::vec2(2.5f, 2.5f));
-						tileMap.Textures.emplace_back(SubTexture2D::CreateFromCoords(tileSet.TileSet, {1.0f, 1.0f}, {128.0f, 128.0f}));
-						tileMap.Positions.emplace_back(glm::vec2(3.5f, 2.5f));
-						tileMap.Textures.emplace_back(SubTexture2D::CreateFromCoords(tileSet.TileSet, {1.0f, 1.0f}, {128.0f, 128.0f}));
-						break;
-					}
-					case -1:
-						break;
-					default:
-						TURT_CORE_ERROR("Component Type cannot be added");
+					type.ctor<Entity>().invoke(entity);
 				}
-			}
+			});
+			ImGui::EndPopup();
 		}
 	}
 }

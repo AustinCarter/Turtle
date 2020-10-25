@@ -30,6 +30,8 @@ namespace Turtle {
 		TagComponent, TransformComponent
 	};
 
+	// static std::string[] ComponentTypeStrings{"TagComponent, TransformComponent, SpriteRendererComponent, CameraComponent, NativeScriptComponent, ParticleSpawnerComponent, TileSetComponent, GridComponent, TileMapComponent"};
+
 	struct TagComponent
 	{
 		std::string Tag;

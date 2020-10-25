@@ -22,7 +22,7 @@ namespace Turtle {
 		TURT_PROFILE_FUNCTION();
 
 
-		m_CheckerboardTexture = AssetManager::CreateTexture("assets/textures/Checkerboard.png");
+		//m_CheckerboardTexture = AssetManager::CreateTexture("assets/textures/Checkerboard.png");
 
 		FramebufferSpecification fbSpec;
 		fbSpec.Width = 1280;

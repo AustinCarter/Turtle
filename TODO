@@ -21,7 +21,7 @@ Editor:
 		- conversion from opengl size to pixels*
 		- mouse transform conversion to world space
 		- add tiles to map
-		- TileMap component
+		- TileMap component*
 	- Load/Save Scenes (Re: Seralization)*
 		- save*
 		- load*
@@ -30,7 +30,6 @@ Editor:
 	- Select Shader	(RE: Materials)
 	- entity click to select and drag (requires mouse transform to world space) 
 	- layer integration
-
 
 
 mousepos 
