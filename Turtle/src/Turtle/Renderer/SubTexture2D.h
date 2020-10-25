@@ -15,6 +15,7 @@ namespace Turtle {
 
 		//NOTE: I don't love this api
 		static Ref<SubTexture2D> CreateFromCoords(const Ref<Texture2D>& texture, const glm::vec2& spritePos, const glm::vec2& cellSize, const glm::vec2& spriteSize = { 1, 1});
+		static Ref<SubTexture2D> CreateFromBounds(const Ref<Texture2D>& texture, glm::vec2* bounds);
 	private:
 		Ref<Texture2D> m_Texture;
 		glm::vec2 m_TexCoords[4];

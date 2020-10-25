@@ -18,4 +18,9 @@ namespace Turtle {
 		
 		return CreateRef<SubTexture2D>(texture, min, max);	
 	}
+
+	Ref<SubTexture2D> SubTexture2D::CreateFromBounds(const Ref<Texture2D>& texture, glm::vec2* bounds)
+	{
+		return CreateRef<SubTexture2D>(texture, bounds[0], bounds[2]);	
+	}
 }

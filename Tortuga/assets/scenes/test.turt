@@ -4,6 +4,19 @@ Entities:
     SpriteRendererComponent:
       Color: [1, 1, 1, 1]
       Textured: false
+    GridComponent:
+      GridSize: 1
+      Active: false
+    TileMapComponent:
+      Tint: [1, 1, 1, 1]
+      Positions: [[2.5, 2.5], [3.5, 2.5]]
+      Textures:
+        Texture: assets/textures/RPGpack_sheet_2X.png
+        TextureBounds: [[[0.0500000007, 0.0769230798], [0.100000001, 0.0769230798], [0.100000001, 0.15384616], [0.0500000007, 0.15384616]], [[0.0500000007, 0.0769230798], [0.100000001, 0.0769230798], [0.100000001, 0.15384616], [0.0500000007, 0.15384616]]]
+    TileSetComponent:
+      TileWidth: 64
+      TileHeight: 64
+      TileSet: assets/textures/RPGpack_sheet_2X.png
     TagComponent:
       Tag: Square
     TransformComponent:
@@ -11,6 +24,12 @@ Entities:
       Rotation: [0, 0, 0]
       Scale: [1, 1, 1]
   - Entity: 12837192831273
+    TagComponent:
+      Tag: Camera
+    TransformComponent:
+      Translation: [0, 0, 0]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
     CameraComponent:
       Camera:
         ProjectionType: 1
@@ -22,9 +41,3 @@ Entities:
         OrthographicFar: 1
       Primary: true
       FixedAspectRatio: false
-    TagComponent:
-      Tag: Camera
-    TransformComponent:
-      Translation: [0, 0, 0]
-      Rotation: [0, 0, 0]
-      Scale: [1, 1, 1]

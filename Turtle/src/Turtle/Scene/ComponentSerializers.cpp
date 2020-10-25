@@ -55,6 +55,35 @@ namespace YAML {
 		}
 	};
 
+	template<>
+	struct convert<glm::vec2>
+	{
+		static Node encode(const glm::vec2& rhs)
+		{
+			Node node;
+			node.push_back(rhs.x);
+			node.push_back(rhs.y);
+			return node;
+		}
+
+		static bool decode(const Node& node, glm::vec2& rhs)
+		{
+			if (!node.IsSequence() || node.size() != 2)
+				return false;
+
+			rhs.x = node[0].as<float>();
+			rhs.y = node[1].as<float>();
+			return true;
+		}
+	};
+
+}
+
+YAML::Emitter& operator<<(YAML::Emitter& out, const glm::vec2& v)
+{
+	out << YAML::Flow;
+	out << YAML::BeginSeq << v.x << v.y << YAML::EndSeq;
+	return out;
 }
 
 YAML::Emitter& operator<<(YAML::Emitter& out, const glm::vec3& v)
@@ -276,12 +305,64 @@ namespace Turtle {
 		out << YAML::Key << "TileMapComponent";
 		out << YAML::BeginMap; // TileMapComponent
 
+		out << YAML::Key << "Tint" << YAML::Value << Tint;
+
+		out << YAML::Key << "Positions";
+		out << YAML::Flow;
+		out << YAML::BeginSeq;
+		for(auto& position : Positions)
+		{
+		  out << YAML::Value << position;
+		}
+		out << YAML::EndSeq;
+
+		out << YAML::Key << "Textures";
+		out << YAML::BeginMap; // Textures
+
+	  	out << YAML::Key << "Texture" << YAML::Value << Textures[0]->GetTexture()->GetPath();
+		out << YAML::Key << "TextureBounds";
+		out << YAML::Flow;
+		out << YAML::BeginSeq;
+		for(auto& texture : Textures)
+		{
+	 	 	auto texCorods = texture->GetTexCoords();
+			out << YAML::Flow;
+		 	out << YAML::BeginSeq;
+		 	out << texCorods[0] << texCorods[1] << texCorods[2] << texCorods[3];
+		 	out << YAML::EndSeq;
+		}
+		out << YAML::EndSeq;
+		out << YAML::EndMap; // Textures
+		//out << YAML::Key << "Textures" << YAML::Value << Textures;
 
 		out << YAML::EndMap; // TileMapComponent
 	}
 
 	void TileMapComponent::Deserialize(YAML::Node& data, Entity entity)
 	{
+		auto& comp = entity.GetComponent < TileMapComponent >();
 
+		comp.Tint = data["Tint"].as<glm::vec4>();
+		auto Positions = data["Positions"];
+		for(YAML::Node position : Positions)
+		{
+			TURT_CORE_WARN("POS");
+			comp.Positions.emplace_back(position.as<glm::vec2>());
+		}
+		auto Textures = data["Textures"];
+		std::string path = Textures["Texture"].as<std::string>();
+		Ref<Texture2D> tex = AssetManager::CreateTexture(path);
+		for(YAML::Node texture : Textures["TextureBounds"])
+		{
+			TURT_CORE_WARN("TEX");
+			glm::vec2 bounds[4];
+			int index = 0;
+			for(YAML::Node bound : texture)
+			{
+				bounds[index] = bound.as<glm::vec2>();
+				index++;
+			}
+			comp.Textures.emplace_back(SubTexture2D::CreateFromBounds(tex, bounds));
+		}
 	}
 }

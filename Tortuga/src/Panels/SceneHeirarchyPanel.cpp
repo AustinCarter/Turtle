@@ -460,6 +460,7 @@ namespace Turtle {
 				{
 					entity.RemoveComponent<TileSetComponent>();
 					entity.RemoveComponent<GridComponent>();
+					entity.RemoveComponent<TileMapComponent>();
 					// open = false;
 				}
 				ImGui::EndPopup();
@@ -559,9 +560,11 @@ namespace Turtle {
 						entity.AddComponent<TileMapComponent>();
 						auto& tileSet = entity.GetComponent<TileSetComponent>();
 						tileSet.TileSet = AssetManager::CreateTexture("assets/textures/RPGpack_sheet_2X.png");
-						// auto& tileMap = entity.GetComponent<TileMapComponent>();
-						// tileMap.Positions.emplace_back(glm::vec2(2.5f, 2.5f));
-						// tileMap.Textures.emplace_back(SubTexture2D::CreateFromCoords(tileSet.TileSet, {1.0f, 1.0f}, {128.0f, 128.0f}));
+						auto& tileMap = entity.GetComponent<TileMapComponent>();
+						tileMap.Positions.emplace_back(glm::vec2(2.5f, 2.5f));
+						tileMap.Textures.emplace_back(SubTexture2D::CreateFromCoords(tileSet.TileSet, {1.0f, 1.0f}, {128.0f, 128.0f}));
+						tileMap.Positions.emplace_back(glm::vec2(3.5f, 2.5f));
+						tileMap.Textures.emplace_back(SubTexture2D::CreateFromCoords(tileSet.TileSet, {1.0f, 1.0f}, {128.0f, 128.0f}));
 						break;
 					}
 					case -1:

@@ -1,6 +1,5 @@
 Engine:
-	- Seralization
-		- want to move serialization out of scene so that yaml doesn't need to be include of sandbox and tortuga
+	- Seralization*
 		- deserializaton*
 		- Try to remove need for InitComponentMeta as a function. 
 	- Particles*
@@ -22,13 +21,14 @@ Editor:
 		- conversion from opengl size to pixels*
 		- mouse transform conversion to world space
 		- add tiles to map
-	- Load/Save Scenes (Re: Seralization)
+		- TileMap component
+	- Load/Save Scenes (Re: Seralization)*
 		- save*
 		- load*
 	- Scene play
 	- Bindable Scripts
 	- Select Shader	(RE: Materials)
-	- entity click to select and drag
+	- entity click to select and drag (requires mouse transform to world space) 
 	- layer integration
 
 

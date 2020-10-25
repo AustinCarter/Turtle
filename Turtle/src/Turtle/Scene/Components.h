@@ -177,7 +177,7 @@ namespace Turtle {
 	{
 		//NOTE: ON SERIALIZATION COULD STORE THE SIZE OF THE VECTORS TO ALLOW FOR ONLY
 		//ALLOCATION DURING DESERIALIZATION
-		Ref<TileSetComponent> TileSet;
+		// Ref<TileSetComponent> TileSet;
 		glm::vec4 Tint {1.0f, 1.0f, 1.0f, 1.0f};
 		std::vector<glm::vec2> Positions;
 		std::vector<Ref<SubTexture2D>> Textures;
