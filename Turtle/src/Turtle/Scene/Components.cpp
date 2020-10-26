@@ -18,5 +18,6 @@ namespace Turtle {
 		RegisterComponent<TileSetComponent>("TileSetComponent");
 		RegisterComponent<GridComponent>("GridComponent");
 		RegisterComponent<TileMapComponent>("TileMapComponent");
+
 	}
 } 

@@ -4,14 +4,14 @@ Engine:
 		- Try to remove need for InitComponentMeta as a function. 
 	- Particles*
 	- lighting	
-	- Animation : Not sure if I want to do this engine side
 	- Material (Shader + Texture)
 	- Sound
 	- Shader Asset Manegment
+	- Auto Scale IMGUI UI for different screen sizes
+	- Animation : Not sure if I want to do this engine side
 	- Physics
 	- UI system
 	- Stretch: Non-native scripting (lua?)
-	- Auto Scale IMGUI UI for different screen sizes
 Editor:
 	- Tile Map/Grid Import and Placement UI
 		- import tileset/tileset component*
@@ -28,8 +28,8 @@ Editor:
 	- Scene play
 	- Bindable Scripts
 	- Select Shader	(RE: Materials)
-	- entity click to select and drag (requires mouse transform to world space) 
 	- layer integration
+	- entity click to select and drag (requires mouse transform to world space) 
 
 
 mousepos 

@@ -134,18 +134,22 @@ namespace Turtle {
 		if (ImGui::Button("+ Add Component"))
 			ImGui::OpenPopup("AddComponent");
 		if (ImGui::BeginPopup("AddComponent"))
-		{
-			m_Context->m_Registry.visit([&](const auto component){
-				auto type = entt::resolve_type(component);	
-				auto typeString = type.prop("Name"_hs).value().try_cast<char const*>();
-
-				//auto reg = m_Context->m_Registry;
-
-				if(ImGui::MenuItem(*typeString))
+		{			
+			entt::meta_range<entt::meta_type> range{ entt::internal::meta_context::local() };
+			for (auto& typeID : range)
+			{
+				auto type = entt::resolve_type(typeID.type_id());
+				if(type)
 				{
-					type.ctor<Entity>().invoke(entity);
+					auto typeString = type.prop("Name"_hs).value().try_cast<char const*>();
+				
+					if(ImGui::MenuItem(*typeString))
+					{
+						type.ctor<Entity>().invoke(entity);
+					}
 				}
-			});
+			}
+
 			ImGui::EndPopup();
 		}
 	}
