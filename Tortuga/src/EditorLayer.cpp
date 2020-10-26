@@ -271,7 +271,6 @@ namespace Turtle {
 			m_SceneHierarchyPanel.SetContext(m_ActiveScene);
 			
 			m_ActiveScene->DeserializeScene(filepath);
-			m_ActiveScene->OnViewportResize((uint32_t)m_ViewportSize.x, (uint32_t)m_ViewportSize.y);
 		}
 	}
 

@@ -1,11 +1,12 @@
 #include "turtpch.h"
 #include "Scene.h"
-
+ 
 #include "Turtle/Renderer/Renderer2D.h"
 
 #include "Turtle/Scene/Entity.h"
 #include "Turtle/Core/AssetManager.h"
 #include "Turtle/Scene/Components.h"
+#include "Turtle/Scene/ComponentConnections.cpp"
 
 #include "Turtle/Core/Log.h"
 
@@ -15,12 +16,15 @@
 
 #include <fstream>
 
+#include <Turtle/Utils/PlatformUtils.h>
+
 
 namespace Turtle {
 
 	Scene::Scene()
 	{
-
+		m_Registry.on_construct<CameraComponent>().connect<&Scene::OnCameraConstruct>(*this);
+		m_Registry.on_construct<TileSetComponent>().connect<&OnTileSetConstruct>();
 	}
 
 	Scene::~Scene()
@@ -148,7 +152,7 @@ namespace Turtle {
 						}
 						for(int y = -1; y <= orthoSize/grid.GridSize ; y++)
 						{
-							Renderer2D::DrawQuad(glm::vec2(cameraTransform[3][0],(y*grid.GridSize) + (cameraTransform[3][1]-fmod(cameraTransform[3][1], grid.GridSize)) - ((orthoSize/ 2) - fmod(orthoSize/ 2, grid.GridSize))), glm::vec2(orthoSize*aspectRatio, .001f*orthoSize), glm::vec4(0.5f, 0.5f, 0.5f, 1.0f));
+							Renderer2D::DrawQuad(glm::vec2(cameraTransform[3][0],(y*grid.GridSize) + (cameraTransform[3][1]-fmod(cameraTransform[3][1], grid.GridSize)) - ((orthoSize/ 2) - fmod(orthoSize/ 2, grid.GridSize))), glm::vec2(orthoSize*aspectRatio, .0015f*orthoSize), glm::vec4(0.5f, 0.5f, 0.5f, 1.0f));
 						}
 
 						break;
@@ -181,8 +185,9 @@ namespace Turtle {
 		}
 	}
 
-	void Scene::OnCameraAdd(CameraComponent& cameraComponent)
+	void Scene::OnCameraConstruct(entt::registry & registry, entt::entity entity)
 	{
+		auto& cameraComponent = registry.get<CameraComponent>(entity);
 		cameraComponent.Camera.SetViewportSize(m_ViewportWidth, m_ViewportHeight);	
 	}
 
@@ -229,7 +234,6 @@ namespace Turtle {
 			return;
 
 		std::string sceneName = data["Scene"].as<std::string>();
-		TURT_CORE_TRACE("Deserializing scene '{0}'", sceneName);
 
 		YAML::Node entities = data["Entities"];
 		if(entities)

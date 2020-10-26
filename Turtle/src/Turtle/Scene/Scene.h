@@ -3,6 +3,7 @@
 #include <entt.hpp>
 
 #include "Turtle/Core/Timestep.h"
+#include <entt.hpp>
 
 
 namespace Turtle {
@@ -20,7 +21,7 @@ namespace Turtle {
 		void OnUpdate(Timestep ts);
 		void OnViewportResize(uint32_t width, uint32_t height);
 
-		void OnCameraAdd(CameraComponent& cameraComponent);
+		void OnCameraConstruct(entt::registry& registry, entt::entity entity);
 
 		void SerializeScene(const std::string& filepath);
 		void DeserializeScene(const std::string& filepath);

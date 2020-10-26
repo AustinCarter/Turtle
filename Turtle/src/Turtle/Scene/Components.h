@@ -13,6 +13,8 @@
 
 #include "Turtle/Renderer/ParticleSpawner.h"
 
+//#include <entt.hpp>
+
 #include <fstream>
 
 #include <yaml-cpp/yaml.h>
@@ -22,15 +24,6 @@ namespace Turtle {
 
 
 	void InitComponentMeta();
-
-	//NOTE: Tag and Transform component should be after any newly added  components
-	enum class ComponentTypes { 
-		SpriteRendererComponent = 0, CameraComponent = 1, NativeScriptComponent = 2, 
-		ParticleSpawnerComponent = 3, TileSetComponent = 4,
-		TagComponent, TransformComponent
-	};
-
-	// static std::string[] ComponentTypeStrings{"TagComponent, TransformComponent, SpriteRendererComponent, CameraComponent, NativeScriptComponent, ParticleSpawnerComponent, TileSetComponent, GridComponent, TileMapComponent"};
 
 	struct TagComponent
 	{
@@ -43,6 +36,7 @@ namespace Turtle {
 
 		void Serialize(YAML::Emitter& out);
 		void Deserialize(YAML::Node& out, Entity entity);
+		void DrawUI(Entity entity);
 	};
 
 	struct TransformComponent
@@ -67,6 +61,7 @@ namespace Turtle {
 		}
 		void Serialize(YAML::Emitter& out);
 		void Deserialize(YAML::Node& out, Entity entity);
+		void DrawUI(Entity entity);
 	};
 
 	struct SpriteRendererComponent
@@ -89,6 +84,7 @@ namespace Turtle {
 
 		void Serialize(YAML::Emitter& out);
 		void Deserialize(YAML::Node& out, Entity entity);
+		void DrawUI(Entity entity);
 
 	};
 
@@ -103,6 +99,7 @@ namespace Turtle {
 
 		void Serialize(YAML::Emitter& out);
 		void Deserialize(YAML::Node& out, Entity entity);
+		void DrawUI(Entity entity);
 	};
 
 
@@ -123,6 +120,7 @@ namespace Turtle {
 		}
 		void Serialize(YAML::Emitter& out);
 		void Deserialize(YAML::Node& out, Entity entity);
+		void DrawUI(Entity entity);
 	};
 
 	struct ParticleSpawnerComponent
@@ -146,6 +144,7 @@ namespace Turtle {
 
 		void Serialize(YAML::Emitter& out);
 		void Deserialize(YAML::Node& out, Entity entity);
+		void DrawUI(Entity entity);
 
 	};
 
@@ -154,25 +153,29 @@ namespace Turtle {
 	{
 		Ref<Texture2D> TileSet;
 		uint32_t TileWidth = 64, TileHeight = 64;
+		uint32_t SelectedX = 0, SelectedY = 0;
+		bool DisplayPallette;
 
 		TileSetComponent() = default;
 		TileSetComponent(const TileSetComponent&) = default;
 
 		void Serialize(YAML::Emitter& out);
 		void Deserialize(YAML::Node& out, Entity entity);
+		void DrawUI(Entity entity);
 	};
 
 	struct GridComponent
 	{
 		//COULD MAKE A GLM::VEC2 FOR NON SQUARE GRID
 		float GridSize = 1.0f;
-		bool Active = false;
+		bool Active = true;
 
 		GridComponent() = default;
 		GridComponent(const GridComponent&) = default;
 
 		void Serialize(YAML::Emitter& out);
 		void Deserialize(YAML::Node& out, Entity entity);
+		void DrawUI(Entity entity);
 	};
 
 	struct TileMapComponent
@@ -189,6 +192,7 @@ namespace Turtle {
 
 		void Serialize(YAML::Emitter& out);
 		void Deserialize(YAML::Node& out, Entity entity);
+		void DrawUI(Entity entity);
 	};
 
 	
@@ -204,6 +208,18 @@ namespace Turtle {
 		if(entity.HasComponent<Component>())
 			return entity.GetComponent<Component>();
 		return entity.AddComponent<Component>();
+	}
+
+	template<typename Component>
+	static void RegisterComponent(char const* name)
+	{
+		entt::meta<Component>().type(entt::hashed_string{ name })
+			.prop("Name"_hs, name)
+			.ctor<&Get<Component>>()
+			.ctor<&Add<Component>>()
+			.func<&Component::Serialize>("Serialize"_hs)
+			.func<&Component::Deserialize>("Deserialize"_hs)
+			.func<&Component::DrawUI>("DrawUI"_hs);
 	}
 
 }
