@@ -148,7 +148,6 @@ namespace Turtle {
 
 	};
 
-	//NOTE: if an Entity has a tile set, it is expected to also have a grid and tile map at the moment
 	struct TileSetComponent
 	{
 		Ref<Texture2D> TileSet;

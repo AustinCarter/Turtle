@@ -34,6 +34,9 @@
     <Filter Include="src\Turtle\Scene">
       <UniqueIdentifier>{D9EE4C82-C5E7-6BD4-EE19-5159DA714BE0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\Turtle\Scripting">
+      <UniqueIdentifier>{BE747E88-AA03-0852-5322-1C4D3F9018F8}</UniqueIdentifier>
+    </Filter>
     <Filter Include="src\Turtle\Utils">
       <UniqueIdentifier>{1C837A82-087C-99D4-31AE-7E591D0679E0}</UniqueIdentifier>
     </Filter>
@@ -209,6 +212,9 @@
     </ClInclude>
     <ClInclude Include="src\Turtle\Scene\ScriptableEntity.h">
       <Filter>src\Turtle\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Turtle\Scripting\LuaScriptBinder.h">
+      <Filter>src\Turtle\Scripting</Filter>
     </ClInclude>
     <ClInclude Include="src\Turtle\Utils\ImGuiUILib.h">
       <Filter>src\Turtle\Utils</Filter>
@@ -1547,6 +1553,9 @@
     <ClCompile Include="src\Turtle\Renderer\VertexArray.cpp">
       <Filter>src\Turtle\Renderer</Filter>
     </ClCompile>
+    <ClCompile Include="src\Turtle\Scene\ComponentConnections.cpp">
+      <Filter>src\Turtle\Scene</Filter>
+    </ClCompile>
     <ClCompile Include="src\Turtle\Scene\ComponentSerializers.cpp">
       <Filter>src\Turtle\Scene</Filter>
     </ClCompile>
@@ -1564,6 +1573,9 @@
     </ClCompile>
     <ClCompile Include="src\Turtle\Scene\SceneCamera.cpp">
       <Filter>src\Turtle\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Turtle\Scripting\LuaScriptBinder.cpp">
+      <Filter>src\Turtle\Scripting</Filter>
     </ClCompile>
     <ClCompile Include="src\turtpch.cpp">
       <Filter>src</Filter>

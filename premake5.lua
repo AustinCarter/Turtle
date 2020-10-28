@@ -25,12 +25,14 @@ IncludeDir["ImGui"] = "Turtle/vendor/imgui"
 IncludeDir["glm"] = "Turtle/vendor/glm"
 IncludeDir["stb_image"] = "Turtle/vendor/stb_image"
 IncludeDir["entt"] = "Turtle/vendor/entt/include"
+IncludeDir["lua"] = "Turtle/vendor/lua/src"
 
 group "Dependencies"
 	include "Turtle/vendor/GLFW"
 	include "Turtle/vendor/Glad"
 	include "Turtle/vendor/imgui"
 	include "Turtle/vendor/yaml-cpp"
+	include "Turtle/vendor/lua"
 group ""
 
 project "Turtle"
@@ -71,7 +73,8 @@ project "Turtle"
 		"%{IncludeDir.glm}",
 		"%{IncludeDir.stb_image}",
 		"%{IncludeDir.yaml_cpp}",
-		"%{IncludeDir.entt}"
+		"%{IncludeDir.entt}",
+		"%{IncludeDir.lua}"
 	}
 
 	links 
@@ -80,6 +83,7 @@ project "Turtle"
 		"Glad",
 		"ImGui",
 		"yaml-cpp",
+		"lua",
 		"opengl32.lib"
 	}
 
