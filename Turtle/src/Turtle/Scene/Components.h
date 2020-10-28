@@ -13,6 +13,8 @@
 
 #include "Turtle/Renderer/ParticleSpawner.h"
 
+#include "Turtle/Scripting/LuaScript.h"
+
 //#include <entt.hpp>
 
 #include <fstream>
@@ -21,10 +23,6 @@
 
 
 namespace Turtle {
-
-
-	void InitComponentMeta();
-
 	struct TagComponent
 	{
 		std::string Tag;
@@ -102,26 +100,39 @@ namespace Turtle {
 		void DrawUI(Entity entity);
 	};
 
-
-	struct NativeScriptComponent
+	struct ScriptComponent
 	{
-		ScriptableEntity* Instance = nullptr;
-		bool Bound = false; 
+		Ref<LuaScript> Script;
 
-		ScriptableEntity*(*InstantiateScript)();
-		void (*DestroyScript)(NativeScriptComponent*);
+		ScriptComponent() = default;
+		ScriptComponent(const ScriptComponent&) = default;
 
-		template<typename T>
-		void Bind()
-		{
-			InstantiateScript = []() { return static_cast<ScriptableEntity*>(new T()); };
-			DestroyScript = [](NativeScriptComponent* nsc) {delete nsc->Instance; nsc->Instance = nullptr; };
-			Bound = true; 
-		}
 		void Serialize(YAML::Emitter& out);
 		void Deserialize(YAML::Node& out, Entity entity);
 		void DrawUI(Entity entity);
+
 	};
+
+
+	// struct NativeScriptComponent
+	// {
+	// 	ScriptableEntity* Instance = nullptr;
+	// 	bool Bound = false; 
+
+	// 	ScriptableEntity*(*InstantiateScript)();
+	// 	void (*DestroyScript)(NativeScriptComponent*);
+
+	// 	template<typename T>
+	// 	void Bind()
+	// 	{
+	// 		InstantiateScript = []() { return static_cast<ScriptableEntity*>(new T()); };
+	// 		DestroyScript = [](NativeScriptComponent* nsc) {delete nsc->Instance; nsc->Instance = nullptr; };
+	// 		Bound = true; 
+	// 	}
+	// 	void Serialize(YAML::Emitter& out);
+	// 	void Deserialize(YAML::Node& out, Entity entity);
+	// 	void DrawUI(Entity entity);
+	// };
 
 	struct ParticleSpawnerComponent
 	{
@@ -214,11 +225,19 @@ namespace Turtle {
 	{
 		entt::meta<Component>().type(entt::hashed_string{ name })
 			.prop("Name"_hs, name)
+			.prop("Component"_hs)
+			.ctor<>()
 			.ctor<&Get<Component>>()
 			.ctor<&Add<Component>>()
 			.func<&Component::Serialize>("Serialize"_hs)
 			.func<&Component::Deserialize>("Deserialize"_hs)
 			.func<&Component::DrawUI>("DrawUI"_hs);
+
+		std::string getterName = "GetComponent__";
+		getterName.append(name);
+		entt::meta<Entity>()
+			.func<&Entity::GetComponent<Component>>(entt::hashed_string{getterName.c_str()})
+				.prop("Name"_hs, (char const*)getterName.c_str());
 	}
 
 }

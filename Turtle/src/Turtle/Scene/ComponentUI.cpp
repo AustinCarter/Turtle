@@ -12,22 +12,19 @@
 
 namespace Turtle{
 
-	//NOTE: Tag and Transform UI is being drawn in the SceneHeirarchy Panel at the moment to ensure they are shown at the top
-	void TagComponent::DrawUI(Entity entity){}
-	void TransformComponent::DrawUI(Entity entity){}
-
-	void SpriteRendererComponent::DrawUI(Entity entity)
+	template<typename T, typename UIFunction>
+	static void DrawComponent(const std::string& name, Entity entity, UIFunction uiFunction)
 	{
 		ImGuiTreeNodeFlags treeNodeFlags = ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_Framed | ImGuiTreeNodeFlags_SpanAvailWidth | ImGuiTreeNodeFlags_FramePadding;
 
-		bool open = ImGui::TreeNodeEx((void*)typeid(SpriteRendererComponent).hash_code(), treeNodeFlags, "Sprite");
+		bool open = ImGui::TreeNodeEx((void*)typeid(T).hash_code(), treeNodeFlags, name.c_str());
 		bool removed = false;
-		if (ImGui::BeginPopupContextItem("Sprite Renderer Component Context Menu"))
+		if (ImGui::BeginPopupContextItem("Component Context Menu"))
 		{
 			removed = ImGui::Selectable("Remove Component");
 			if (removed)
 			{
-				entity.RemoveComponent<SpriteRendererComponent>();
+				entity.RemoveComponent<T>();
 				// open = false;
 			}
 			ImGui::EndPopup();
@@ -35,54 +32,50 @@ namespace Turtle{
 		}
 		if (open && !removed)
 		{
-			auto& spriteComponent = entity.GetComponent<SpriteRendererComponent>();
-			auto& color = spriteComponent.Color; 
+			auto& component = entity.GetComponent<T>();
+			uiFunction(component);
+			ImGui::TreePop();
+		}
+	}
+
+	//NOTE: Tag and Transform UI is being drawn in the SceneHeirarchy Panel at the moment to ensure they are shown at the top
+	void TagComponent::DrawUI(Entity entity){}
+	void TransformComponent::DrawUI(Entity entity){}
+
+	void SpriteRendererComponent::DrawUI(Entity entity)
+	{
+		DrawComponent<SpriteRendererComponent>("Sprite", entity, [](auto& component)
+		{
+			auto& color = component.Color; 
 			ImGui::ColorEdit4("Color", glm::value_ptr(color));
 
-			if (Textured)
+			if (component.Textured)
 			{
-				ImGui::Image((void*)spriteComponent.RendererID, ImVec2{ 100, 100 }, ImVec2{ 0, 1 }, ImVec2{ 1, 0 });
+				ImGui::Image((void*)component.RendererID, ImVec2{ 100, 100 }, ImVec2{ 0, 1 }, ImVec2{ 1, 0 });
 				ImGui::SameLine();
 
 				if(ImGui::Button("Remove Texture"))
-					spriteComponent.Textured = false;
+					component.Textured = false;
 				
 			}
 			
 			else if(ImGui::Button("Add Texture"))
 			{
 				std::string path = FileDialogs::OpenFile("*.png\0*.png\0");
-				spriteComponent.Texture = AssetManager::CreateTexture(path);
-				spriteComponent.RendererID = spriteComponent.Texture->GetRendererID();
-				spriteComponent.Textured = true;
+				component.Texture = AssetManager::CreateTexture(path);
+				component.RendererID = component.Texture->GetRendererID();
+				component.Textured = true;
 			}
-
-			ImGui::TreePop();
-		}
+		});
 	}
 
 	void CameraComponent::DrawUI(Entity entity)
 	{
-		ImGuiTreeNodeFlags treeNodeFlags = ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_Framed | ImGuiTreeNodeFlags_SpanAvailWidth | ImGuiTreeNodeFlags_FramePadding;
-		bool open = ImGui::TreeNodeEx((void*)typeid(CameraComponent).hash_code(), treeNodeFlags, "Camera");
-		bool removed = false;
-		if (ImGui::BeginPopupContextItem("Camera Component Context Menu"))
+		DrawComponent<CameraComponent>("Camera", entity, [](auto& component)
 		{
-			removed = ImGui::Selectable("Remove Component");
-			if (removed)
-			{
-				entity.RemoveComponent<CameraComponent>();
-				// open = false;
-			}
-			ImGui::EndPopup();
-			if(removed && open) ImGui::TreePop();
-		}
-		if (open && !removed)
-		{
-			auto& cameraComponent = entity.GetComponent<CameraComponent>();
-			auto& camera = cameraComponent.Camera;
+			auto& camera = component.Camera;
 
-			ImGui::Checkbox("Primary", &cameraComponent.Primary);
+			ImGui::Checkbox("Primary", &component.Primary);
 
 			const char* projectionTypeStrings[] = {"Perspective", "Orthographic"};
 
@@ -136,59 +129,22 @@ namespace Turtle{
 					camera.SetOrthographicFarClip(orthoFar);		
 
 
-				ImGui::Checkbox("Fixed Aspect Ratio", &cameraComponent.FixedAspectRatio);	
+				ImGui::Checkbox("Fixed Aspect Ratio", &component.FixedAspectRatio);	
 			}
-
-
-			ImGui::TreePop();
-		}
+		});
 	}
 
-	void NativeScriptComponent::DrawUI(Entity entity)
+	void ScriptComponent::DrawUI(Entity entity)
 	{
-		ImGuiTreeNodeFlags treeNodeFlags = ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_Framed | ImGuiTreeNodeFlags_SpanAvailWidth | ImGuiTreeNodeFlags_FramePadding;
-		bool open = ImGui::TreeNodeEx((void*)typeid(NativeScriptComponent).hash_code(), treeNodeFlags, "Native Script");
-		bool removed = false;
-		if (ImGui::BeginPopupContextItem("Camera Component Context Menu"))
-		{
-			removed = ImGui::Selectable("Remove Component");
-			if (removed)
-			{
-				entity.RemoveComponent<NativeScriptComponent>();
-				// open = false;
-			}
-			ImGui::EndPopup();
-			if(open && removed) ImGui::TreePop();
-		}
-		if (open && !removed)
-		{
-			// auto& nativeScriptComponent = entity.GetComponent<NativeScriptComponent>();
-			const char* BoundString = Bound ? "" : "No script bound";	
-			ImGui::Button(BoundString);
-			ImGui::TreePop();
-		} 
+		
 	}
 
 	void ParticleSpawnerComponent::DrawUI(Entity entity)
 	{
-		ImGuiTreeNodeFlags treeNodeFlags = ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_Framed | ImGuiTreeNodeFlags_SpanAvailWidth | ImGuiTreeNodeFlags_FramePadding;
-		bool open = ImGui::TreeNodeEx((void*)typeid(ParticleSpawnerComponent).hash_code(), treeNodeFlags, "Particle Spawner");
-		bool removed = false;
-		if (ImGui::BeginPopupContextItem("Particle Spawner Component Context Menu"))
+
+		DrawComponent<ParticleSpawnerComponent>("Particle Spawner", entity, [](auto& component)
 		{
-			removed = ImGui::Selectable("Remove Component");
-			if (removed)
-			{
-				entity.RemoveComponent<ParticleSpawnerComponent>();
-				// open = false;
-			}
-			ImGui::EndPopup();
-			if(open && removed) ImGui::TreePop();
-		}
-		if (open && !removed)
-		{
-			auto& particleSpawnerComponent = entity.GetComponent<ParticleSpawnerComponent>();
-			ParticleProps& particle = particleSpawnerComponent.Particle;
+			ParticleProps& particle = component.Particle;
 
 			ImGui::Text("Random Rotate");
 			ImGui::NextColumn();
@@ -249,120 +205,94 @@ namespace Turtle{
 			ImGui::Text("Emission Rate");
 			ImGui::NextColumn();
 			ImGui::PushItemWidth(ImGui::GetContentRegionAvailWidth()*0.8f);
-			ImGui::DragInt("##Emission Rate", (int*)(&particleSpawnerComponent.EmissionRate), 0.03f, 0, 10);
+			ImGui::DragInt("##Emission Rate", (int*)(&component.EmissionRate), 0.03f, 0, 10);
 			ImGui::PopItemWidth();
 
 
 			ImGui::PopStyleVar(2);
 			// ImGui::PopItemWidth();
 			ImGui::Columns(1);
+		});
 
-			ImGui::TreePop();
-		} 
 	}
 
 	void TileSetComponent::DrawUI(Entity entity)
 	{
-		ImGuiTreeNodeFlags treeNodeFlags = ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_Framed | ImGuiTreeNodeFlags_SpanAvailWidth | ImGuiTreeNodeFlags_FramePadding;
-		bool open = ImGui::TreeNodeEx((void*)typeid(TileSetComponent).hash_code(), treeNodeFlags, "Tile Set");
-		bool removed = false;
-		if (ImGui::BeginPopupContextItem("Tile Set Component Context Menu"))
-		{
-			removed = ImGui::Selectable("Remove Component");
-			if (removed)
-			{
-				entity.RemoveComponent<TileSetComponent>();
-			}
-			ImGui::EndPopup();
-			if(open && removed) ImGui::TreePop();
-		}
-		if (open && !removed)
-		{
-			auto& tileSetComponent = entity.GetComponent<TileSetComponent>();
-			
-			ImGui::Checkbox("Active", &tileSetComponent.DisplayPallette);
 
-			if(tileSetComponent.DisplayPallette)
+		DrawComponent<TileSetComponent>("Tile Set", entity, [&](auto& component)
+		{
+			ImGui::Checkbox("Active", &component.DisplayPallette);
+
+			if(component.DisplayPallette)
 			{
 				ImGui::Begin("Tile Pallette"); 
 				ImGuiIO& io = ImGui::GetIO();
 				ImGui::BeginChild("Tile Set", ImVec2{ ImGui::GetContentRegionAvail().x, ImGui::GetContentRegionAvail().y - 30 }, false, ImGuiWindowFlags_HorizontalScrollbar);
 				ImVec2 p = ImGui::GetCursorScreenPos();
-				ImGui::Image((void*)tileSetComponent.TileSet->GetRendererID(), ImVec2{ (float)tileSetComponent.TileSet->GetWidth(), (float)tileSetComponent.TileSet->GetHeight()},ImVec2{ 0, 1 }, ImVec2{ 1, 0 });
+				ImGui::Image((void*)component.TileSet->GetRendererID(), ImVec2{ (float)component.TileSet->GetWidth(), (float)component.TileSet->GetHeight()},ImVec2{ 0, 1 }, ImVec2{ 1, 0 });
 				
-				if(!tileSetComponent.TileWidth) tileSetComponent.TileWidth = tileSetComponent.TileSet->GetWidth();
-				if(!tileSetComponent.TileHeight) tileSetComponent.TileHeight = tileSetComponent.TileSet->GetHeight();
+				if(!component.TileWidth) component.TileWidth = component.TileSet->GetWidth();
+				if(!component.TileHeight) component.TileHeight = component.TileSet->GetHeight();
 
-				for(int x = 1; x < tileSetComponent.TileSet->GetWidth()/tileSetComponent.TileWidth; x++)
+				for(int x = 1; x < component.TileSet->GetWidth()/component.TileWidth; x++)
 				{
-					ImGui::GetWindowDrawList()->AddLine(ImVec2(p.x + tileSetComponent.TileWidth * x , p.y), ImVec2(p.x + tileSetComponent.TileWidth * x, p.y + tileSetComponent.TileSet->GetHeight()), IM_COL32(0, 0, 0, 255), 1.0f);
+					ImGui::GetWindowDrawList()->AddLine(ImVec2(p.x + component.TileWidth * x , p.y), ImVec2(p.x + component.TileWidth * x, p.y + component.TileSet->GetHeight()), IM_COL32(0, 0, 0, 255), 1.0f);
 				}
-				for(int y = 1; y < tileSetComponent.TileSet->GetHeight()/tileSetComponent.TileHeight; y++)
+				for(int y = 1; y < component.TileSet->GetHeight()/component.TileHeight; y++)
 				{
-					ImGui::GetWindowDrawList()->AddLine(ImVec2(p.x, p.y + tileSetComponent.TileHeight * y), ImVec2(p.x +  tileSetComponent.TileSet->GetWidth(), p.y + tileSetComponent.TileHeight * y), IM_COL32(0, 0, 0, 255), 1.0f);
+					ImGui::GetWindowDrawList()->AddLine(ImVec2(p.x, p.y + component.TileHeight * y), ImVec2(p.x +  component.TileSet->GetWidth(), p.y + component.TileHeight * y), IM_COL32(0, 0, 0, 255), 1.0f);
 				}
 
 				if (ImGui::IsItemHovered() && ImGui::IsMouseClicked(0))
 				{
-					tileSetComponent.SelectedX = (int)(io.MousePos.x - p.x) / tileSetComponent.TileWidth;
-					tileSetComponent.SelectedY = (int)(io.MousePos.y - p.y) / tileSetComponent.TileHeight;
+					component.SelectedX = (int)(io.MousePos.x - p.x) / component.TileWidth;
+					component.SelectedY = (int)(io.MousePos.y - p.y) / component.TileHeight;
 					// TURT_WARN("selected: {0}, {1}", (int)(io.MousePos.x - p.x)/128, (int)(io.MousePos.y - p.y)/128);
 				}
 
-				int xPos = tileSetComponent.TileWidth * SelectedX;
-				int yPos = tileSetComponent.TileHeight * tileSetComponent.SelectedY;
-				ImGui::GetWindowDrawList()->AddLine(ImVec2(p.x + xPos , p.y + yPos), ImVec2(p.x + xPos + tileSetComponent.TileWidth, p.y + yPos), IM_COL32(255, 0, 0, 255), 3.0f);
-				ImGui::GetWindowDrawList()->AddLine(ImVec2(p.x + xPos + tileSetComponent.TileWidth , p.y + yPos), ImVec2(p.x + xPos + tileSetComponent.TileWidth, p.y + yPos + tileSetComponent.TileHeight), IM_COL32(255, 0, 0, 255), 3.0f);
-				ImGui::GetWindowDrawList()->AddLine(ImVec2(p.x + xPos , p.y + yPos ), ImVec2(p.x + xPos, p.y + yPos + tileSetComponent.TileHeight), IM_COL32(255, 0, 0, 255), 3.0f);
-				ImGui::GetWindowDrawList()->AddLine(ImVec2(p.x + xPos , p.y + yPos + tileSetComponent.TileHeight), ImVec2(p.x + xPos + tileSetComponent.TileWidth, p.y + yPos + tileSetComponent.TileHeight), IM_COL32(255, 0, 0, 255), 3.0f);
+				int xPos = component.TileWidth * SelectedX;
+				int yPos = component.TileHeight * component.SelectedY;
+				ImGui::GetWindowDrawList()->AddLine(ImVec2(p.x + xPos , p.y + yPos), ImVec2(p.x + xPos + component.TileWidth, p.y + yPos), IM_COL32(255, 0, 0, 255), 3.0f);
+				ImGui::GetWindowDrawList()->AddLine(ImVec2(p.x + xPos + component.TileWidth , p.y + yPos), ImVec2(p.x + xPos + component.TileWidth, p.y + yPos + component.TileHeight), IM_COL32(255, 0, 0, 255), 3.0f);
+				ImGui::GetWindowDrawList()->AddLine(ImVec2(p.x + xPos , p.y + yPos ), ImVec2(p.x + xPos, p.y + yPos + component.TileHeight), IM_COL32(255, 0, 0, 255), 3.0f);
+				ImGui::GetWindowDrawList()->AddLine(ImVec2(p.x + xPos , p.y + yPos + component.TileHeight), ImVec2(p.x + xPos + component.TileWidth, p.y + yPos + component.TileHeight), IM_COL32(255, 0, 0, 255), 3.0f);
 
 				ImGui::EndChild();
 				if(ImGui::Button("Close"))
-					tileSetComponent.DisplayPallette = false;
+					component.DisplayPallette = false;
 				ImGui::End();
 
-				uint32_t TileSetWidth = tileSetComponent.TileSet->GetWidth();
-				uint32_t TileSetHeight = tileSetComponent.TileSet->GetHeight();
+				uint32_t TileSetWidth = component.TileSet->GetWidth();
+				uint32_t TileSetHeight = component.TileSet->GetHeight();
 
-				ImVec2 min = ImVec2( (float)(SelectedX * tileSetComponent.TileWidth)/TileSetWidth, 
-					1.0f - (float)(tileSetComponent.SelectedY * tileSetComponent.TileHeight)/TileSetHeight);
-				ImVec2 max = ImVec2( (float)((SelectedX + 1) * tileSetComponent.TileWidth)/TileSetWidth, 
-					1.0f - (float)((tileSetComponent.SelectedY + 1) * tileSetComponent.TileHeight)/TileSetHeight);
+				ImVec2 min = ImVec2( (float)(SelectedX * component.TileWidth)/TileSetWidth, 
+					1.0f - (float)(component.SelectedY * component.TileHeight)/TileSetHeight);
+				ImVec2 max = ImVec2( (float)((SelectedX + 1) * component.TileWidth)/TileSetWidth, 
+					1.0f - (float)((component.SelectedY + 1) * component.TileHeight)/TileSetHeight);
 
-				ImGui::Image((void*)tileSetComponent.TileSet->GetRendererID(),  ImVec2{ (float)tileSetComponent.TileWidth, (float)tileSetComponent.TileHeight}, min, max);
+				ImGui::Image((void*)component.TileSet->GetRendererID(),  ImVec2{ (float)component.TileWidth, (float)component.TileHeight}, min, max);
 			}
 
 			ImGui::PushItemWidth(ImGui::GetContentRegionAvailWidth() * 0.5f);
-			ImGui::InputScalar("Tile Width", ImGuiDataType_S32, &tileSetComponent.TileWidth);
-			ImGui::InputScalar("Tile Height", ImGuiDataType_S32, &tileSetComponent.TileHeight);
+			ImGui::InputScalar("Tile Width", ImGuiDataType_S32, &component.TileWidth);
+			ImGui::InputScalar("Tile Height", ImGuiDataType_S32, &component.TileHeight);
 			ImGui::PopItemWidth();
-
-			ImGui::TreePop();
-		} 
+		});		
 	}
 
 	void GridComponent::DrawUI(Entity entity)
 	{
-		ImGuiTreeNodeFlags treeNodeFlags = ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_Framed | ImGuiTreeNodeFlags_SpanAvailWidth | ImGuiTreeNodeFlags_FramePadding;
-
-		if (ImGui::TreeNodeEx((void*)typeid(GridComponent).hash_code(), treeNodeFlags, "Grid"))
+		DrawComponent<GridComponent>("Grid", entity, [](auto& component)
 		{
-			auto& gridComponent = entity.GetComponent<GridComponent>();
-			ImGui::Checkbox("Active", &gridComponent.Active);
-			ImGui::DragFloat("Size", &gridComponent.GridSize, 0.01f);
-
-			ImGui::TreePop();
-		}
+			ImGui::Checkbox("Active", &component.Active);
+			ImGui::DragFloat("Size", &component.GridSize, 0.01f);
+		});		
 	}
 
 	void TileMapComponent::DrawUI(Entity entity)
 	{
-		ImGuiTreeNodeFlags treeNodeFlags = ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_Framed | ImGuiTreeNodeFlags_SpanAvailWidth | ImGuiTreeNodeFlags_FramePadding;
-		if (ImGui::TreeNodeEx((void*)typeid(TileMapComponent).hash_code(), treeNodeFlags, "Tile Map"))
+		DrawComponent<TileMapComponent>("Tile Map", entity, [](auto& component)
 		{
-
-			ImGui::TreePop();
-		}
-
+		});	
 	}
 }

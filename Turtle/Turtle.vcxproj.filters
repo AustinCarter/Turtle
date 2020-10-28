@@ -120,6 +120,9 @@
     <ClInclude Include="src\Turtle\Core\Log.h">
       <Filter>src\Turtle\Core</Filter>
     </ClInclude>
+    <ClInclude Include="src\Turtle\Core\MetaRegistry.h">
+      <Filter>src\Turtle\Core</Filter>
+    </ClInclude>
     <ClInclude Include="src\Turtle\Core\MouseButtonCodes.h">
       <Filter>src\Turtle\Core</Filter>
     </ClInclude>
@@ -213,7 +216,7 @@
     <ClInclude Include="src\Turtle\Scene\ScriptableEntity.h">
       <Filter>src\Turtle\Scene</Filter>
     </ClInclude>
-    <ClInclude Include="src\Turtle\Scripting\LuaScriptBinder.h">
+    <ClInclude Include="src\Turtle\Scripting\LuaScript.h">
       <Filter>src\Turtle\Scripting</Filter>
     </ClInclude>
     <ClInclude Include="src\Turtle\Utils\ImGuiUILib.h">
@@ -1562,9 +1565,6 @@
     <ClCompile Include="src\Turtle\Scene\ComponentUI.cpp">
       <Filter>src\Turtle\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="src\Turtle\Scene\Components.cpp">
-      <Filter>src\Turtle\Scene</Filter>
-    </ClCompile>
     <ClCompile Include="src\Turtle\Scene\Entity.cpp">
       <Filter>src\Turtle\Scene</Filter>
     </ClCompile>
@@ -1574,7 +1574,7 @@
     <ClCompile Include="src\Turtle\Scene\SceneCamera.cpp">
       <Filter>src\Turtle\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="src\Turtle\Scripting\LuaScriptBinder.cpp">
+    <ClCompile Include="src\Turtle\Scripting\LuaScript.cpp">
       <Filter>src\Turtle\Scripting</Filter>
     </ClCompile>
     <ClCompile Include="src\turtpch.cpp">

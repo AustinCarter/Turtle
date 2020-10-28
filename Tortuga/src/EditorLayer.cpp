@@ -12,6 +12,59 @@
 
 namespace Turtle {
 
+	// ----------------------- TEMP -----------------------------------------
+	struct GlobalMetaFunctionsComponent {};
+
+	void HelloWorld()
+	{
+		printf("Hello, World\n");
+	}
+
+	static void HelloWorld2()
+	{
+		printf("Hello, World 2\n");
+	}
+
+	static void HelloWorld3(uint32_t x, int y)
+	{
+		printf("Hello, World 3 (%d, %d)\n", x, y);
+	}
+
+	int Add(int a, int b)
+	{
+		return a + b;
+	}
+
+	struct Sprite
+	{
+		int x;
+		int y;
+
+		Sprite() : x(0), y(0) {}
+		~Sprite() {}
+
+		int Move(int velX, int velY)
+		{
+			x += velX;
+			y += velY;
+			return x + y;
+		}
+
+		void Draw()
+		{
+			printf("sprite(%p): x = %d, y = %d\n", this, x, y);
+		}
+	};
+
+	static Sprite Instance;
+
+	static Sprite& GetSprite()
+	{
+		return Instance;
+	}
+
+	// ---------------------------------------------------------------------
+
 	EditorLayer::EditorLayer()
 		: Layer("EditorLayer"), m_CameraController(1280.0f / 720.0f)
 	{
@@ -76,6 +129,78 @@ namespace Turtle {
 
 		m_CameraEntity.AddComponent<NativeScriptComponent>().Bind<CameraController>();
 #endif
+		constexpr char* LUA_SCRIPT = R"(
+			-- this is a lua script
+			Global.HelloWorld()
+			Global.HelloWorld2()
+			local c= Global.Add(10, 2)
+			Global.HelloWorld3( c, 42)
+			local spr = Sprite.new()
+			spr:Draw()
+			local d = spr:Move(2, 2)
+			spr:Draw()
+			-- move(4, 4)
+			spr:Move(d, d)
+			spr:Draw()
+			local x = spr.x
+			spr.x = 10
+			-- move 12, 12
+			spr:Move(x, x)
+			spr:Draw()
+			spr.img = 42
+			local im = spr.img	
+			print(im)
+
+			local Transfrom = TransformComponent.new()
+
+
+			function Foo(x, y)
+				Global.HelloWorld3( x, y)
+			end
+
+			function Bar()
+				print("Im The Bar")
+			end
+
+			function Render()
+				spri = Global.GetSprite()
+				spri.x = 420
+
+			end
+		)";
+
+		entt::meta<GlobalMetaFunctionsComponent>().type("Global"_hs)
+			.func<&HelloWorld>("HelloWorld"_hs).prop("Name"_hs, "HelloWorld")
+			.func<&HelloWorld2>("HelloWorld2"_hs).prop("Name"_hs, "HelloWorld2")
+			.func<&HelloWorld3>("HelloWorld3"_hs).prop("Name"_hs, "HelloWorld3")
+			.func<&Add>("Add"_hs).prop("Name"_hs, "Add");
+
+
+		entt::meta<Sprite>().type("Sprite"_hs)
+			.prop("Name"_hs, "Sprite")
+			.ctor<>()
+			.func<&Sprite::Move>("Move"_hs).prop("Name"_hs, "Move")
+			.func<&Sprite::Draw>("Draw"_hs).prop("Name"_hs, "Draw")
+			.func<&GetSprite, entt::as_ref_t>("GetSprite"_hs).prop("Name"_hs, "GetSprite")
+			.data<&Sprite::x>("x"_hs)
+			.data<&Sprite::y>("y"_hs);
+
+		LuaScript script;
+		script.LoadScript(LUA_SCRIPT);
+		script.ExecuteScript();
+
+		int x = 1;
+		int y = 2;
+
+		script.CallScriptFunction("Foo", x, y);
+		script.CallScriptFunction("Bar");
+		Sprite sprite;
+		script.CallScriptFunction("Render");
+		script.CallScriptFunction("Render");
+		sprite.Draw();
+		sprite.x += 10;
+		script.CallScriptFunction("Render");
+		Instance.Draw();
 
 		m_SceneHierarchyPanel.SetContext(m_ActiveScene);
 	}

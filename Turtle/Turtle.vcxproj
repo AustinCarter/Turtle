@@ -162,6 +162,7 @@
     <ClInclude Include="src\Turtle\Core\Layer.h" />
     <ClInclude Include="src\Turtle\Core\LayerStack.h" />
     <ClInclude Include="src\Turtle\Core\Log.h" />
+    <ClInclude Include="src\Turtle\Core\MetaRegistry.h" />
     <ClInclude Include="src\Turtle\Core\MouseButtonCodes.h" />
     <ClInclude Include="src\Turtle\Core\Random.h" />
     <ClInclude Include="src\Turtle\Core\Timestep.h" />
@@ -193,7 +194,7 @@
     <ClInclude Include="src\Turtle\Scene\Scene.h" />
     <ClInclude Include="src\Turtle\Scene\SceneCamera.h" />
     <ClInclude Include="src\Turtle\Scene\ScriptableEntity.h" />
-    <ClInclude Include="src\Turtle\Scripting\LuaScriptBinder.h" />
+    <ClInclude Include="src\Turtle\Scripting\LuaScript.h" />
     <ClInclude Include="src\Turtle\Utils\ImGuiUILib.h" />
     <ClInclude Include="src\Turtle\Utils\PlatformUtils.h" />
     <ClInclude Include="src\turtpch.h" />
@@ -644,11 +645,10 @@
     <ClCompile Include="src\Turtle\Scene\ComponentConnections.cpp" />
     <ClCompile Include="src\Turtle\Scene\ComponentSerializers.cpp" />
     <ClCompile Include="src\Turtle\Scene\ComponentUI.cpp" />
-    <ClCompile Include="src\Turtle\Scene\Components.cpp" />
     <ClCompile Include="src\Turtle\Scene\Entity.cpp" />
     <ClCompile Include="src\Turtle\Scene\Scene.cpp" />
     <ClCompile Include="src\Turtle\Scene\SceneCamera.cpp" />
-    <ClCompile Include="src\Turtle\Scripting\LuaScriptBinder.cpp" />
+    <ClCompile Include="src\Turtle\Scripting\LuaScript.cpp" />
     <ClCompile Include="src\turtpch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>

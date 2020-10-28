@@ -21,14 +21,21 @@
 
 #include "Turtle/ImGui/ImGuiLayer.h"
 
+//--- Scene -----------------------
 #include "Turtle/Scene/Scene.h"
 #include "Turtle/Scene/Components.h"
 #include "Turtle/Scene/Entity.h"
 #include "Turtle/Scene/ScriptableEntity.h"
+// --------------------------------
+
+//--- Scripting ---------------------------
+#include "Turtle/Scripting/LuaScript.h"
+//----------------------------------
+
 
 // #include "Turtle/Utils/PlatformUtils.h"
 
-// ---Renderer  ---------------------
+// --- Renderer  ---------------------
 #include "Turtle/Renderer/Renderer.h"
 #include "Turtle/Renderer/Renderer2D.h"
 #include "Turtle/Renderer/RenderCommand.h"

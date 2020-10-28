@@ -210,14 +210,29 @@ namespace Turtle {
 		comp.FixedAspectRatio = data["FixedAspectRatio"].as<bool>();
 	}
 
-	void NativeScriptComponent::Serialize(YAML::Emitter& out)
+	// void NativeScriptComponent::Serialize(YAML::Emitter& out)
+	// {
+	// }
+
+	// void NativeScriptComponent::Deserialize(YAML::Node& data, Entity entity)
+	// {
+
+	// }
+
+	void ScriptComponent::Serialize(YAML::Emitter& out)
 	{
+		out << YAML::Key << "ScriptComponent";
+		out << YAML::BeginMap; // ScriptComponent
+
+
+		out << YAML::EndMap; // ScriptComponent
 	}
 
-	void NativeScriptComponent::Deserialize(YAML::Node& data, Entity entity)
+	void ScriptComponent::Deserialize(YAML::Node& data, Entity entity)
 	{
 
 	}
+	
 
 	void ParticleSpawnerComponent::Serialize(YAML::Emitter& out)
 	{

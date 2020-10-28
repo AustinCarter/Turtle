@@ -1,65 +1,33 @@
+/*
+Script binding based off of tutorial series by David Poo https://www.youtube.com/playlist?list=PLLwK93hM93Z3nhfJyRRWGRXHaXgNX0Itk
+ */
+
 #include "turtpch.h"
-#include "Components.h"
+#include "LuaScript.h"
 
-#include <entt.hpp>
+namespace Turtle
+{
 
-//TEMP 
-#include "Turtle/Scripting/LuaScriptBinder.h"
-#include "lua.hpp"
-
-
-namespace Turtle {
-	
-	struct GlobalMetaFunctionsComponent 
+	int LuaScript::LoadScript(const char* script)
 	{
-		int myDataTest = 0;
-
-		void MyFuncTest()
+		return luaL_loadstring(m_State, script);
+		int doResult = luaL_dostring(m_State, script);
+		if (doResult != LUA_OK)
 		{
-			myDataTest++;
+			TURT_CORE_ERROR("Error: {0}\n", lua_tostring(m_State, -1));
 		}
-	};
-
-	void HelloWorld()
-	{
-		printf("Hello, World\n");
 	}
 
-	static void HelloWorld2()
+	int LuaScript::ExecuteScript()
 	{
-		printf("Hello, World 2\n");
+		return lua_pcall(m_State, 0, LUA_MULTRET, 0);
 	}
 
-	static void HelloWorld3(uint32_t x, int y)
+	void LuaScript::CloseScript(lua_State* L)
 	{
-		printf("Hello, World 3 (%d, %d)\n", x, y);
+		lua_close(L);
 	}
 
-	int Add(int a, int b)
-	{
-		return a + b;
-	}
-
-	struct Sprite
-	{
-		int x;
-		int y;
-
-		Sprite() : x(0), y(0) {}
-		~Sprite() {}
-
-		int Move(int velX, int velY)
-		{
-			x += velX;
-			y += velY;
-			return x + y;
-		}
-
-		void Draw()
-		{
-			printf("sprite(%p): x = %d, y = %d\n", this, x, y);
-		}
-	};
 
 	std::string MetaTableName(const entt::meta_type type)
 	{
@@ -137,48 +105,6 @@ namespace Turtle {
 		return numReturnValues;
 	}
 
-
-	int PutOnLuaStack(lua_State* L) { return 0; }
-
-	template<typename T>
-	int PutOnLuaStack(lua_State* L, T& toPutOnStack)
-	{
-		if (entt::resolve<T>().is_class() /*|| entt::resolve<T>().is_pointer()*/)
-		{
-			entt::meta_any val{ std::ref(toPutOnStack) };
-			return ToLua(L, val);
-		}
-		else
-		{
-			entt::meta_any val{ toPutOnStack };
-			return ToLua(L, val);
-		}
-	}
-
-	template<typename T, typename... REST>
-	int PutOnLuaStack(lua_State* L, T& toPutOnStack, REST&... rest)
-	{
-		return PutOnLuaStack(L, toPutOnStack) + PutOnLuaStack(L, rest...);
-	}
-
-	template<typename... ARGS>
-	void CallScriptFunction(lua_State* L, const char* funcName, ARGS&... args)
-	{
-		lua_getglobal(L, funcName);
-		if (lua_type(L, -1) == LUA_TFUNCTION)
-		{
-			int numArgs = PutOnLuaStack(L, args... );
-			if (lua_pcall(L, numArgs, 0, 0))
-			{
-				TURT_CORE_ASSERT(false, "Unable to call script funciton");
-			}
-		}
-		else
-		{
-			TURT_CORE_ASSERT(false, "Unknown script function");
-		}
-	}
-
 	/*
 	* Invoke func on instance with arguments from lua passed on stack and results left to stack
 	*/
@@ -207,7 +133,7 @@ namespace Turtle {
 
 		for (int i = 0; i < numLuaArgs; i++)
 		{
-			//lua index starts from 1
+			//lua index starts from 1  
 			int luaArgIndex = i + 1 + paramStackOffset;
 			entt::meta_type nativeParameterType = func.arg(i);
 			int luaType = lua_type(L, luaArgIndex);
@@ -395,7 +321,7 @@ namespace Turtle {
 
 	}
 
-	lua_State* CreateScript()
+	LuaScript::LuaScript()
 	{
 		lua_State* L = luaL_newstate();
 		luaopen_base(L);
@@ -411,16 +337,21 @@ namespace Turtle {
 			auto funcs = type.func();
 			for (auto& func : funcs)
 			{
-				entt::meta_any name = func.prop("Name"_hs).value();
-				char const** cName = name.try_cast<char const*>();
-				TURT_CORE_ASSERT(name, "Nameless Global Meta Function while binding lua.");
+				
+				//TURT_CORE_ASSERT(name, "Nameless Global Meta Function while binding lua.");
 				if (func.is_static())
 				{
-					lua_pushstring(L, *cName);
-					lua_pushnumber(L, type.id());
-					lua_pushnumber(L, func.id());
-					lua_pushcclosure(L, CallGlobalFromLua, 2);
-					lua_settable(L, -3);
+					entt::meta_prop nameProp = func.prop("Name"_hs);
+					if(nameProp)
+					{
+						entt::meta_any name = nameProp.value();
+						char const** cName = name.try_cast<char const*>();
+						lua_pushstring(L, *cName);
+						lua_pushnumber(L, type.id());
+						lua_pushnumber(L, func.id());
+						lua_pushcclosure(L, CallGlobalFromLua, 2);
+						lua_settable(L, -3);
+					}	
 				}
 			}
 
@@ -443,7 +374,7 @@ namespace Turtle {
 
 				luaL_newmetatable(L, MetaTableName(type).c_str());
 				lua_pushstring(L, "__gc");
-				lua_pushcfunction(L, DestroyUserDatum);
+				lua_pushcfunction(L,DestroyUserDatum);
 				lua_settable(L, -3);
 
 				lua_pushstring(L, "__index");
@@ -458,122 +389,7 @@ namespace Turtle {
 				lua_settable(L, -3);
 			}
 		}
-
-		return L;
+		m_State = L;
 	}
+}
 
-	int LoadScript(lua_State* L, const char* script)
-	{
-		return luaL_loadstring(L, script);
-		int doResult = luaL_dostring(L, script);
-		if (doResult != LUA_OK)
-		{
-			TURT_CORE_ERROR("Error: {0}\n", lua_tostring(L, -1));
-		}
-	}
-
-	int ExecuteScript(lua_State* L)
-	{
-		return lua_pcall(L, 0, LUA_MULTRET, 0);
-	}
-
-	void CloseScript(lua_State* L)
-	{
-		lua_close(L);
-	}
-
-	//Register types and functions to ECS (entt) meta system
-	void InitComponentMeta()
-	{
-		//-------------------LUA TESTING--------------------------------------------------------
-
-		entt::meta<GlobalMetaFunctionsComponent>().type("Global"_hs)
-			.func<&HelloWorld>("HelloWorld"_hs).prop("Name"_hs, "HelloWorld")
-			.func<&HelloWorld2>("HelloWorld2"_hs).prop("Name"_hs, "HelloWorld2")
-			.func<&HelloWorld3>("HelloWorld3"_hs).prop("Name"_hs, "HelloWorld3")
-			.func<&GlobalMetaFunctionsComponent::MyFuncTest>("MyFuncTest"_hs).prop("Name"_hs, "MyFuncTest")
-			.func<&Add>("Add"_hs).prop("Name"_hs, "Add");
-
-
-		entt::meta<Sprite>().type("Sprite"_hs)
-			.prop("Name"_hs, "Sprite")
-			.ctor<>()
-			.func<&Sprite::Move>("Move"_hs).prop("Name"_hs, "Move")
-			.func<&Sprite::Draw>("Draw"_hs).prop("Name"_hs, "Draw")
-			.data<&Sprite::x>("x"_hs)
-			.data<&Sprite::y>("y"_hs);
-			
-
-		constexpr char* LUA_SCRIPT = R"(
-			-- this is a lua script
-			Global.HelloWorld()
-			Global.HelloWorld2()
-			local c= Global.Add(10, 2)
-			Global.HelloWorld3( c, 42)
-			local spr = Sprite.new()
-			spr:Draw()
-			local d = spr:Move(2, 2)
-			spr:Draw()
-			-- move(4, 4)
-			spr:Move(d, d)
-			spr:Draw()
-			local x = spr.x
-			spr.x = 10
-			-- move 12, 12
-			spr:Move(x, x)
-			spr:Draw()
-			spr.img = 42
-			local im = spr.img	
-			print(im)
-
-			function Foo(x, y)
-				Global.HelloWorld3( x, y)
-			end
-
-			function Bar()
-				print("Im The Bar")
-			end
-
-			function Render(sprite)
-				sprite.x = sprite.x + 10
-				sprite:Draw()
-			end
-		)";
-
-		lua_State* L = CreateScript();
-		LoadScript(L, LUA_SCRIPT);
-		if (ExecuteScript(L) != LUA_OK)
-		{
-			TURT_CORE_ASSERT("Error: {0}\n", lua_tostring(L, -1));
-		}
-
-		int x = 1;
-		int y = 2;
-
-		CallScriptFunction(L, "Foo", x, y);
-		CallScriptFunction(L, "Bar");
-		Sprite sprite;
-		CallScriptFunction(L, "Render", sprite);
-		CallScriptFunction(L, "Render", sprite);
-		sprite.Draw();
-		sprite.x += 10;
-		CallScriptFunction(L, "Render", sprite);
-
-
-		// -----------------------------------------------------------------------------------------------
-
-
-		RegisterComponent<TagComponent>("TagComponent");
-		RegisterComponent<TransformComponent>("TransformComponent");
-		RegisterComponent<SpriteRendererComponent>("SpriteRendererComponent");
-		RegisterComponent<CameraComponent>("CameraComponent");
-		RegisterComponent<NativeScriptComponent>("NativeScriptComponent");
-		RegisterComponent<ParticleSpawnerComponent>("ParticleSpawnerComponent");
-		RegisterComponent<TileSetComponent>("TileSetComponent");
-		RegisterComponent<GridComponent>("GridComponent");
-		RegisterComponent<TileMapComponent>("TileMapComponent");
-
-
-
-	}
-} 

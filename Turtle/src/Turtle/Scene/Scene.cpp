@@ -54,22 +54,22 @@ namespace Turtle {
 		TURT_PROFILE_FUNCTION();
 		//update scripts
 		{
-			m_Registry.view<NativeScriptComponent>().each([=](auto entity, auto& nsc)
-			{
-				//TODO: MOVE TO ONSCENEPLAY
-				if(nsc.Bound)
-				{	
-					if(!nsc.Instance)
-					{
-						nsc.Instance = nsc.InstantiateScript();
-						nsc.Instance->m_Entity = Entity{ entity, this };
-						nsc.Instance->OnCreate();
-					}
+			// m_Registry.view<NativeScriptComponent>().each([=](auto entity, auto& nsc)
+			// {
+			// 	//TODO: MOVE TO ONSCENEPLAY
+			// 	if(nsc.Bound)
+			// 	{	
+			// 		if(!nsc.Instance)
+			// 		{
+			// 			nsc.Instance = nsc.InstantiateScript();
+			// 			nsc.Instance->m_Entity = Entity{ entity, this };
+			// 			nsc.Instance->OnCreate();
+			// 		}
 
-					nsc.Instance->OnUpdate(ts);
-				}
+			// 		nsc.Instance->OnUpdate(ts);
+			// 	}
 				
-			});
+			// });
 		}
 
 

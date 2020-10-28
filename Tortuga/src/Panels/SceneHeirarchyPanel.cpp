@@ -142,11 +142,15 @@ namespace Turtle {
 				auto type = entt::resolve_type(typeID.type_id());
 				if(type)
 				{
-					auto typeString = type.prop("Name"_hs).value().try_cast<char const*>();
-				
-					if(ImGui::MenuItem(*typeString))
+					entt::meta_prop isComponent = type.prop("Component"_hs);
+					if(isComponent)
 					{
-						type.ctor<Entity>().invoke(entity);
+						auto typeString = type.prop("Name"_hs).value().try_cast<char const*>();
+					
+						if(ImGui::MenuItem(*typeString))
+						{
+							type.ctor<Entity>().invoke(entity);
+						}
 					}
 				}
 			}

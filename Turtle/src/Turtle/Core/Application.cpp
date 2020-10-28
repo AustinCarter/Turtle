@@ -8,7 +8,7 @@
 #include "Turtle/Core/AssetManager.h"
 #include "Turtle/Core/Random.h"
 
-#include "Turtle/Scene/Components.h"
+#include "Turtle/Core/MetaRegistry.h"
 
 
 #include "glfw/glfw3.h"
@@ -29,11 +29,11 @@ namespace Turtle {
 		m_Window = Window::Create(WindowProps(name));
 		m_Window->SetEventCallback(TURT_BIND_EVENT_FN(Application::OnEvent));
 
+		InitMetaRegistry();
 		//initiate sub-systems
 		AssetManager::Init();
 		Renderer::Init();
 		Random::Init();
-		InitComponentMeta();
 
 		m_ImGuiLayer = new ImGuiLayer();
 		PushOverlay(m_ImGuiLayer);
