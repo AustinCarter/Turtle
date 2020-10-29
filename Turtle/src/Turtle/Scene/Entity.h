@@ -16,12 +16,6 @@ namespace Turtle {
 
 		Scene* GetScene() { return m_Scene; };
 
-		template<typename T>
-		static T& GetComponentFromHandle(Entity entity)
-		{
-			return entity.GetScene()->m_Registry.get<T>(entity);
-		}
-
 		template<typename T, typename... Args>
 		T& AddComponent(Args&&... args)
 		{

@@ -29,7 +29,7 @@ namespace Turtle {
 		}
 
 	private:
-		std::string m_Path; // might not actually want this here
+		std::string m_Path;
 		uint32_t m_Width, m_Height;
 		uint32_t m_RendererID, m_AssetID;
 		GLenum m_InternalFormat, m_DataFormat;

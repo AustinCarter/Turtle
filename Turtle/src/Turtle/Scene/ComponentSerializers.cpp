@@ -210,27 +210,28 @@ namespace Turtle {
 		comp.FixedAspectRatio = data["FixedAspectRatio"].as<bool>();
 	}
 
-	// void NativeScriptComponent::Serialize(YAML::Emitter& out)
-	// {
-	// }
-
-	// void NativeScriptComponent::Deserialize(YAML::Node& data, Entity entity)
-	// {
-
-	// }
-
 	void ScriptComponent::Serialize(YAML::Emitter& out)
 	{
-		out << YAML::Key << "ScriptComponent";
-		out << YAML::BeginMap; // ScriptComponent
+		if(Script)
+		{
+			out << YAML::Key << "ScriptComponent";
+			out << YAML::BeginMap; // ScriptComponent
 
+				out << YAML::Key << "Script" << YAML::Value << Script->GetFilepath();
 
-		out << YAML::EndMap; // ScriptComponent
+			out << YAML::EndMap; // ScriptComponent
+		}
 	}
 
 	void ScriptComponent::Deserialize(YAML::Node& data, Entity entity)
 	{
+		auto& comp = entity.GetComponent < ScriptComponent >();
 
+			comp.Script = CreateRef<LuaScript>();
+			std::string path = data["Script"].as<std::string>();
+			if(comp.Script->LoadScriptFromFile(path) != LUA_OK)
+				comp.Script->LogError();
+			comp.Script->ExecuteScript();
 	}
 	
 

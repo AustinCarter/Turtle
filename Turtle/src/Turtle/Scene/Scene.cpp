@@ -59,9 +59,10 @@ namespace Turtle {
 			{
 				Entity turtEntity = { entity, this };
 				ScriptComponent script = view.get<ScriptComponent>(entity);
-				script.Script->CallScriptFunction("OnUpdate", turtEntity);
+				float seconds = ts.GetSeconds();
+				if(script.Script)
+					script.Script->CallScriptFunction("OnUpdate", turtEntity, seconds);
 			}
-		
 			
 		}
 

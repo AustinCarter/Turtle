@@ -102,7 +102,7 @@ namespace Turtle {
 
 	struct ScriptComponent
 	{
-		LuaScript* Script;
+		Ref<LuaScript> Script;
 
 		ScriptComponent() = default;
 		ScriptComponent(const ScriptComponent&) = default;
@@ -219,7 +219,8 @@ namespace Turtle {
 			return entity.GetComponent<Component>();
 		return entity.AddComponent<Component>();
 	}
-
+	
+	//Register generic component information (Name, Get&Add constructor, Serialize, Deserialize, DrawUI )
 	template<typename Component>
 	static entt::meta_factory<Component> RegisterComponent(char const* name)
 	{

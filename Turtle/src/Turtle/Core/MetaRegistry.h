@@ -31,16 +31,14 @@ namespace Turtle {
 			.data<&glm::vec4::y, entt::as_ref_t>("y"_hs)
 			.data<&glm::vec4::z, entt::as_ref_t>("z"_hs)
 			.data<&glm::vec4::w, entt::as_ref_t>("w"_hs);
-
-		//Register generic component information (Name, Get&Add constructor, Serialize, Deserialize, DrawUI )
-		
 		
 		RegisterComponent<TagComponent>("TagComponent");
 		RegisterComponent<TransformComponent>("TransformComponent")
 			.data<&TransformComponent::Translation, entt::as_ref_t>("Translation"_hs)
 		 	.data<&TransformComponent::Rotation, entt::as_ref_t>("Rotation"_hs)
 		 	.data<&TransformComponent::Scale, entt::as_ref_t>("Scale"_hs);
-		RegisterComponent<SpriteRendererComponent>("SpriteRendererComponent");
+		RegisterComponent<SpriteRendererComponent>("SpriteRendererComponent")
+			.data<&SpriteRendererComponent::Color, entt::as_ref_t>("Color"_hs);
 		RegisterComponent<CameraComponent>("CameraComponent");
 		//RegisterComponent<NativeScriptComponent>("NativeScriptComponent");
 		RegisterComponent<ScriptComponent>("ScriptComponent");
@@ -49,19 +47,5 @@ namespace Turtle {
 		RegisterComponent<TileSetComponent>("TileSetComponent");
 		RegisterComponent<GridComponent>("GridComponent");
 		RegisterComponent<TileMapComponent>("TileMapComponent");
-
-
-		// entt::resolve<ParticleSpawnerComponent>()
-
-
-		//Register Component Data Memebers (used to expose to lua scripts)
-		// emtt::meta<TransformComponent>();
-		// emtt::meta<SpriteRendererComponent>();
-		// emtt::meta<CameraComponent>();
-		// emtt::meta<NativeScriptComponent>();
-		// emtt::meta<ParticleSpawnerComponent>();
-		// emtt::meta<TileSetComponent>();
-		// emtt::meta<GridComponent>();
-		// emtt::meta<TileMapComponent>();
 	}
 }

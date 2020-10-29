@@ -16,12 +16,7 @@ namespace Turtle {
 
 	public:
 		LuaScript();
-		~LuaScript() 
-		{ 
-			CloseScript(m_State); 
-			//free(m_Memory);
-		}
-
+		~LuaScript() { CloseScript(m_State); }
 		//static lua_State* CreateScript();
 		int LoadScript(const char* script);
 		int LoadScriptFromFile(const std::string& filepath);
@@ -74,5 +69,6 @@ namespace Turtle {
 		lua_State* m_State = nullptr;
 		void CloseScript(lua_State* L);
 		std::string m_Filepath;
+		void* m_Memory;
 	};
 }

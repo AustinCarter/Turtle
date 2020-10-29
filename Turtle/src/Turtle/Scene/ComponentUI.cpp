@@ -7,6 +7,8 @@
 
 #include "Turtle/Utils/PlatformUtils.h"
 
+#include <filesystem>
+
 
 #include <glm/gtc/type_ptr.hpp>
 
@@ -136,7 +138,20 @@ namespace Turtle{
 
 	void ScriptComponent::DrawUI(Entity entity)
 	{
-		
+		DrawComponent<ScriptComponent>("Script", entity, [](auto& component)
+		{
+			if(component.Script)
+				ImGui::Text("Current Script %s", component.Script->GetFilepath().c_str());
+			if(ImGui::Button("Set Script"))
+			{
+				component.Script = CreateRef<LuaScript>();
+				std::string filepath = FileDialogs::OpenFile("*.lua\0*.lua\0");
+				if(component.Script->LoadScriptFromFile(filepath) != LUA_OK)
+					component.Script->LogError();
+				component.Script->ExecuteScript();
+			}
+			
+		});
 	}
 
 	void ParticleSpawnerComponent::DrawUI(Entity entity)

@@ -3,13 +3,14 @@ Engine:
 		- seralization*
 		- deserializaton*
 	- Particles*
-	- scripting (Lua w/entt::meta)
+	- scripting (Lua w/entt::meta to bind)
 		- Move to some sort of Script Class*
 		- Add Metadata for desired types
-		- ScriptComponent
-			- UI
-		- read from file
-		- Clean up error messages
+		- Serialize and Desrialize*
+		- ScriptComponent*
+			- UI*
+		- read from file*
+		- Clean up error messages ~
 	- lighting	
 	- Material (Shader + Texture)
 	- Sound

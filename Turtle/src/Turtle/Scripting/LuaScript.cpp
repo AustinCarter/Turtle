@@ -5,6 +5,8 @@ Script binding based off of tutorial series by David Poo https://www.youtube.com
 #include "turtpch.h"
 #include "LuaScript.h"
 
+#include <glm/glm.hpp>
+
 
 namespace Turtle
 {
@@ -19,9 +21,12 @@ namespace Turtle
 			}
 			else
 			{
-				free(ptr);
-				ptr = malloc(nsize);
-				return ptr;
+				// TURT_CORE_TRACE("Reallocating from {0} to {1}: {2}", osize, nsize, ptr );
+				//NOTE: allocating nsize * 2 seems to have prevented heap corruption errors that were occuring, however I probably shouldn't need to do this 
+				return realloc(ptr, nsize * 2);
+				// free(ptr);
+				// ptr = malloc(nsize);
+				// return ptr;
 			}
 		}
 	};
@@ -303,21 +308,29 @@ namespace Turtle
 			switch(luaType)
 			{
 			case LUA_TNUMBER:
-				if (entt::resolve<float>() = type)
-				{
-					float val = (float)lua_tonumber(L, 3);
-					TURT_CORE_ASSERT(data.set(ud, val), "Failed to set native float value");
-				}
-				else if (entt::resolve<unsigned int>() = type)
+				if (entt::resolve<uint32_t>() == data.type())
 				{
 					uint32_t val = (uint32_t)lua_tonumber(L, 3);
-					TURT_CORE_ASSERT(data.set(ud, val), "Failed to set native uint32 value");
+					bool set = data.set(ud, val);
+					TURT_CORE_ASSERT(set, "Failed to set native uint32 value");
 				}
-				else if (entt::resolve<int>() = type)
+				else if (entt::resolve<int>() == data.type())
 				{
 					int val = (int)lua_tonumber(L, 3);
-					TURT_CORE_ASSERT(data.set(ud , val), "Failed to set native int value");
+					bool set = data.set(ud, val);
+					TURT_CORE_ASSERT(set, "Failed to set native int value");
 				}
+				else if (entt::resolve<float>() == data.type())
+				{
+					float val = (float)lua_tonumber(L, 3);
+					bool set = data.set(ud, val);
+					TURT_CORE_ASSERT(set, "Failed to set native float value");
+				}
+				else
+				{
+					TURT_CORE_ERROR("Could not convert type of {0} to native numeric arg", fieldName);
+				} 
+				
 				break;
 			default:
 				TURT_CORE_ASSERT(false, "Unrecognized lua Type");
@@ -350,8 +363,8 @@ namespace Turtle
 
 	LuaScript::LuaScript()
 	{
-		lua_State* L = luaL_newstate();
-		luaopen_base(L);
+
+		lua_State* L = lua_newstate(LuaMem::l_alloc, m_Memory);
 
 		lua_newtable(L);
 		lua_pushvalue(L, -1);
@@ -385,6 +398,10 @@ namespace Turtle
 			}
 
 		}
+
+		int stackSize = lua_gettop(L);
+		lua_pop(L, stackSize);
+
 		for (auto& type : range)
 		{
 			entt::meta_prop nameProp = type.prop("Name"_hs);
@@ -418,7 +435,11 @@ namespace Turtle
 				lua_settable(L, -3);
 			}
 		}
+
+		stackSize = lua_gettop(L);
+		lua_pop(L, stackSize);
 		m_State = L;
+		void* m_Memory = nullptr;
 	}
 }
 

@@ -1,0 +1,74 @@
+Scene: Untitled
+Entities:
+  - Entity: 12837192831273
+    ScriptComponent:
+      Script: C:\Users\Austin\Desktop\Turtle\Tortuga\assets\scripts\test.lua
+    ParticleSpawnerComponent:
+      Particle:
+        ColorBegin: [0.996078432, 0.831372559, 0.482352942, 1]
+        ColorEnd: [0.996078432, 0.427450985, 0.160784319, 0.899999976]
+        SizeBegin: 0.300000012
+        SizeEnd: 0
+        SizeVariation: 0.200000003
+        LifeTime: 2
+        Velocity: [0, 2, 0]
+        VelocityVariation: [3, 2, 0]
+        Position: [0.884626389, 0.466300488, 0]
+      EmissionRate: 1
+    SpriteRendererComponent:
+      Color: [0.951651156, 0.400366724, 0.714502275, 1]
+      Textured: false
+    TagComponent:
+      Tag: Boss
+    TransformComponent:
+      Translation: [0.884626389, 0.466300488, 0]
+      Rotation: [0, 0, 45.1097031]
+      Scale: [2.5, 2.5, 1]
+  - Entity: 12837192831273
+    TagComponent:
+      Tag: Camera
+    TransformComponent:
+      Translation: [0, 0, 0]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+    CameraComponent:
+      Camera:
+        ProjectionType: 1
+        PerspectiveFOV: 0.785398185
+        PerspectiveNear: 0.00999999978
+        PerspectiveFar: 1000
+        OrthographicSize: 10
+        OrthographicNear: -1
+        OrthographicFar: 1
+      Primary: true
+      FixedAspectRatio: false
+  - Entity: 12837192831273
+    SpriteRendererComponent:
+      Color: [0.0737913698, 0.676476181, 0.764478743, 1]
+      Textured: false
+    TagComponent:
+      Tag: Player
+    TransformComponent:
+      Translation: [0, -1.79999995, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.75, 0.75, 1]
+  - Entity: 12837192831273
+    SpriteRendererComponent:
+      Color: [0.587416351, 0.154961899, 0.891891897, 1]
+      Textured: false
+    TagComponent:
+      Tag: Stage
+    TransformComponent:
+      Translation: [0, 0, -0.100000001]
+      Rotation: [0, 0, 0]
+      Scale: [8, 8, 1]
+  - Entity: 12837192831273
+    SpriteRendererComponent:
+      Color: [0.285714269, 0.285711408, 0.285711408, 1]
+      Textured: false
+    TagComponent:
+      Tag: BG
+    TransformComponent:
+      Translation: [0, 0, -0.200000003]
+      Rotation: [0, 0, 0]
+      Scale: [16, 16, 1]
