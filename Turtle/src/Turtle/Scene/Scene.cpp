@@ -54,22 +54,15 @@ namespace Turtle {
 		TURT_PROFILE_FUNCTION();
 		//update scripts
 		{
-			// m_Registry.view<NativeScriptComponent>().each([=](auto entity, auto& nsc)
-			// {
-			// 	//TODO: MOVE TO ONSCENEPLAY
-			// 	if(nsc.Bound)
-			// 	{	
-			// 		if(!nsc.Instance)
-			// 		{
-			// 			nsc.Instance = nsc.InstantiateScript();
-			// 			nsc.Instance->m_Entity = Entity{ entity, this };
-			// 			nsc.Instance->OnCreate();
-			// 		}
-
-			// 		nsc.Instance->OnUpdate(ts);
-			// 	}
-				
-			// });
+			auto view = m_Registry.view<ScriptComponent>();
+			for (auto entity : view)
+			{
+				Entity turtEntity = { entity, this };
+				ScriptComponent script = view.get<ScriptComponent>(entity);
+				script.Script->CallScriptFunction("OnUpdate", turtEntity);
+			}
+		
+			
 		}
 
 
@@ -248,7 +241,7 @@ namespace Turtle {
 					entt::hashed_string hs{ component.first.as<std::string>().c_str() };
 					//auto comp = component.second.as<YAML::Node>();
 					auto type = entt::resolve_id(hs);
-					if(type)
+					if(type && type.prop("Component"_hs))
 					{
 						auto instance = type.ctor<Entity>().invoke(deserializedEntity);
 						type.func("Deserialize"_hs).invoke(instance, std::ref(component.second), deserializedEntity);
@@ -257,6 +250,7 @@ namespace Turtle {
 
 			}
 		}
+
 
 
 	}

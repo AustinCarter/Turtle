@@ -14,6 +14,14 @@ namespace Turtle {
 		Entity(entt::entity handle, Scene* scene);
 		Entity(const Entity& other) = default;
 
+		Scene* GetScene() { return m_Scene; };
+
+		template<typename T>
+		static T& GetComponentFromHandle(Entity entity)
+		{
+			return entity.GetScene()->m_Registry.get<T>(entity);
+		}
+
 		template<typename T, typename... Args>
 		T& AddComponent(Args&&... args)
 		{
@@ -25,7 +33,8 @@ namespace Turtle {
 		T& GetComponent()
 		{
 			TURT_CORE_ASSERT(HasComponent<T>(), "Entity doesn't have component.");
-			return m_Scene->m_Registry.get<T>(m_EntityHandle); 
+			T& result = m_Scene->m_Registry.get<T>(m_EntityHandle);
+			return result;
 		}
 
 		template<typename T>

@@ -128,7 +128,7 @@ namespace Turtle {
 		};
 
 		m_CameraEntity.AddComponent<NativeScriptComponent>().Bind<CameraController>();
-#endif
+
 		constexpr char* LUA_SCRIPT = R"(
 			-- this is a lua script
 			Global.HelloWorld()
@@ -151,7 +151,7 @@ namespace Turtle {
 			local im = spr.img	
 			print(im)
 
-			local Transfrom = TransformComponent.new()
+			--local Transfrom = TransformComponent.new()
 
 
 			function Foo(x, y)
@@ -167,7 +167,15 @@ namespace Turtle {
 				spri.x = 420
 
 			end
+
+			function TestGet(Entity)
+				local Transform = Entity:GetComponent_TransformComponent() -- TransformComponent.new()
+			end
 		)";
+	#endif
+
+		Entity& particleSpawn = m_ActiveScene->CreateEntity("particleSpawn Entity");
+		particleSpawn.AddComponent<ParticleSpawnerComponent>();
 
 		entt::meta<GlobalMetaFunctionsComponent>().type("Global"_hs)
 			.func<&HelloWorld>("HelloWorld"_hs).prop("Name"_hs, "HelloWorld")
@@ -185,22 +193,32 @@ namespace Turtle {
 			.data<&Sprite::x>("x"_hs)
 			.data<&Sprite::y>("y"_hs);
 
-		LuaScript script;
-		script.LoadScript(LUA_SCRIPT);
-		script.ExecuteScript();
+		//new LuaScript script*;
+		// if(script.LoadScript(LUA_SCRIPT) != LUA_OK)
+		// 	TURT_CORE_ERROR("Failed to loaod script {0}");
+		// if(script->LoadScriptFromFile("assets/scripts/test.lua") != LUA_OK)
+		// 	script->LogError();
+		// script->ExecuteScript();
 
 		int x = 1;
 		int y = 2;
 
-		script.CallScriptFunction("Foo", x, y);
-		script.CallScriptFunction("Bar");
-		Sprite sprite;
-		script.CallScriptFunction("Render");
-		script.CallScriptFunction("Render");
-		sprite.Draw();
-		sprite.x += 10;
-		script.CallScriptFunction("Render");
-		Instance.Draw();
+		// script.CallScriptFunction("Foo", x, y);
+		// script.CallScriptFunction("Bar");
+		// Sprite sprite;
+		// script.CallScriptFunction("Render");
+		// script.CallScriptFunction("Render");
+		// sprite.Draw();
+		// sprite.x += 10;
+
+		ScriptComponent& scriptComponent = particleSpawn.AddComponent<ScriptComponent>();
+		scriptComponent.Script = new LuaScript();
+		if(scriptComponent.Script->LoadScriptFromFile("assets/scripts/test.lua") != LUA_OK)
+			scriptComponent.Script->LogError();
+		scriptComponent.Script->ExecuteScript();
+
+		// spawn.EmissionRate = 5.0f;
+		// script.CallScriptFunction("TestGet", particleSpawn);
 
 		m_SceneHierarchyPanel.SetContext(m_ActiveScene);
 	}

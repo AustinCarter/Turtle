@@ -4,39 +4,38 @@
 
 #include <entt.hpp>
 
+
+//#include "LuaAreaAllocator.h"
+
 namespace Turtle {
+	//not thrilled that this has to be forward declared here for CallScriptFunction to work
 	int ToLua(lua_State* L, entt::meta_any& result);
+
 	class LuaScript
 	{
+
 	public:
 		LuaScript();
-		~LuaScript() { CloseScript(m_State); }
+		~LuaScript() 
+		{ 
+			CloseScript(m_State); 
+			//free(m_Memory);
+		}
 
 		//static lua_State* CreateScript();
 		int LoadScript(const char* script);
+		int LoadScriptFromFile(const std::string& filepath);
 		int ExecuteScript();
+		void LogError();
 
-		
-		/*
-		std::string MetaTableName(const entt::meta_type type);
-
-		int CreateUserDatum(lua_State* L);
-		int CreateUserDatumFromMetaObject(lua_State* L, const entt::meta_any& object);
-		int ToLua(lua_State* L, entt::meta_any& result);
-		int InvokeMethod(lua_State* L, entt::meta_func& func, entt::meta_any& instance);
-		int DestroyUserDatum(lua_State* L);
-		static int InvokeFuncOnUserDatum(lua_State* L);
-		int IndexUserDatum(lua_State* L);
-		int NewIndexUserDatum(lua_State* L);
-		int CallGlobalFromLua(lua_State* L);
-		*/
+		const std::string& LuaScript::GetFilepath() { return m_Filepath; }
 
 		int PutOnLuaStack() { return 0; }
 
 		template<typename T>
 		inline int PutOnLuaStack(T& toPutOnStack)
 		{
-			if (entt::resolve<T>().is_class() /*|| entt::resolve<T>().is_pointer()*/)
+			if (entt::resolve<T>().is_class()/*|| entt::resolve<T>().is_pointer()*/)
 			{
 				entt::meta_any val{ std::ref(toPutOnStack) };
 				return ToLua(m_State, val);
@@ -63,17 +62,17 @@ namespace Turtle {
 				int numArgs = PutOnLuaStack(args... );
 				if (lua_pcall(m_State, numArgs, 0, 0))
 				{
-					TURT_CORE_ASSERT(false, "Unable to call script funciton");
+					TURT_CORE_ERROR("Unable to call script funciton: \n LUA ERROR: {0}", lua_tostring(m_State, -1));
 				}
 			}
 			else
 			{
-				TURT_CORE_ASSERT(false, "Unknown script function");
+				TURT_CORE_ERROR("Unknown script function {0}", funcName);
 			}
 		}
 	private:
 		lua_State* m_State = nullptr;
 		void CloseScript(lua_State* L);
-		std::string m_Path;
+		std::string m_Filepath;
 	};
 }

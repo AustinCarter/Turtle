@@ -194,6 +194,7 @@
     <ClInclude Include="src\Turtle\Scene\Scene.h" />
     <ClInclude Include="src\Turtle\Scene\SceneCamera.h" />
     <ClInclude Include="src\Turtle\Scene\ScriptableEntity.h" />
+    <ClInclude Include="src\Turtle\Scripting\LuaAreaAllocator.h" />
     <ClInclude Include="src\Turtle\Scripting\LuaScript.h" />
     <ClInclude Include="src\Turtle\Utils\ImGuiUILib.h" />
     <ClInclude Include="src\Turtle\Utils\PlatformUtils.h" />

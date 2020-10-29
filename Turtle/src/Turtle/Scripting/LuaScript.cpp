@@ -5,31 +5,56 @@ Script binding based off of tutorial series by David Poo https://www.youtube.com
 #include "turtpch.h"
 #include "LuaScript.h"
 
+
 namespace Turtle
 {
+	struct LuaMem
+	{
+		static void* l_alloc(void* ud, void* ptr, size_t osize, size_t nsize)
+		{
+			(void)ud; (void)osize;  /* not used */
+			if (nsize == 0) {
+				free(ptr);
+				return NULL;
+			}
+			else
+			{
+				free(ptr);
+				ptr = malloc(nsize);
+				return ptr;
+			}
+		}
+	};
 
 	int LuaScript::LoadScript(const char* script)
 	{
 		return luaL_loadstring(m_State, script);
-		int doResult = luaL_dostring(m_State, script);
-		if (doResult != LUA_OK)
-		{
-			TURT_CORE_ERROR("Error: {0}\n", lua_tostring(m_State, -1));
-		}
+	}
+
+	int LuaScript::LoadScriptFromFile(const std::string& filepath)
+	{
+		m_Filepath = filepath;
+		return luaL_loadfile(m_State, filepath.c_str());
 	}
 
 	int LuaScript::ExecuteScript()
 	{
 		return lua_pcall(m_State, 0, LUA_MULTRET, 0);
 	}
-
+	
 	void LuaScript::CloseScript(lua_State* L)
 	{
 		lua_close(L);
 	}
 
 
-	std::string MetaTableName(const entt::meta_type type)
+	void LuaScript::LogError()
+	{
+		TURT_CORE_ERROR("LUA ERROR: {0}", lua_tostring( m_State, -1 ) );
+	}
+
+
+	std::string MetaTableName(const entt::meta_type& type)
 	{
 		const char** cName = type.prop("Name"_hs).value().try_cast<char const*>();
 		std::string metaTableName = *cName;
@@ -86,6 +111,7 @@ namespace Turtle
 		}
 		else if (!result.type().is_void())
 		{
+			auto type = result.type();
 			if (entt::resolve<int>() == result.type())
 				lua_pushnumber(L, result.cast<int>());
 			else if (entt::resolve<uint32_t>() == result.type())
@@ -94,10 +120,10 @@ namespace Turtle
 				lua_pushnumber(L, result.cast<float>());
 			else if (result.type().is_class())
 			{
-				CreateUserDatumFromMetaObject(L, result);
+				CreateUserDatumFromMetaObject(L, std::ref(result));
 			}
 			else
-				TURT_CORE_ASSERT(false, "Unhandled return type in lua invocation");
+				TURT_CORE_ERROR("Unhandled return type in lua invocation");
 
 			numReturnValues++;
 			return numReturnValues;
@@ -140,9 +166,9 @@ namespace Turtle
 			switch (luaType)
 			{
 			case LUA_TNUMBER:
-				if (entt::resolve<int>() == nativeParameterType)
+				if (entt::resolve<int32_t>() == nativeParameterType)
 				{
-					pbv[i].intVal = (int)lua_tonumber(L, luaArgIndex);
+					pbv[i].intVal = (int32_t)lua_tonumber(L, luaArgIndex);
 					nativeArgs[i] = pbv[i].intVal;
 				}
 				else if (entt::resolve<uint32_t>() == nativeParameterType)
@@ -167,7 +193,7 @@ namespace Turtle
 
 		}
 
-		entt::meta_any result = func.invoke(instance, (entt::meta_any*)(nativeArgs.data()), nativeArgs.size());
+		entt::meta_any& result = func.invoke(instance, (entt::meta_any*)(nativeArgs.data()), nativeArgs.size());
 		return ToLua(L, result);
 		
 		
@@ -215,12 +241,18 @@ namespace Turtle
 		entt::meta_func indexFunc; 
 		for (auto& func : type.func())
 		{
-			char const** funcName = func.prop("Name"_hs).value().try_cast<char const*>();
-			if (!strcmp(*funcName, fieldName))
+			entt::meta_prop nameProp = func.prop("Name"_hs);
+			if (nameProp)
 			{
-				indexFunc = func;
-				break;
+				char const** funcName = nameProp.value().try_cast<char const*>();
+				TURT_CORE_ASSERT(funcName, "Function name could not be resolved to a string");
+				if (!strcmp(*funcName, fieldName))
+				{
+					indexFunc = func;
+					break;
+				}
 			}
+			
 		}
 		if (indexFunc)
 		{
@@ -230,16 +262,11 @@ namespace Turtle
 			return 1;
 		}
 
-		//NOTE: currently member data/variables must be refered to in lua with the name registered to entt
-		//for (auto& data : type.data())
-		//{
-
-//		}	
 		entt::meta_data data = type.data(entt::hashed_string{fieldName});
 		if (data)
 		{
 			entt::meta_any& ud = *(entt::meta_any*)lua_touserdata(L, 1);
-			entt::meta_any result = data.get(ud);
+			entt::meta_any& result = data.get(ud);
 			if (result)
 			{
 				return ToLua(L, result);
@@ -276,28 +303,28 @@ namespace Turtle
 			switch(luaType)
 			{
 			case LUA_TNUMBER:
-				if (entt::resolve<int>() = type)
-				{
-					int val = (int)lua_tonumber(L, 3);
-					TURT_CORE_ASSERT(data.set(ud , val), "Failed to set native value");
-				}
-				else if (entt::resolve<uint32_t>() = type)
-				{
-					uint32_t val = (uint32_t)lua_tonumber(L, 3);
-					TURT_CORE_ASSERT(data.set(ud, val), "Failed to set native value");
-				}
-				else if (entt::resolve<float>() = type)
+				if (entt::resolve<float>() = type)
 				{
 					float val = (float)lua_tonumber(L, 3);
-					TURT_CORE_ASSERT(data.set(ud, val), "Failed to set native value");
+					TURT_CORE_ASSERT(data.set(ud, val), "Failed to set native float value");
+				}
+				else if (entt::resolve<unsigned int>() = type)
+				{
+					uint32_t val = (uint32_t)lua_tonumber(L, 3);
+					TURT_CORE_ASSERT(data.set(ud, val), "Failed to set native uint32 value");
+				}
+				else if (entt::resolve<int>() = type)
+				{
+					int val = (int)lua_tonumber(L, 3);
+					TURT_CORE_ASSERT(data.set(ud , val), "Failed to set native int value");
 				}
 				break;
 			default:
 				TURT_CORE_ASSERT(false, "Unrecognized lua Type");
 				break;
 			}
+			return 0;
 		}
-
 
 		lua_getuservalue(L, 1);
 		lua_pushvalue(L, 2);
@@ -329,6 +356,8 @@ namespace Turtle
 		lua_newtable(L);
 		lua_pushvalue(L, -1);
 		lua_setglobal(L, "Global");
+
+		luaL_openlibs(L);
 
 		lua_pushvalue(L, -1);
 		entt::meta_range<entt::meta_type> range{ entt::internal::meta_context::local() };

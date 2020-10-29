@@ -216,6 +216,9 @@
     <ClInclude Include="src\Turtle\Scene\ScriptableEntity.h">
       <Filter>src\Turtle\Scene</Filter>
     </ClInclude>
+    <ClInclude Include="src\Turtle\Scripting\LuaAreaAllocator.h">
+      <Filter>src\Turtle\Scripting</Filter>
+    </ClInclude>
     <ClInclude Include="src\Turtle\Scripting\LuaScript.h">
       <Filter>src\Turtle\Scripting</Filter>
     </ClInclude>

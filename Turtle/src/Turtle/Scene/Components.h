@@ -102,7 +102,7 @@ namespace Turtle {
 
 	struct ScriptComponent
 	{
-		Ref<LuaScript> Script;
+		LuaScript* Script;
 
 		ScriptComponent() = default;
 		ScriptComponent(const ScriptComponent&) = default;
@@ -138,7 +138,7 @@ namespace Turtle {
 	{
 		ParticleSpawner ParticleSpawner;
 		ParticleProps Particle;
-		uint32_t EmissionRate = 1;
+		unsigned int EmissionRate = 1;
 
 		ParticleSpawnerComponent()
 		{
@@ -221,9 +221,9 @@ namespace Turtle {
 	}
 
 	template<typename Component>
-	static void RegisterComponent(char const* name)
+	static entt::meta_factory<Component> RegisterComponent(char const* name)
 	{
-		entt::meta<Component>().type(entt::hashed_string{ name })
+		auto ret =  entt::meta<Component>().type(entt::hashed_string{ name })
 			.prop("Name"_hs, name)
 			.prop("Component"_hs)
 			.ctor<>()
@@ -233,11 +233,17 @@ namespace Turtle {
 			.func<&Component::Deserialize>("Deserialize"_hs)
 			.func<&Component::DrawUI>("DrawUI"_hs);
 
-		std::string getterName = "GetComponent__";
+		std::string getterName = "Get__";
 		getterName.append(name);
+
+		char* getterName_c = (char*)malloc(128);
+		strcpy_s(getterName_c, 128, getterName.c_str());
+		
 		entt::meta<Entity>()
-			.func<&Entity::GetComponent<Component>>(entt::hashed_string{getterName.c_str()})
-				.prop("Name"_hs, (char const*)getterName.c_str());
+			.func<&Entity::GetComponent<Component>, entt::as_ref_t>(entt::hashed_string{getterName_c})
+				.prop("Name"_hs, (char const*)getterName_c);
+
+		return ret;
 	}
 
 }
