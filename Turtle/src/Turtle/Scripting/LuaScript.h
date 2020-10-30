@@ -23,7 +23,8 @@ namespace Turtle {
 		int ExecuteScript();
 		void LogError();
 
-		const std::string& LuaScript::GetFilepath() { return m_Filepath; }
+		const std::string& GetFilepath() { return m_Filepath; }
+		lua_State* GetState() { return m_State; }
 
 		int PutOnLuaStack() { return 0; }
 

@@ -1,3 +1,10 @@
+--[[
+	Properties that will be exposed to c++
+--]]
+Props = {
+	TestVal = 10,
+	CoolerVal = 1
+}
 
 --[[
 Called once a frame

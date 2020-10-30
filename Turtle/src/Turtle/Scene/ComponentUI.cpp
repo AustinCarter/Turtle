@@ -141,7 +141,27 @@ namespace Turtle{
 		DrawComponent<ScriptComponent>("Script", entity, [](auto& component)
 		{
 			if(component.Script)
+			{
 				ImGui::Text("Current Script %s", component.Script->GetFilepath().c_str());
+				// table is in the stack at index 't'
+				lua_State* L = component.Script->GetState();
+				lua_getglobal(L, "Props");
+				int top = lua_gettop(L);  // first key
+				lua_pushnil(L);
+				if (!lua_isnil(L, top))
+				{
+					while (lua_next(L, top) != 0)
+					{
+						// uses 'key' (at index -2) and 'value' (at index -1)
+						const char* fieldName = lua_tostring(L, -2);
+						float value = lua_tonumber(L, -1);
+						ImGui::DragFloat(fieldName, &value);
+						lua_pushnumber(L, value);
+						lua_setfield(L, top, fieldName);
+						lua_pop(L, 1);
+					}
+				}
+			}
 			if(ImGui::Button("Set Script"))
 			{
 				component.Script = CreateRef<LuaScript>();
