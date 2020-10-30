@@ -43,14 +43,6 @@ namespace Turtle {
 		m_CameraEntity.AddComponent<CameraComponent>();
 	#endif
 
-		Entity particleSpawn = m_ActiveScene->CreateEntity("particleSpawn Entity");
-		particleSpawn.AddComponent<ParticleSpawnerComponent>();
-		particleSpawn.AddComponent<SpriteRendererComponent>(glm::vec4{0.0f, 0.0f, 0.0f, 1.0f});
-
-		Entity cameraEntity = m_ActiveScene->CreateEntity("Camera");
-		cameraEntity.AddComponent<CameraComponent>();
-
-
 		// spawn.EmissionRate = 5.0f;
 		// script.CallScriptFunction("TestGet", particleSpawn);
 

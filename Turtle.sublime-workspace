@@ -4,6 +4,26 @@
 		"selected_items":
 		[
 			[
+				"cop",
+				"component\tabc"
+			],
+			[
+				"Add",
+				"AddComponent\tabc"
+			],
+			[
+				"luaopen",
+				"luaL_openlibs\tabc"
+			],
+			[
+				"enti",
+				"entity\tabc"
+			],
+			[
+				"Call",
+				"CallScriptFunction\t(EditorLayer.cpp)"
+			],
+			[
 				"Emi",
 				"EmissionRate\tabc"
 			],
@@ -256,10 +276,6 @@
 				"SpriteRendererComponent\tabc"
 			],
 			[
-				"Add",
-				"AddComponenet\t(Scene.cpp)"
-			],
-			[
 				"square",
 				"square2\tabc"
 			],
@@ -498,205 +514,11 @@
 			[
 				"a_Tex",
 				"a_TexIndex\tabc"
-			],
-			[
-				"v_Tex",
-				"v_TexIndex\tabc"
-			],
-			[
-				"Quad",
-				"QuadVertexBufferPtr\tabc"
-			],
-			[
-				"TextureSlo",
-				"TextureSlots\tabc"
-			],
-			[
-				"TextureSlot",
-				"TextureSlotIndex\tabc"
 			]
 		]
 	},
 	"buffers":
 	[
-		{
-			"file": "Turtle/src/Turtle/Scripting/LuaScript.cpp",
-			"settings":
-			{
-				"buffer_size": 10169,
-				"encoding": "UTF-8",
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "Tortuga/src/EditorLayer.h",
-			"settings":
-			{
-				"buffer_size": 1125,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "Tortuga/src/EditorLayer.cpp",
-			"settings":
-			{
-				"buffer_size": 11590,
-				"encoding": "UTF-8",
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "premake5.lua",
-			"settings":
-			{
-				"buffer_size": 3963,
-				"encoding": "UTF-8",
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "Turtle/src/Turtle.h",
-			"settings":
-			{
-				"buffer_size": 1402,
-				"encoding": "UTF-8",
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "Turtle/src/Turtle/Scene/Scene.h",
-			"settings":
-			{
-				"buffer_size": 731,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"contents": "#include \"turtpch.h\"\n#include \"Scene.h\"\n \n#include \"Turtle/Renderer/Renderer2D.h\"\n\n#include \"Turtle/Scene/Entity.h\"\n#include \"Turtle/Core/AssetManager.h\"\n#include \"Turtle/Scene/Components.h\"\n#include \"Turtle/Scene/ComponentConnections.cpp\"\n\n#include \"Turtle/Core/Log.h\"\n\n#include <yaml-cpp/yaml.h>\n\n#include <glm/glm.hpp>\n\n#include <fstream>\n\n#include <Turtle/Utils/PlatformUtils.h>\n\n\nnamespace Turtle {\n\n\tScene::Scene()\n\t{\n\t\tm_Registry.on_construct<CameraComponent>().connect<&Scene::OnCameraConstruct>(*this);\n\t\tm_Registry.on_construct<TileSetComponent>().connect<&OnTileSetConstruct>();\n\t}\n\n\tScene::~Scene()\n\t{\n\t\t\n\t}\n\n\tEntity Scene::CreateEntity(const std::string& name)\n\t{\n\n\t\tTURT_PROFILE_FUNCTION();\n\t\tEntity entity = {  m_Registry.create(), this };\n\t\tentity.AddComponent<TransformComponent>();\n\t\tauto& tag = entity.AddComponent<TagComponent>();\n\t\ttag.Tag = name.empty() ? \"Unnamed Entity\" : name;\n\n\t\treturn entity;\n\t}\n\n\tvoid Scene::DestroyEntity(Entity entity)\n\t{\n\t\tm_Registry.destroy(entity);\n\t}\n\n\tvoid Scene::OnUpdate(Timestep ts)\n\t{\n\t\tTURT_PROFILE_FUNCTION();\n\t\t//update scripts\n\t\t{\n\t\t\t// m_Registry.view<NativeScriptComponent>().each([=](auto entity, auto& nsc)\n\t\t\t// {\n\t\t\t// \t//TODO: MOVE TO ONSCENEPLAY\n\t\t\t// \tif(nsc.Bound)\n\t\t\t// \t{\t\n\t\t\t// \t\tif(!nsc.Instance)\n\t\t\t// \t\t{\n\t\t\t// \t\t\tnsc.Instance = nsc.InstantiateScript();\n\t\t\t// \t\t\tnsc.Instance->m_Entity = Entity{ entity, this };\n\t\t\t// \t\t\tnsc.Instance->OnCreate();\n\t\t\t// \t\t}\n\n\t\t\t// \t\tnsc.Instance->OnUpdate(ts);\n\t\t\t// \t}\n\t\t\t\t\n\t\t\t// });\n\t\t\t\n\t\t}\n\n\n\t\t//Render sprites\n\t\tglm::mat4 cameraTransform;\n\t\tCamera* primaryCamera = nullptr;\n\t\t{\n\t\t\tauto view = m_Registry.view<TransformComponent, CameraComponent>();\n\t\t\tfor (auto entity : view)\n\t\t\t{\n\t\t\t\tauto [transform, camera]= view.get<TransformComponent, CameraComponent>(entity);\n\n\t\t\t\tif(camera.Primary)\n\t\t\t\t{\n\t\t\t\t\tprimaryCamera = &camera.Camera;\n\t\t\t\t\tcameraTransform = transform.GetTransform();\n\t\t\t\t\tbreak;\n\t\t\t\t} \n\t\t\t}\n\t\t}\n\n\t\tif (primaryCamera)\n\t\t{\n\t\t\tRenderer2D::BeginScene(primaryCamera->GetProjection(), cameraTransform);\n\t\t\t\n\t\t\t{\n\t\t\t\tauto group = m_Registry.group<TransformComponent>(entt::get<SpriteRendererComponent>);\n\t\t\t\tfor (auto entity : group)\n\t\t\t\t{\n\t\t\t\t\tauto [transform, sprite] = group.get<TransformComponent, SpriteRendererComponent>(entity);\n\n\t\t\t\t\tif (sprite.Textured)\n\t\t\t\t\t\tRenderer2D::DrawQuad(transform.GetTransform(),sprite.Texture, sprite.Color);\n\t\t\t\t\telse\n\t\t\t\t\t\tRenderer2D::DrawQuad(transform.GetTransform(), sprite.Color);\n\n\t\t\t\t}\n\t\t\t}\n\n\t\t\t{\n\t\t\t\tauto view = m_Registry.view<TransformComponent, ParticleSpawnerComponent>();\n\n\t\t\t\tfor (auto entity : view)\n\t\t\t\t{\n\t\t\t\t\tauto [transform, spawner] = view.get<TransformComponent, ParticleSpawnerComponent>(entity);\n\n\t\t\t\t\tspawner.Particle.Position = transform.Translation;\n\n\t\t\t\t\tspawner.ParticleSpawner.OnUpdate(ts);\n\t\t\t\t\tspawner.ParticleSpawner.OnRender();\n\t\t\t\t\tfor(int i = 0; i < spawner.EmissionRate; i++)\n\t\t\t\t\t\tspawner.ParticleSpawner.Emit(spawner.Particle);\n\t\t\t\t\t\n\t\t\t\t}\n\t\t\t}\n\n\t\t\t{\n\t\t\t\tauto view = m_Registry.view<GridComponent, TileMapComponent>();\n\t\t\t\t\n\n\t\t\t\tfor (auto entity : view)\n\t\t\t\t{\n\t\t\t\t\tauto [grid, tileMap] = view.get<GridComponent, TileMapComponent>(entity);\n\t\t\t\t\t\n\t\t\t\t\tint index = 0;\n\t\t\t\t\tfor( auto& pos : tileMap.Positions)\n\t\t\t\t\t{\n\t\t\t\t\t\tRenderer2D::DrawQuad(glm::vec2(pos.x, pos.y), glm::vec2(1.0f, 1.0f), tileMap.Textures[index], tileMap.Tint);\n\t\t\t\t\t\tindex ++;\n\t\t\t\t\t}\n\n\t\t\t\t\tif(grid.Active && grid.GridSize > 0)\n\t\t\t\t\t{\n\t\t\t\t\t\tfloat orthoSize = ((SceneCamera*)primaryCamera)->GetOrthographicSize();\n\t\t\t\t\t\tfloat aspectRatio = ((SceneCamera*)primaryCamera)->GetAspectRatio();\n\n\t\t\t\t\t\tfor(int x = -1; x <= orthoSize*aspectRatio/grid.GridSize; x++)\n\t\t\t\t\t\t{\n\t\t\t\t\t\t\tRenderer2D::DrawQuad(glm::vec2( ((x*grid.GridSize) + (cameraTransform[3][0]-fmod(cameraTransform[3][0], grid.GridSize)) - (((orthoSize * aspectRatio) / 2) - fmod((orthoSize * aspectRatio) / 2, grid.GridSize))), cameraTransform[3][1]), glm::vec2(.001f*orthoSize, orthoSize), glm::vec4(0.5f, 0.5f, 0.5f, 1.0f));\n\t\t\t\t\t\t}\n\t\t\t\t\t\tfor(int y = -1; y <= orthoSize/grid.GridSize ; y++)\n\t\t\t\t\t\t{\n\t\t\t\t\t\t\tRenderer2D::DrawQuad(glm::vec2(cameraTransform[3][0],(y*grid.GridSize) + (cameraTransform[3][1]-fmod(cameraTransform[3][1], grid.GridSize)) - ((orthoSize/ 2) - fmod(orthoSize/ 2, grid.GridSize))), glm::vec2(orthoSize*aspectRatio, .0015f*orthoSize), glm::vec4(0.5f, 0.5f, 0.5f, 1.0f));\n\t\t\t\t\t\t}\n\n\t\t\t\t\t\tbreak;\n\t\t\t\t\t}\n\n\t\t\t\t\t//TileMapComponent tileMap = view.get<TileMapComponent>(entity);\n\n\t\t\t\t}\n\t\t\t}\n\n\t\t\tRenderer2D::EndScene();\n\t\t}\n\t}\n\n\tvoid Scene::OnViewportResize(uint32_t width, uint32_t height)\n\t{\n\t\t\n\t\tTURT_PROFILE_FUNCTION();\n\t\tm_ViewportWidth = width;\n\t\tm_ViewportHeight = height;\n\n\t\tauto view = m_Registry.view<CameraComponent>();\n\t\tfor(auto entity : view)\n\t\t{\n\t\t\tauto& cameraComponent = view.get<CameraComponent>(entity);\n\t\t\tif(!cameraComponent.FixedAspectRatio)\n\t\t\t{\n\t\t\t\tcameraComponent.Camera.SetViewportSize(width, height);\n\t\t\t}\n\t\t}\n\t}\n\n\tvoid Scene::OnCameraConstruct(entt::registry & registry, entt::entity entity)\n\t{\n\t\tauto& cameraComponent = registry.get<CameraComponent>(entity);\n\t\tcameraComponent.Camera.SetViewportSize(m_ViewportWidth, m_ViewportHeight);\t\n\t}\n\n\tvoid Scene::SerializeScene(const std::string& filepath)\n\t{\n\t\tYAML::Emitter out;\n\t\tout << YAML::BeginMap;\n\t\tout << YAML::Key << \"Scene\" << YAML::Value << \"Untitled\";\n\t\tout << YAML::Key << \"Entities\" << YAML::Value << YAML::BeginSeq;\n\n\t\t m_Registry.each([&](auto entityID)\n\t\t{\n\t\t\tEntity entity = { entityID, this };\n\t\t\tif (!entity)\n\t\t\t\treturn;\n\n\t\t\tout << YAML::BeginMap; // Entity\n\t\t\tout << YAML::Key << \"Entity\" << YAML::Value << \"12837192831273\"; // TODO: Entity ID goes here\n\n\t\t\tm_Registry.visit(entityID, [&](const auto component) {\n\t\t\t\tauto type = entt::resolve_type(component);\n\t\t\t\tauto instance = type.ctor<decltype(m_Registry), entt::entity>().invoke(std::ref(m_Registry), entityID);\n\t\t\t\ttype.func(\"Serialize\"_hs).invoke(instance, std::ref(out));\n\t\t\t});\n\n\t\t\tout << YAML::EndMap; // Entity\n\t\t});\n\n\t \tout << YAML::EndSeq;\n\t\tout << YAML::EndMap;\n\n\t\tstd::ofstream fout(filepath);\n\t\tfout << out.c_str();\n\t}\n\n\tvoid Scene::DeserializeScene(const std::string& filepath)\n\t{\n\t\tstd::ifstream stream(filepath);\n\t\tstd::stringstream strStream;\n\t\tstrStream << stream.rdbuf();\n\n\t\tYAML::Node data = YAML::Load(strStream.str());\n\t\tif (!data[\"Scene\"])\n\t\t\treturn;\n\n\t\tstd::string sceneName = data[\"Scene\"].as<std::string>();\n\n\t\tYAML::Node entities = data[\"Entities\"];\n\t\tif(entities)\n\t\t{\n\t\t\tfor (YAML::Node entity : entities)\n\t\t\t{\n\t\t\t\tuint64_t uuid = entity[\"Entity\"].as<uint64_t>(); //TODO\n\t\t\t\tEntity deserializedEntity = CreateEntity();\n\n\t\t\t\t for(auto component : entity)\n\t\t\t\t {\n\t\t\t\t\tentt::hashed_string hs{ component.first.as<std::string>().c_str() };\n\t\t\t\t\t//auto comp = component.second.as<YAML::Node>();\n\t\t\t\t\tauto type = entt::resolve_id(hs);\n\t\t\t\t\tif(type && type.prop(\"Component\"_hs))\n\t\t\t\t\t{\n\t\t\t\t\t\tauto instance = type.ctor<Entity>().invoke(deserializedEntity);\n\t\t\t\t\t\ttype.func(\"Deserialize\"_hs).invoke(instance, std::ref(component.second), deserializedEntity);\n\t\t\t\t\t}\n\t\t\t\t }\n\n\t\t\t}\n\t\t}\n\n\n\n\t}\n\n}",
-			"file": "Turtle/src/Turtle/Scene/Scene.cpp",
-			"file_size": 7248,
-			"file_write_time": 132483931859160737,
-			"settings":
-			{
-				"buffer_size": 6988,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"contents": "Searching 691 files for \"NativeScriptComponent\"\n\nC:\\Users\\Austin\\Desktop\\Turtle\\Tortuga\\src\\EditorLayer.cpp:\n  128  \t\t};\n  129  \n  130: \t\tm_CameraEntity.AddComponent<NativeScriptComponent>().Bind<CameraController>();\n  131  #endif\n  132  \t\tconstexpr char* LUA_SCRIPT = R\"(\n\nC:\\Users\\Austin\\Desktop\\Turtle\\Tortuga\\src\\Panels\\ComponentSelectPanel.cpp:\n   14  \t\tstatic int selected = -1;\n   15  \t\t//NOTE: At the moment order matters, must match ComponentType order\n   16: \t\tconst char* componentTypes[] = {\"SpriteRendererComponent\", \"CameraComponent\", \"NativeScriptComponent\", \"ParticleSpawnerComponenet\", \"TileSetComponent\"};\n   17  \t\tImGui::BeginChild(\"Component Select\", ImVec2(ImGui::GetWindowContentRegionWidth(), 200), true);\n   18  \t\tif(ImGui::Selectable(\"None\", -1==m_ComponentType, ImGuiSelectableFlags_AllowDoubleClick))\n\nC:\\Users\\Austin\\Desktop\\Turtle\\Turtle\\src\\Turtle\\Core\\MetaRegistry.h:\n   14  \t\tRegisterComponent<SpriteRendererComponent>(\"SpriteRendererComponent\");\n   15  \t\tRegisterComponent<CameraComponent>(\"CameraComponent\");\n   16: \t\t// RegisterComponent<NativeScriptComponent>(\"NativeScriptComponent\");\n   17  \t\tRegisterComponent<ScriptComponent>(\"ScriptComponent\");\n   18  \t\tRegisterComponent<ParticleSpawnerComponent>(\"ParticleSpawnerComponent\");\n   ..\n   25  \t\t// emtt::meta<SpriteRendererComponent>();\n   26  \t\t// emtt::meta<CameraComponent>();\n   27: \t\t// emtt::meta<NativeScriptComponent>();\n   28  \t\t// emtt::meta<ParticleSpawnerComponent>();\n   29  \t\t// emtt::meta<TileSetComponent>();\n\nC:\\Users\\Austin\\Desktop\\Turtle\\Turtle\\src\\Turtle\\Scene\\Components.h:\n  115  \n  116  \n  117: \t// struct NativeScriptComponent\n  118  \t// {\n  119  \t// \tScriptableEntity* Instance = nullptr;\n  ...\n  121  \n  122  \t// \tScriptableEntity*(*InstantiateScript)();\n  123: \t// \tvoid (*DestroyScript)(NativeScriptComponent*);\n  124  \n  125  \t// \ttemplate<typename T>\n  ...\n  127  \t// \t{\n  128  \t// \t\tInstantiateScript = []() { return static_cast<ScriptableEntity*>(new T()); };\n  129: \t// \t\tDestroyScript = [](NativeScriptComponent* nsc) {delete nsc->Instance; nsc->Instance = nullptr; };\n  130  \t// \t\tBound = true; \n  131  \t// \t}\n\nC:\\Users\\Austin\\Desktop\\Turtle\\Turtle\\src\\Turtle\\Scene\\ComponentSerializers.cpp:\n  211  \t}\n  212  \n  213: \t// void NativeScriptComponent::Serialize(YAML::Emitter& out)\n  214  \t// {\n  215  \t// }\n  216  \n  217: \t// void NativeScriptComponent::Deserialize(YAML::Node& data, Entity entity)\n  218  \t// {\n  219  \n\nC:\\Users\\Austin\\Desktop\\Turtle\\Turtle\\src\\Turtle\\Scene\\ComponentUI.cpp:\n  145  \t}\n  146  \n  147: \t// void NativeScriptComponent::DrawUI(Entity entity)\n  148  \t// {\n  149  \t// \tImGuiTreeNodeFlags treeNodeFlags = ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_Framed | ImGuiTreeNodeFlags_SpanAvailWidth | ImGuiTreeNodeFlags_FramePadding;\n  150: \t// \tbool open = ImGui::TreeNodeEx((void*)typeid(NativeScriptComponent).hash_code(), treeNodeFlags, \"Native Script\");\n  151  \t// \tbool removed = false;\n  152  \t// \tif (ImGui::BeginPopupContextItem(\"Camera Component Context Menu\"))\n  ...\n  155  \t// \t\tif (removed)\n  156  \t// \t\t{\n  157: \t// \t\t\tentity.RemoveComponent<NativeScriptComponent>();\n  158  \t// \t\t\t// open = false;\n  159  \t// \t\t}\n  ...\n  163  \t// \tif (open && !removed)\n  164  \t// \t{\n  165: \t// \t\t// auto& nativeScriptComponent = entity.GetComponent<NativeScriptComponent>();\n  166  \t// \t\tconst char* BoundString = Bound ? \"\" : \"No script bound\";\t\n  167  \t// \t\tImGui::Button(BoundString);\n  ...\n  170  \t// }\n  171  \n  172: \t//void NativeScriptComponent::DrawUI(Entity entity)\n  173  \t//{\n  174  \t\t// ImGuiTreeNodeFlags treeNodeFlags = ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_Framed | ImGuiTreeNodeFlags_SpanAvailWidth | ImGuiTreeNodeFlags_FramePadding;\n  175: \t\t// bool open = ImGui::TreeNodeEx((void*)typeid(NativeScriptComponent).hash_code(), treeNodeFlags, \"Native Script\");\n  176  \t\t// bool removed = false;\n  177  \t\t// if (ImGui::BeginPopupContextItem(\"Camera Component Context Menu\"))\n  ...\n  180  \t\t// \tif (removed)\n  181  \t\t// \t{\n  182: \t\t// \t\tentity.RemoveComponent<NativeScriptComponent>();\n  183  \t\t// \t\t// open = false;\n  184  \t\t// \t}\n  ...\n  188  \t\t// if (open && !removed)\n  189  \t\t// {\n  190: \t\t// \t// auto& nativeScriptComponent = entity.GetComponent<NativeScriptComponent>();\n  191  \t\t// \tconst char* BoundString = Bound ? \"\" : \"No script bound\";\t\n  192  \t\t// \tImGui::Button(BoundString);\n\nC:\\Users\\Austin\\Desktop\\Turtle\\Turtle\\src\\Turtle\\Scene\\Scene.cpp:\n   55  \t\t//update scripts\n   56  \t\t{\n   57: \t\t\t// m_Registry.view<NativeScriptComponent>().each([=](auto entity, auto& nsc)\n   58  \t\t\t// {\n   59  \t\t\t// \t//TODO: MOVE TO ONSCENEPLAY\n\n21 matches across 7 files\n\n\nSearching 691 files for \"NativeScriptComponent\"\n\nC:\\Users\\Austin\\Desktop\\Turtle\\Tortuga\\src\\EditorLayer.cpp:\n  128  \t\t};\n  129  \n  130: \t\tm_CameraEntity.AddComponent<NativeScriptComponent>().Bind<CameraController>();\n  131  #endif\n  132  \t\tconstexpr char* LUA_SCRIPT = R\"(\n\nC:\\Users\\Austin\\Desktop\\Turtle\\Tortuga\\src\\Panels\\ComponentSelectPanel.cpp:\n   14  \t\tstatic int selected = -1;\n   15  \t\t//NOTE: At the moment order matters, must match ComponentType order\n   16: \t\tconst char* componentTypes[] = {\"SpriteRendererComponent\", \"CameraComponent\", \"NativeScriptComponent\", \"ParticleSpawnerComponenet\", \"TileSetComponent\"};\n   17  \t\tImGui::BeginChild(\"Component Select\", ImVec2(ImGui::GetWindowContentRegionWidth(), 200), true);\n   18  \t\tif(ImGui::Selectable(\"None\", -1==m_ComponentType, ImGuiSelectableFlags_AllowDoubleClick))\n\nC:\\Users\\Austin\\Desktop\\Turtle\\Turtle\\src\\Turtle\\Core\\MetaRegistry.h:\n   14  \t\tRegisterComponent<SpriteRendererComponent>(\"SpriteRendererComponent\");\n   15  \t\tRegisterComponent<CameraComponent>(\"CameraComponent\");\n   16: \t\t// RegisterComponent<NativeScriptComponent>(\"NativeScriptComponent\");\n   17  \t\tRegisterComponent<ScriptComponent>(\"ScriptComponent\");\n   18  \t\tRegisterComponent<ParticleSpawnerComponent>(\"ParticleSpawnerComponent\");\n   ..\n   25  \t\t// emtt::meta<SpriteRendererComponent>();\n   26  \t\t// emtt::meta<CameraComponent>();\n   27: \t\t// emtt::meta<NativeScriptComponent>();\n   28  \t\t// emtt::meta<ParticleSpawnerComponent>();\n   29  \t\t// emtt::meta<TileSetComponent>();\n\nC:\\Users\\Austin\\Desktop\\Turtle\\Turtle\\src\\Turtle\\Scene\\Components.h:\n  115  \n  116  \n  117: \t// struct NativeScriptComponent\n  118  \t// {\n  119  \t// \tScriptableEntity* Instance = nullptr;\n  ...\n  121  \n  122  \t// \tScriptableEntity*(*InstantiateScript)();\n  123: \t// \tvoid (*DestroyScript)(NativeScriptComponent*);\n  124  \n  125  \t// \ttemplate<typename T>\n  ...\n  127  \t// \t{\n  128  \t// \t\tInstantiateScript = []() { return static_cast<ScriptableEntity*>(new T()); };\n  129: \t// \t\tDestroyScript = [](NativeScriptComponent* nsc) {delete nsc->Instance; nsc->Instance = nullptr; };\n  130  \t// \t\tBound = true; \n  131  \t// \t}\n\nC:\\Users\\Austin\\Desktop\\Turtle\\Turtle\\src\\Turtle\\Scene\\ComponentSerializers.cpp:\n  211  \t}\n  212  \n  213: \t// void NativeScriptComponent::Serialize(YAML::Emitter& out)\n  214  \t// {\n  215  \t// }\n  216  \n  217: \t// void NativeScriptComponent::Deserialize(YAML::Node& data, Entity entity)\n  218  \t// {\n  219  \n\nC:\\Users\\Austin\\Desktop\\Turtle\\Turtle\\src\\Turtle\\Scene\\ComponentUI.cpp:\n  145  \t}\n  146  \n  147: \t// void NativeScriptComponent::DrawUI(Entity entity)\n  148  \t// {\n  149  \t// \tImGuiTreeNodeFlags treeNodeFlags = ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_Framed | ImGuiTreeNodeFlags_SpanAvailWidth | ImGuiTreeNodeFlags_FramePadding;\n  150: \t// \tbool open = ImGui::TreeNodeEx((void*)typeid(NativeScriptComponent).hash_code(), treeNodeFlags, \"Native Script\");\n  151  \t// \tbool removed = false;\n  152  \t// \tif (ImGui::BeginPopupContextItem(\"Camera Component Context Menu\"))\n  ...\n  155  \t// \t\tif (removed)\n  156  \t// \t\t{\n  157: \t// \t\t\tentity.RemoveComponent<NativeScriptComponent>();\n  158  \t// \t\t\t// open = false;\n  159  \t// \t\t}\n  ...\n  163  \t// \tif (open && !removed)\n  164  \t// \t{\n  165: \t// \t\t// auto& nativeScriptComponent = entity.GetComponent<NativeScriptComponent>();\n  166  \t// \t\tconst char* BoundString = Bound ? \"\" : \"No script bound\";\t\n  167  \t// \t\tImGui::Button(BoundString);\n  ...\n  170  \t// }\n  171  \n  172: \t//void NativeScriptComponent::DrawUI(Entity entity)\n  173  \t//{\n  174  \t\t// ImGuiTreeNodeFlags treeNodeFlags = ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_Framed | ImGuiTreeNodeFlags_SpanAvailWidth | ImGuiTreeNodeFlags_FramePadding;\n  175: \t\t// bool open = ImGui::TreeNodeEx((void*)typeid(NativeScriptComponent).hash_code(), treeNodeFlags, \"Native Script\");\n  176  \t\t// bool removed = false;\n  177  \t\t// if (ImGui::BeginPopupContextItem(\"Camera Component Context Menu\"))\n  ...\n  180  \t\t// \tif (removed)\n  181  \t\t// \t{\n  182: \t\t// \t\tentity.RemoveComponent<NativeScriptComponent>();\n  183  \t\t// \t\t// open = false;\n  184  \t\t// \t}\n  ...\n  188  \t\t// if (open && !removed)\n  189  \t\t// {\n  190: \t\t// \t// auto& nativeScriptComponent = entity.GetComponent<NativeScriptComponent>();\n  191  \t\t// \tconst char* BoundString = Bound ? \"\" : \"No script bound\";\t\n  192  \t\t// \tImGui::Button(BoundString);\n\nC:\\Users\\Austin\\Desktop\\Turtle\\Turtle\\src\\Turtle\\Scene\\Scene.cpp:\n   55  \t\t//update scripts\n   56  \t\t{\n   57: \t\t\t// m_Registry.view<NativeScriptComponent>().each([=](auto entity, auto& nsc)\n   58  \t\t\t// {\n   59  \t\t\t// \t//TODO: MOVE TO ONSCENEPLAY\n\n21 matches across 7 files\n",
-			"settings":
-			{
-				"buffer_size": 9282,
-				"line_ending": "Windows",
-				"name": "Find Results",
-				"scratch": true
-			}
-		},
-		{
-			"file": "Tortuga/src/Panels/ComponentSelectPanel.cpp",
-			"settings":
-			{
-				"buffer_size": 1409,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "Turtle/src/Turtle/Core/Core.h",
-			"settings":
-			{
-				"buffer_size": 1165,
-				"encoding": "UTF-8",
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "Turtle/src/Turtle/Core/MetaRegistry.h",
-			"settings":
-			{
-				"buffer_size": 1506,
-				"encoding": "UTF-8",
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "Turtle/src/Turtle/Scene/Entity.h",
-			"settings":
-			{
-				"buffer_size": 1661,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "Turtle/src/Turtle/Core/Application.cpp",
-			"settings":
-			{
-				"buffer_size": 2793,
-				"encoding": "UTF-8",
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "Turtle/src/Turtle/Scripting/LuaScript.h",
-			"settings":
-			{
-				"buffer_size": 1629,
-				"encoding": "UTF-8",
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "Tortuga/src/Panels/SceneHeirarchyPanel.cpp",
-			"settings":
-			{
-				"buffer_size": 4301,
-				"encoding": "UTF-8",
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"contents": "#include \"turtpch.h\"\n#include \"Components.h\"\n\n#include <entt.hpp>\n\n//TEMP \n#include \"lua.hpp\"\n#include \"Turtle/Scripting/LuaScript.h\"\n\n\nnamespace Turtle {\n\t\n\tstruct GlobalMetaFunctionsComponent {};\n\n\tvoid HelloWorld()\n\t{\n\t\tprintf(\"Hello, World\\n\");\n\t}\n\n\tstatic void HelloWorld2()\n\t{\n\t\tprintf(\"Hello, World 2\\n\");\n\t}\n\n\tstatic void HelloWorld3(uint32_t x, int y)\n\t{\n\t\tprintf(\"Hello, World 3 (%d, %d)\\n\", x, y);\n\t}\n\n\tint Add(int a, int b)\n\t{\n\t\treturn a + b;\n\t}\n\n\tstruct Sprite\n\t{\n\t\tint x;\n\t\tint y;\n\n\t\tSprite() : x(0), y(0) {}\n\t\t~Sprite() {}\n\n\t\tint Move(int velX, int velY)\n\t\t{\n\t\t\tx += velX;\n\t\t\ty += velY;\n\t\t\treturn x + y;\n\t\t}\n\n\t\tvoid Draw()\n\t\t{\n\t\t\tprintf(\"sprite(%p): x = %d, y = %d\\n\", this, x, y);\n\t\t}\n\t};\n\n\tstatic Sprite Instance;\n\n\tstatic Sprite& GetSprite()\n\t{\n\t\treturn Instance;\n\t}\n\n\n\t//Register types and functions to ECS (entt) meta system\n\tvoid InitComponentMeta()\n\t{\n\t\t//-------------------LUA TESTING--------------------------------------------------------\n\n\t\tentt::meta<GlobalMetaFunctionsComponent>().type(\"Global\"_hs)\n\t\t\t.func<&HelloWorld>(\"HelloWorld\"_hs).prop(\"Name\"_hs, \"HelloWorld\")\n\t\t\t.func<&HelloWorld2>(\"HelloWorld2\"_hs).prop(\"Name\"_hs, \"HelloWorld2\")\n\t\t\t.func<&HelloWorld3>(\"HelloWorld3\"_hs).prop(\"Name\"_hs, \"HelloWorld3\")\n\t\t\t.func<&Add>(\"Add\"_hs).prop(\"Name\"_hs, \"Add\");\n\n\n\t\tentt::meta<Sprite>().type(\"Sprite\"_hs)\n\t\t\t.prop(\"Name\"_hs, \"Sprite\")\n\t\t\t.ctor<>()\n\t\t\t.func<&Sprite::Move>(\"Move\"_hs).prop(\"Name\"_hs, \"Move\")\n\t\t\t.func<&Sprite::Draw>(\"Draw\"_hs).prop(\"Name\"_hs, \"Draw\")\n\t\t\t.func<&GetSprite, entt::as_ref_t>(\"GetSprite\"_hs).prop(\"Name\"_hs, \"GetSprite\")\n\t\t\t.data<&Sprite::x>(\"x\"_hs)\n\t\t\t.data<&Sprite::y>(\"y\"_hs);\n\t\t\t\n\n\t\tconstexpr char* LUA_SCRIPT = R\"(\n\t\t\t-- this is a lua script\n\t\t\tGlobal.HelloWorld()\n\t\t\tGlobal.HelloWorld2()\n\t\t\tlocal c= Global.Add(10, 2)\n\t\t\tGlobal.HelloWorld3( c, 42)\n\t\t\tlocal spr = Sprite.new()\n\t\t\tspr:Draw()\n\t\t\tlocal d = spr:Move(2, 2)\n\t\t\tspr:Draw()\n\t\t\t-- move(4, 4)\n\t\t\tspr:Move(d, d)\n\t\t\tspr:Draw()\n\t\t\tlocal x = spr.x\n\t\t\tspr.x = 10\n\t\t\t-- move 12, 12\n\t\t\tspr:Move(x, x)\n\t\t\tspr:Draw()\n\t\t\tspr.img = 42\n\t\t\tlocal im = spr.img\t\n\t\t\tprint(im)\n\n\t\t\tfunction Foo(x, y)\n\t\t\t\tGlobal.HelloWorld3( x, y)\n\t\t\tend\n\n\t\t\tfunction Bar()\n\t\t\t\tprint(\"Im The Bar\")\n\t\t\tend\n\n\t\t\tfunction Render()\n\t\t\t\tspri = Global.GetSprite()\n\t\t\t\tspri.x = 420\n\n\t\t\tend\n\t\t)\";\n\n\t\tLuaScript myScript;\n\t\tmyScript.LoadScript(LUA_SCRIPT);\n\t\tmyScript.ExecuteScript();\n\n\t\tint x = 1;\n\t\tint y = 2;\n\n\t\tmyScript.CallScriptFunction(\"Foo\", x, y);\n\t\tmyScript.CallScriptFunction(\"Bar\");\n\t\tSprite sprite;\n\t\tmyScript.CallScriptFunction(\"Render\");\n\t\tmyScript.CallScriptFunction(\"Render\");\n\t\tsprite.Draw();\n\t\tsprite.x += 10;\n\t\tmyScript.CallScriptFunction(\"Render\");\n\t\tInstance.Draw();\n\n\n\t\t// -----------------------------------------------------------------------------------------------\n\n\n\t\t\n\n\n\n\t}\n} ",
-			"settings":
-			{
-				"buffer_size": 2777,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "TODO",
-			"settings":
-			{
-				"buffer_size": 1130,
-				"encoding": "UTF-8",
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "Tortuga/assets/scripts/test.lua",
-			"settings":
-			{
-				"buffer_size": 304,
-				"encoding": "UTF-8",
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "Turtle/src/Turtle/Scene/Components.h",
-			"settings":
-			{
-				"buffer_size": 6708,
-				"encoding": "UTF-8",
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "Turtle/src/Turtle/Scene/ComponentSerializers.cpp",
-			"settings":
-			{
-				"buffer_size": 11347,
-				"encoding": "UTF-8",
-				"line_ending": "Windows"
-			}
-		}
 	],
 	"build_system": "Packages/User/Engine.sublime-build",
 	"build_system_choices":
@@ -962,6 +784,10 @@
 		"selected_items":
 		[
 			[
+				"syntax",
+				"Set Syntax: C++"
+			],
+			[
 				"install",
 				"Package Control: Install Package"
 			],
@@ -1172,43 +998,66 @@
 	"expanded_folders":
 	[
 		"/C/Users/Austin/Desktop/Turtle",
-		"/C/Users/Austin/Desktop/Turtle/Sandbox",
 		"/C/Users/Austin/Desktop/Turtle/Tortuga",
 		"/C/Users/Austin/Desktop/Turtle/Tortuga/assets",
 		"/C/Users/Austin/Desktop/Turtle/Tortuga/assets/scripts",
 		"/C/Users/Austin/Desktop/Turtle/Tortuga/assets/shaders",
-		"/C/Users/Austin/Desktop/Turtle/Tortuga/assets/textures"
+		"/C/Users/Austin/Desktop/Turtle/Tortuga/assets/textures",
+		"/C/Users/Austin/Desktop/Turtle/Turtle",
+		"/C/Users/Austin/Desktop/Turtle/Turtle/src",
+		"/C/Users/Austin/Desktop/Turtle/Turtle/src/Turtle",
+		"/C/Users/Austin/Desktop/Turtle/Turtle/src/Turtle/Scripting"
 	],
 	"file_history":
 	[
+		"/C/Users/Austin/Desktop/Turtle/Turtle/src/Turtle/Scene/Components.h",
+		"/C/Users/Austin/Desktop/Turtle/Turtle/vendor/glm/glm/vec3.hpp",
+		"/C/Users/Austin/Desktop/Turtle/Turtle/vendor/glm/glm/glm.hpp",
+		"/C/Users/Austin/Desktop/Turtle/Turtle/vendor/imgui/imgui_demo.cpp",
+		"/C/Users/Austin/Desktop/Turtle/Tortuga/assets/scripts/test2.lua",
 		"/C/Users/Austin/Desktop/Turtle/Tortuga/assets/scripts/test.lua",
-		"/C/Users/Austin/Desktop/Turtle/Tortuga/assets/scripts",
-		"/C/Users/Austin/Desktop/Turtle/Tortuga/assets/scenes/Game.turt",
+		"/C/Users/Austin/Desktop/Turtle/Turtle/src/Platform/OpenGL/OpenGLTexture.h",
+		"/C/Users/Austin/Desktop/Turtle/Turtle/src/Turtle/Scripting/LuaScript.h",
+		"/C/Users/Austin/Desktop/Turtle/Turtle/src/Turtle/Scripting/LuaScript.cpp",
+		"/C/Users/Austin/Desktop/Turtle/Turtle/src/Turtle/Scene/ComponentSerializers.cpp",
+		"/C/Users/Austin/Desktop/Turtle/TODO",
+		"/C/Users/Austin/Desktop/Turtle/Turtle/src/Turtle/Core/MetaRegistry.h",
+		"/C/Users/Austin/Desktop/Turtle/Tortuga/src/Panels/SceneHeirarchyPanel.cpp",
+		"/C/Users/Austin/Desktop/Turtle/Turtle/src/Turtle/Core/Application.cpp",
+		"/C/Users/Austin/Desktop/Turtle/Turtle/src/Turtle/Scene/Entity.h",
+		"/C/Users/Austin/Desktop/Turtle/Turtle/src/Turtle/Core/Core.h",
+		"/C/Users/Austin/Desktop/Turtle/Turtle/src/Turtle/Scene/Scene.cpp",
+		"/C/Users/Austin/Desktop/Turtle/Turtle/src/Turtle/Scene/Scene.h",
+		"/C/Users/Austin/Desktop/Turtle/Turtle/src/Turtle.h",
+		"/C/Users/Austin/Desktop/Turtle/premake5.lua",
 		"/C/Users/Austin/Desktop/Turtle/Turtle/src/Turtle/Scene/ComponentUI.cpp",
+		"/C/Users/Austin/Desktop/Turtle/Tortuga/src/EditorLayer.cpp",
+		"/C/Users/Austin/Desktop/Turtle/Turtle/src/Turtle/Utils/PlatformUtils.h",
+		"/C/Users/Austin/Desktop/Turtle/Tortuga/src/Panels/FileSelector.cpp",
+		"/C/Users/Austin/Desktop/Turtle/Tortuga/src/EditorLayer.h",
+		"/C/Users/Austin/Desktop/Turtle/Turtle/vendor/lua/src/luaconf.h",
+		"/C/Users/Austin/Desktop/Turtle/Tortuga/assets/scenes/scripts.turt",
+		"/C/Users/Austin/Desktop/Turtle/Turtle/src/Platform/Windows/WindowsPlatformUtils.cpp",
+		"/C/Users/Austin/Desktop/Turtle/Tortuga/assets/scenes/Example.turt",
+		"/C/Users/Austin/Desktop/Turtle/Tortuga/assets/scenes/Game.turt",
+		"/C/Users/Austin/Desktop/Turtle/Turtle/src/Turtle/Scripting/LuaAreaAllocator.h",
+		"/C/Users/Austin/Desktop/Turtle/Tortuga/src/Panels/ComponentSelectPanel.cpp",
+		"/C/Users/Austin/Desktop/Turtle/Turtle/vendor/glm/glm/ext/vector_float3.hpp",
+		"/C/Users/Austin/Desktop/Turtle/Tortuga/assets/scripts",
 		"/C/Users/Austin/Desktop/Turtle/Turtle/src/Turtle/Scene/Components.cpp",
 		"/C/Users/Austin/Desktop/Turtle/Turtle/vendor/yaml-cpp/premake5.lua",
-		"/C/Users/Austin/Desktop/Turtle/premake5.lua",
 		"/C/Users/Austin/Desktop/Turtle/Turtle/vendor/lua/premake5.lua",
 		"/C/Users/Austin/Desktop/Turtle/Turtle/vendor/lua/src/Makefile",
 		"/C/Users/Austin/Desktop/Turtle/Turtle/vendor/imgui/premake5.lua",
-		"/C/Users/Austin/Desktop/Turtle/Tortuga/src/EditorLayer.cpp",
-		"/C/Users/Austin/Desktop/Turtle/Tortuga/src/EditorLayer.h",
 		"/C/Users/Austin/Desktop/Turtle/Turtle/src/Turtle/Scripting/ComponentLuaAPIs.h",
-		"/C/Users/Austin/Desktop/Turtle/Tortuga/src/Panels/SceneHeirarchyPanel.cpp",
-		"/C/Users/Austin/Desktop/Turtle/Turtle/src/Turtle/Scene/Components.h",
 		"/C/Users/Austin/Desktop/Turtle/Tortuga/src/Panels/TilePallettePanel.cpp",
-		"/C/Users/Austin/Desktop/Turtle/Turtle/src/Turtle/Scene/Scene.cpp",
 		"/C/Users/Austin/Desktop/Turtle/Tortuga/assets/scenes/test.turt",
 		"/C/Users/Austin/Desktop/Turtle/Turtle/src/Turtle/Renderer/SubTexture2D.h",
-		"/C/Users/Austin/Desktop/Turtle/Turtle/src/Turtle/Scene/Scene.h",
 		"/C/Users/Austin/Desktop/Turtle/Turtle/src/Turtle/Renderer/SubTexture2D.cpp",
-		"/C/Users/Austin/Desktop/Turtle/TODO",
 		"/C/Users/Austin/Desktop/Turtle/Turtle/src/Turtle/Scene/ComponentConnections.cpp",
-		"/C/Users/Austin/Desktop/Turtle/Turtle/src/Turtle/Scene/Entity.h",
 		"/C/Users/Austin/Desktop/Turtle/Turtle/src/Turtle/Scene/ScriptableEntity.h",
 		"/C/Users/Austin/Desktop/Turtle/Turtle/src/Turtle/Core/Timestep.h",
 		"/C/Users/Austin/Desktop/Turtle/Turtle/src/Platform/OpenGL/OpenGLRendererAPI.cpp",
-		"/C/Users/Austin/Desktop/Turtle/Turtle/vendor/imgui/imgui_demo.cpp",
 		"/C/Users/Austin/Desktop/Turtle/Tortuga/src/Panels/TilePallettePanel.h",
 		"/C/Users/Austin/Desktop/Turtle/Turtle/src/Turtle/Utils/ImGuiUILib.h",
 		"/C/Users/Austin/Desktop/Turtle/Turtle/vendor/imgui/LICENSE.txt",
@@ -1218,22 +1067,14 @@
 		"/C/Users/Austin/Desktop/Turtle/Turtle/vendor/imgui/imgui.cpp",
 		"/C/Users/Austin/Desktop/Turtle/Turtle/vendor/imgui/imgui.h",
 		"/C/Users/Austin/Desktop/Turtle/Turtle/src/Turtle/Utils/ImGuiUILib.cpp",
-		"/C/Users/Austin/Desktop/Turtle/Turtle/src/Turtle/Scene/ComponentSerializers.cpp",
-		"/C/Users/Austin/Desktop/Turtle/Turtle/src/Platform/Windows/WindowsPlatformUtils.cpp",
-		"/C/Users/Austin/Desktop/Turtle/Turtle/src/Turtle/Utils/PlatformUtils.h",
-		"/C/Users/Austin/Desktop/Turtle/Turtle/src/Turtle.h",
 		"/C/Users/Austin/Desktop/Turtle/Turtle/src/Turtle/Core/KeyCodes.h",
-		"/C/Users/Austin/Desktop/Turtle/Tortuga/assets/scenes/Example.turt",
 		"/C/Users/Austin/Desktop/Turtle/Tortuga/SceneDump.yaml",
 		"/C/Users/Austin/Desktop/Turtle/Turtle/src/Turtle/ImGui/ImGuiLayer.cpp",
 		"/C/Users/Austin/Desktop/Turtle/Turtle/src/Turtle/Core/AssetManager.cpp",
 		"/C/Users/Austin/Desktop/Turtle/Turtle/src/Turtle/Renderer/Texture.h",
-		"/C/Users/Austin/Desktop/Turtle/Turtle/src/Platform/OpenGL/OpenGLTexture.h",
-		"/C/Users/Austin/Desktop/Turtle/Tortuga/src/Panels/FileSelector.cpp",
 		"/C/Users/Austin/Desktop/Turtle/Tortuga/src/Panels/FileSelector.h",
 		"/C/Users/Austin/Desktop/Turtle/Turtle/vendor/entt/include/entt.hpp",
 		"/C/Users/Austin/Desktop/Turtle/Tortuga/SceneDump.json",
-		"/C/Users/Austin/Desktop/Turtle/Turtle/src/Turtle/Core/Application.cpp",
 		"/C/Users/Austin/AppData/Roaming/Sublime Text 3/Packages/User/Engine.sublime-build",
 		"/C/Users/Austin/Desktop/Turtle/Turtle/src/Turtle/Renderer/ParticleSpawner.cpp",
 		"/C/Users/Austin/Desktop/Turtle/Turtle/src/Turtle/Renderer/renderer2d.h",
@@ -1242,7 +1083,6 @@
 		"/C/Users/Austin/Desktop/Turtle/Turtle/vendor/imgui/imgui_internal.h",
 		"/C/Users/Austin/AppData/Local/Temp/7zODD4B.tmp/README.txt",
 		"/C/Users/Austin/AppData/Local/Temp/7zO38A8.tmp/OFL.txt",
-		"/C/Users/Austin/Desktop/Turtle/Tortuga/src/Panels/ComponentSelectPanel.cpp",
 		"/C/Users/Austin/Desktop/Turtle/Turtle/src/Turtle/Renderer/Shader.h",
 		"/C/Users/Austin/Desktop/Turtle/Turtle/src/Turtle/Core/AssetManager.h",
 		"/C/Users/Austin/Desktop/Turtle/Turtle/src/Platform/OpenGL/OpenGLTexture.cpp",
@@ -1251,7 +1091,6 @@
 		"/C/Users/Austin/Desktop/Turtle/Turtle/src/Turtle/Core/Window.h",
 		"/C/Users/Austin/Desktop/Turtle/Turtle/src/Platform/Windows/WindowsWindow.cpp",
 		"/C/Users/Austin/Desktop/Turtle/Turtle/src/Turtle/Renderer/Renderer.h",
-		"/C/Users/Austin/Desktop/Turtle/Turtle/src/Turtle/Core/Core.h",
 		"/C/Users/Austin/Desktop/Turtle/Turtle/src/Turtle/Renderer/Buffer.cpp",
 		"/C/Users/Austin/Desktop/Turtle/Tortuga/src/Panels/ComponentAddPanel.cpp",
 		"/C/Users/Austin/Desktop/Turtle/Tortuga/imgui.ini",
@@ -1298,17 +1137,7 @@
 		"/C/Users/Austin/Desktop/Turtle/Turtle/src/Turtle/Renderer/OrthographicCameraController.h",
 		"/C/Users/Austin/Desktop/Turtle/Turtle/src/Platform/OpenGL/OpenGLFramebuffer.h",
 		"/C/Users/Austin/Desktop/Turtle/Turtle/src/Turtle/Renderer/RendererAPI.h",
-		"/C/Users/Austin/Desktop/Turtle/Turtle/src/Platform/Windows/WindowsInput.cpp",
-		"/C/Users/Austin/Desktop/Turtle/Turtle/src/Platform/Windows/WindowsInput.h",
-		"/C/Users/Austin/Desktop/Turtle/Sandbox/assets/shaders/Texture.glsl",
-		"/C/Users/Austin/Desktop/Turtle/Turtle/src/Turtle/Core/EntryPoint.h",
-		"/C/Users/Austin/Desktop/Turtle/Turtle/src/Turtle/Renderer/OrthographicCamera.h",
-		"/C/Users/Austin/Desktop/Turtle/Sandbox/src/sandbox2d.h",
-		"/C/Users/Austin/Desktop/Turtle/Turtle/src/Turtle/Core/Window.cpp",
-		"/C/Users/Austin/Desktop/Turtle/Sandbox/src/SandboxApp.cpp",
-		"/C/Users/Austin/Desktop/Turtle/Turtle/src/Platform/OpenGL/OpenGLShader.cpp",
-		"/C/Users/Austin/Desktop/Turtle/Turtle/src/Platform/OpenGL/OpenGLShader.h",
-		"/C/Users/Austin/Desktop/Turtle/Turtle/src/Turtle/Renderer/RenderCommand.h"
+		"/C/Users/Austin/Desktop/Turtle/Turtle/src/Platform/Windows/WindowsInput.cpp"
 	],
 	"find":
 	{
@@ -1345,6 +1174,21 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"component",
+			"Comp",
+			"comp",
+			"script",
+			"scriptComponent",
+			"inputtext",
+			"Translation.x",
+			"data.set(ud, val)",
+			"vec3",
+			"ArenaAllocator",
+			"assert",
+			"memlimit",
+			"is_class",
+			"attempt to call a string value",
+			"transform",
 			"tolua",
 			"CallGlobalFromLua",
 			"tolua",
@@ -1457,22 +1301,7 @@
 			"TagComponent",
 			"test",
 			">();\n",
-			".type(",
-			"BLEND",
-			"REmovecomponent",
-			" texCorods[0] <<",
-			"Removecomponent",
-			"Positions",
-			"Tint",
-			"(e)",
-			"e",
-			"onst std::string&",
-			"Hazel Scene (*.hazel)\\0*.hazel\\0",
-			"const std::string& filepath",
-			"Hazel",
-			"ImGui::Render",
-			"ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());",
-			"ImGui::Render"
+			".type("
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -1490,2976 +1319,8 @@
 	"groups":
 	[
 		{
-			"selected": 6,
 			"sheets":
 			[
-				{
-					"buffer": 0,
-					"file": "Turtle/src/Turtle/Scripting/LuaScript.cpp",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 10169,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								6783,
-								6783
-							]
-						],
-						"settings":
-						{
-							"bracket_highlighter.busy": false,
-							"bracket_highlighter.locations":
-							{
-								"close":
-								{
-									"1":
-									[
-										6782,
-										6783
-									]
-								},
-								"icon":
-								{
-									"1":
-									[
-										"Packages/BracketHighlighter/icons/round_bracket.png",
-										"region.yellowish"
-									]
-								},
-								"open":
-								{
-									"1":
-									[
-										6754,
-										6755
-									]
-								},
-								"unmatched":
-								{
-								}
-							},
-							"bracket_highlighter.regions":
-							[
-								"bh_c_define",
-								"bh_c_define_center",
-								"bh_c_define_open",
-								"bh_c_define_close",
-								"bh_c_define_content",
-								"bh_regex",
-								"bh_regex_center",
-								"bh_regex_open",
-								"bh_regex_close",
-								"bh_regex_content",
-								"bh_single_quote",
-								"bh_single_quote_center",
-								"bh_single_quote_open",
-								"bh_single_quote_close",
-								"bh_single_quote_content",
-								"bh_curly",
-								"bh_curly_center",
-								"bh_curly_open",
-								"bh_curly_close",
-								"bh_curly_content",
-								"bh_double_quote",
-								"bh_double_quote_center",
-								"bh_double_quote_open",
-								"bh_double_quote_close",
-								"bh_double_quote_content",
-								"bh_tag",
-								"bh_tag_center",
-								"bh_tag_open",
-								"bh_tag_close",
-								"bh_tag_content",
-								"bh_angle",
-								"bh_angle_center",
-								"bh_angle_open",
-								"bh_angle_close",
-								"bh_angle_content",
-								"bh_round",
-								"bh_round_center",
-								"bh_round_open",
-								"bh_round_close",
-								"bh_round_content",
-								"bh_default",
-								"bh_default_center",
-								"bh_default_open",
-								"bh_default_close",
-								"bh_default_content",
-								"bh_unmatched",
-								"bh_unmatched_center",
-								"bh_unmatched_open",
-								"bh_unmatched_close",
-								"bh_unmatched_content",
-								"bh_square",
-								"bh_square_center",
-								"bh_square_open",
-								"bh_square_close",
-								"bh_square_content"
-							],
-							"open_with_edit": true,
-							"syntax": "Packages/C++/C++.sublime-syntax",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 3997.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 5,
-					"type": "text"
-				},
-				{
-					"buffer": 1,
-					"file": "Tortuga/src/EditorLayer.h",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 1125,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								490,
-								445
-							]
-						],
-						"settings":
-						{
-							"bracket_highlighter.busy": false,
-							"bracket_highlighter.locations":
-							{
-								"close":
-								{
-									"1":
-									[
-										1119,
-										1120
-									]
-								},
-								"icon":
-								{
-									"1":
-									[
-										"Packages/BracketHighlighter/icons/curly_bracket.png",
-										"region.purplish"
-									]
-								},
-								"open":
-								{
-									"1":
-									[
-										164,
-										165
-									]
-								},
-								"unmatched":
-								{
-								}
-							},
-							"bracket_highlighter.regions":
-							[
-								"bh_c_define",
-								"bh_c_define_center",
-								"bh_c_define_open",
-								"bh_c_define_close",
-								"bh_c_define_content",
-								"bh_regex",
-								"bh_regex_center",
-								"bh_regex_open",
-								"bh_regex_close",
-								"bh_regex_content",
-								"bh_single_quote",
-								"bh_single_quote_center",
-								"bh_single_quote_open",
-								"bh_single_quote_close",
-								"bh_single_quote_content",
-								"bh_curly",
-								"bh_curly_center",
-								"bh_curly_open",
-								"bh_curly_close",
-								"bh_curly_content",
-								"bh_double_quote",
-								"bh_double_quote_center",
-								"bh_double_quote_open",
-								"bh_double_quote_close",
-								"bh_double_quote_content",
-								"bh_tag",
-								"bh_tag_center",
-								"bh_tag_open",
-								"bh_tag_close",
-								"bh_tag_content",
-								"bh_angle",
-								"bh_angle_center",
-								"bh_angle_open",
-								"bh_angle_close",
-								"bh_angle_content",
-								"bh_round",
-								"bh_round_center",
-								"bh_round_open",
-								"bh_round_close",
-								"bh_round_content",
-								"bh_default",
-								"bh_default_center",
-								"bh_default_open",
-								"bh_default_close",
-								"bh_default_content",
-								"bh_unmatched",
-								"bh_unmatched_center",
-								"bh_unmatched_open",
-								"bh_unmatched_close",
-								"bh_unmatched_content",
-								"bh_square",
-								"bh_square_center",
-								"bh_square_open",
-								"bh_square_close",
-								"bh_square_content"
-							],
-							"syntax": "Packages/C++/C++.sublime-syntax",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 17,
-					"type": "text"
-				},
-				{
-					"buffer": 2,
-					"file": "Tortuga/src/EditorLayer.cpp",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 11590,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								4438,
-								4438
-							]
-						],
-						"settings":
-						{
-							"bracket_highlighter.busy": false,
-							"bracket_highlighter.locations":
-							{
-								"close":
-								{
-								},
-								"icon":
-								{
-								},
-								"open":
-								{
-								},
-								"unmatched":
-								{
-									"1":
-									[
-										5090,
-										5091
-									]
-								}
-							},
-							"bracket_highlighter.regions":
-							[
-								"bh_c_define",
-								"bh_c_define_center",
-								"bh_c_define_open",
-								"bh_c_define_close",
-								"bh_c_define_content",
-								"bh_regex",
-								"bh_regex_center",
-								"bh_regex_open",
-								"bh_regex_close",
-								"bh_regex_content",
-								"bh_single_quote",
-								"bh_single_quote_center",
-								"bh_single_quote_open",
-								"bh_single_quote_close",
-								"bh_single_quote_content",
-								"bh_curly",
-								"bh_curly_center",
-								"bh_curly_open",
-								"bh_curly_close",
-								"bh_curly_content",
-								"bh_double_quote",
-								"bh_double_quote_center",
-								"bh_double_quote_open",
-								"bh_double_quote_close",
-								"bh_double_quote_content",
-								"bh_tag",
-								"bh_tag_center",
-								"bh_tag_open",
-								"bh_tag_close",
-								"bh_tag_content",
-								"bh_angle",
-								"bh_angle_center",
-								"bh_angle_open",
-								"bh_angle_close",
-								"bh_angle_content",
-								"bh_round",
-								"bh_round_center",
-								"bh_round_open",
-								"bh_round_close",
-								"bh_round_content",
-								"bh_default",
-								"bh_default_center",
-								"bh_default_open",
-								"bh_default_close",
-								"bh_default_content",
-								"bh_unmatched",
-								"bh_unmatched_center",
-								"bh_unmatched_open",
-								"bh_unmatched_close",
-								"bh_unmatched_content",
-								"bh_square",
-								"bh_square_center",
-								"bh_square_open",
-								"bh_square_close",
-								"bh_square_content"
-							],
-							"syntax": "Packages/C++/C++.sublime-syntax",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 2936.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 16,
-					"type": "text"
-				},
-				{
-					"buffer": 3,
-					"file": "premake5.lua",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 3963,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								3564,
-								3564
-							]
-						],
-						"settings":
-						{
-							"bracket_highlighter.busy": false,
-							"bracket_highlighter.locations":
-							{
-								"close":
-								{
-									"1":
-									[
-										3563,
-										3564
-									]
-								},
-								"icon":
-								{
-									"1":
-									[
-										"Packages/BracketHighlighter/icons/double_quote.png",
-										"region.greenish"
-									]
-								},
-								"open":
-								{
-									"1":
-									[
-										3545,
-										3546
-									]
-								},
-								"unmatched":
-								{
-								}
-							},
-							"bracket_highlighter.regions":
-							[
-								"bh_c_define",
-								"bh_c_define_center",
-								"bh_c_define_open",
-								"bh_c_define_close",
-								"bh_c_define_content",
-								"bh_regex",
-								"bh_regex_center",
-								"bh_regex_open",
-								"bh_regex_close",
-								"bh_regex_content",
-								"bh_single_quote",
-								"bh_single_quote_center",
-								"bh_single_quote_open",
-								"bh_single_quote_close",
-								"bh_single_quote_content",
-								"bh_curly",
-								"bh_curly_center",
-								"bh_curly_open",
-								"bh_curly_close",
-								"bh_curly_content",
-								"bh_double_quote",
-								"bh_double_quote_center",
-								"bh_double_quote_open",
-								"bh_double_quote_close",
-								"bh_double_quote_content",
-								"bh_tag",
-								"bh_tag_center",
-								"bh_tag_open",
-								"bh_tag_close",
-								"bh_tag_content",
-								"bh_angle",
-								"bh_angle_center",
-								"bh_angle_open",
-								"bh_angle_close",
-								"bh_angle_content",
-								"bh_round",
-								"bh_round_center",
-								"bh_round_open",
-								"bh_round_close",
-								"bh_round_content",
-								"bh_default",
-								"bh_default_center",
-								"bh_default_open",
-								"bh_default_close",
-								"bh_default_content",
-								"bh_unmatched",
-								"bh_unmatched_center",
-								"bh_unmatched_open",
-								"bh_unmatched_close",
-								"bh_unmatched_content",
-								"bh_square",
-								"bh_square_center",
-								"bh_square_open",
-								"bh_square_close",
-								"bh_square_content"
-							],
-							"syntax": "Packages/Lua/Lua.sublime-syntax",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 714.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 22,
-					"type": "text"
-				},
-				{
-					"buffer": 4,
-					"file": "Turtle/src/Turtle.h",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 1402,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								669,
-								669
-							]
-						],
-						"settings":
-						{
-							"bracket_highlighter.busy": false,
-							"bracket_highlighter.locations":
-							{
-								"close":
-								{
-									"1":
-									[
-										668,
-										669
-									]
-								},
-								"icon":
-								{
-									"1":
-									[
-										"Packages/BracketHighlighter/icons/double_quote.png",
-										"region.greenish"
-									]
-								},
-								"open":
-								{
-									"1":
-									[
-										636,
-										637
-									]
-								},
-								"unmatched":
-								{
-								}
-							},
-							"bracket_highlighter.regions":
-							[
-								"bh_c_define",
-								"bh_c_define_center",
-								"bh_c_define_open",
-								"bh_c_define_close",
-								"bh_c_define_content",
-								"bh_regex",
-								"bh_regex_center",
-								"bh_regex_open",
-								"bh_regex_close",
-								"bh_regex_content",
-								"bh_single_quote",
-								"bh_single_quote_center",
-								"bh_single_quote_open",
-								"bh_single_quote_close",
-								"bh_single_quote_content",
-								"bh_curly",
-								"bh_curly_center",
-								"bh_curly_open",
-								"bh_curly_close",
-								"bh_curly_content",
-								"bh_double_quote",
-								"bh_double_quote_center",
-								"bh_double_quote_open",
-								"bh_double_quote_close",
-								"bh_double_quote_content",
-								"bh_tag",
-								"bh_tag_center",
-								"bh_tag_open",
-								"bh_tag_close",
-								"bh_tag_content",
-								"bh_angle",
-								"bh_angle_center",
-								"bh_angle_open",
-								"bh_angle_close",
-								"bh_angle_content",
-								"bh_round",
-								"bh_round_center",
-								"bh_round_open",
-								"bh_round_close",
-								"bh_round_content",
-								"bh_default",
-								"bh_default_center",
-								"bh_default_open",
-								"bh_default_close",
-								"bh_default_content",
-								"bh_unmatched",
-								"bh_unmatched_center",
-								"bh_unmatched_open",
-								"bh_unmatched_close",
-								"bh_unmatched_content",
-								"bh_square",
-								"bh_square_center",
-								"bh_square_open",
-								"bh_square_close",
-								"bh_square_content"
-							],
-							"syntax": "Packages/C++/C++.sublime-syntax"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 14,
-					"type": "text"
-				},
-				{
-					"buffer": 5,
-					"file": "Turtle/src/Turtle/Scene/Scene.h",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 731,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								0,
-								0
-							]
-						],
-						"settings":
-						{
-							"bracket_highlighter.busy": false,
-							"bracket_highlighter.locations":
-							{
-								"close":
-								{
-								},
-								"icon":
-								{
-								},
-								"open":
-								{
-								},
-								"unmatched":
-								{
-								}
-							},
-							"bracket_highlighter.regions":
-							[
-								"bh_round",
-								"bh_round_center",
-								"bh_round_open",
-								"bh_round_close",
-								"bh_round_content",
-								"bh_regex",
-								"bh_regex_center",
-								"bh_regex_open",
-								"bh_regex_close",
-								"bh_regex_content",
-								"bh_double_quote",
-								"bh_double_quote_center",
-								"bh_double_quote_open",
-								"bh_double_quote_close",
-								"bh_double_quote_content",
-								"bh_single_quote",
-								"bh_single_quote_center",
-								"bh_single_quote_open",
-								"bh_single_quote_close",
-								"bh_single_quote_content",
-								"bh_default",
-								"bh_default_center",
-								"bh_default_open",
-								"bh_default_close",
-								"bh_default_content",
-								"bh_c_define",
-								"bh_c_define_center",
-								"bh_c_define_open",
-								"bh_c_define_close",
-								"bh_c_define_content",
-								"bh_unmatched",
-								"bh_unmatched_center",
-								"bh_unmatched_open",
-								"bh_unmatched_close",
-								"bh_unmatched_content",
-								"bh_angle",
-								"bh_angle_center",
-								"bh_angle_open",
-								"bh_angle_close",
-								"bh_angle_content",
-								"bh_tag",
-								"bh_tag_center",
-								"bh_tag_open",
-								"bh_tag_close",
-								"bh_tag_content",
-								"bh_square",
-								"bh_square_center",
-								"bh_square_open",
-								"bh_square_close",
-								"bh_square_content",
-								"bh_curly",
-								"bh_curly_center",
-								"bh_curly_open",
-								"bh_curly_close",
-								"bh_curly_content"
-							],
-							"syntax": "Packages/C++/C++.sublime-syntax",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 23,
-					"type": "text"
-				},
-				{
-					"buffer": 6,
-					"file": "Turtle/src/Turtle/Scene/Scene.cpp",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 6988,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1494,
-								1177
-							]
-						],
-						"settings":
-						{
-							"bracket_highlighter.busy": false,
-							"bracket_highlighter.locations":
-							{
-								"close":
-								{
-									"1":
-									[
-										1501,
-										1502
-									]
-								},
-								"icon":
-								{
-									"1":
-									[
-										"Packages/BracketHighlighter/icons/curly_bracket.png",
-										"region.purplish"
-									]
-								},
-								"open":
-								{
-									"1":
-									[
-										1090,
-										1091
-									]
-								},
-								"unmatched":
-								{
-								}
-							},
-							"bracket_highlighter.regions":
-							[
-								"bh_c_define",
-								"bh_c_define_center",
-								"bh_c_define_open",
-								"bh_c_define_close",
-								"bh_c_define_content",
-								"bh_regex",
-								"bh_regex_center",
-								"bh_regex_open",
-								"bh_regex_close",
-								"bh_regex_content",
-								"bh_single_quote",
-								"bh_single_quote_center",
-								"bh_single_quote_open",
-								"bh_single_quote_close",
-								"bh_single_quote_content",
-								"bh_curly",
-								"bh_curly_center",
-								"bh_curly_open",
-								"bh_curly_close",
-								"bh_curly_content",
-								"bh_double_quote",
-								"bh_double_quote_center",
-								"bh_double_quote_open",
-								"bh_double_quote_close",
-								"bh_double_quote_content",
-								"bh_tag",
-								"bh_tag_center",
-								"bh_tag_open",
-								"bh_tag_close",
-								"bh_tag_content",
-								"bh_angle",
-								"bh_angle_center",
-								"bh_angle_open",
-								"bh_angle_close",
-								"bh_angle_content",
-								"bh_round",
-								"bh_round_center",
-								"bh_round_open",
-								"bh_round_close",
-								"bh_round_content",
-								"bh_default",
-								"bh_default_center",
-								"bh_default_open",
-								"bh_default_close",
-								"bh_default_content",
-								"bh_unmatched",
-								"bh_unmatched_center",
-								"bh_unmatched_open",
-								"bh_unmatched_close",
-								"bh_unmatched_content",
-								"bh_square",
-								"bh_square_center",
-								"bh_square_open",
-								"bh_square_close",
-								"bh_square_content"
-							],
-							"syntax": "Packages/C++/C++.sublime-syntax",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 527.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 0,
-					"type": "text"
-				},
-				{
-					"buffer": 7,
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 9282,
-						"regions":
-						{
-							"match":
-							{
-								"flags": 112,
-								"regions":
-								[
-									[
-										166,
-										187
-									],
-									[
-										550,
-										571
-									],
-									[
-										1073,
-										1094
-									],
-									[
-										1097,
-										1118
-									],
-									[
-										1391,
-										1412
-									],
-									[
-										1617,
-										1638
-									],
-									[
-										1803,
-										1824
-									],
-									[
-										2012,
-										2033
-									],
-									[
-										2249,
-										2270
-									],
-									[
-										2352,
-										2373
-									],
-									[
-										2548,
-										2569
-									],
-									[
-										2839,
-										2860
-									],
-									[
-										3105,
-										3126
-									],
-									[
-										3253,
-										3274
-									],
-									[
-										3297,
-										3318
-									],
-									[
-										3478,
-										3499
-									],
-									[
-										3768,
-										3789
-									],
-									[
-										4034,
-										4055
-									],
-									[
-										4182,
-										4203
-									],
-									[
-										4226,
-										4247
-									],
-									[
-										4498,
-										4519
-									],
-									[
-										4808,
-										4829
-									],
-									[
-										5192,
-										5213
-									],
-									[
-										5715,
-										5736
-									],
-									[
-										5739,
-										5760
-									],
-									[
-										6033,
-										6054
-									],
-									[
-										6259,
-										6280
-									],
-									[
-										6445,
-										6466
-									],
-									[
-										6654,
-										6675
-									],
-									[
-										6891,
-										6912
-									],
-									[
-										6994,
-										7015
-									],
-									[
-										7190,
-										7211
-									],
-									[
-										7481,
-										7502
-									],
-									[
-										7747,
-										7768
-									],
-									[
-										7895,
-										7916
-									],
-									[
-										7939,
-										7960
-									],
-									[
-										8120,
-										8141
-									],
-									[
-										8410,
-										8431
-									],
-									[
-										8676,
-										8697
-									],
-									[
-										8824,
-										8845
-									],
-									[
-										8868,
-										8889
-									],
-									[
-										9140,
-										9161
-									]
-								],
-								"scope": ""
-							}
-						},
-						"selection":
-						[
-							[
-								563,
-								563
-							]
-						],
-						"settings":
-						{
-							"bracket_highlighter.busy": false,
-							"bracket_highlighter.locations":
-							{
-								"close":
-								{
-									"1":
-									[
-										621,
-										622
-									]
-								},
-								"icon":
-								{
-									"1":
-									[
-										"Packages/BracketHighlighter/icons/curly_bracket.png",
-										"region.purplish"
-									]
-								},
-								"open":
-								{
-									"1":
-									[
-										502,
-										503
-									]
-								},
-								"unmatched":
-								{
-								}
-							},
-							"bracket_highlighter.regions":
-							[
-								"bh_c_define",
-								"bh_c_define_center",
-								"bh_c_define_open",
-								"bh_c_define_close",
-								"bh_c_define_content",
-								"bh_regex",
-								"bh_regex_center",
-								"bh_regex_open",
-								"bh_regex_close",
-								"bh_regex_content",
-								"bh_single_quote",
-								"bh_single_quote_center",
-								"bh_single_quote_open",
-								"bh_single_quote_close",
-								"bh_single_quote_content",
-								"bh_curly",
-								"bh_curly_center",
-								"bh_curly_open",
-								"bh_curly_close",
-								"bh_curly_content",
-								"bh_double_quote",
-								"bh_double_quote_center",
-								"bh_double_quote_open",
-								"bh_double_quote_close",
-								"bh_double_quote_content",
-								"bh_tag",
-								"bh_tag_center",
-								"bh_tag_open",
-								"bh_tag_close",
-								"bh_tag_content",
-								"bh_angle",
-								"bh_angle_center",
-								"bh_angle_open",
-								"bh_angle_close",
-								"bh_angle_content",
-								"bh_round",
-								"bh_round_center",
-								"bh_round_open",
-								"bh_round_close",
-								"bh_round_content",
-								"bh_default",
-								"bh_default_center",
-								"bh_default_open",
-								"bh_default_close",
-								"bh_default_content",
-								"bh_unmatched",
-								"bh_unmatched_center",
-								"bh_unmatched_open",
-								"bh_unmatched_close",
-								"bh_unmatched_content",
-								"bh_square",
-								"bh_square_center",
-								"bh_square_open",
-								"bh_square_close",
-								"bh_square_content"
-							],
-							"default_dir": "C:\\Users\\Austin\\Desktop\\Turtle\\Turtle\\src\\Turtle\\Scene",
-							"detect_indentation": false,
-							"line_numbers": false,
-							"output_tag": 2,
-							"result_base_dir": "",
-							"result_file_regex": "^([^ \t].*):$",
-							"result_line_regex": "^ +([0-9]+):",
-							"scroll_past_end": true,
-							"syntax": "Packages/Default/Find Results.hidden-tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 6,
-					"type": "text"
-				},
-				{
-					"buffer": 8,
-					"file": "Tortuga/src/Panels/ComponentSelectPanel.cpp",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 1409,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1409,
-								1409
-							]
-						],
-						"settings":
-						{
-							"bracket_highlighter.busy": false,
-							"bracket_highlighter.locations":
-							{
-								"close":
-								{
-									"1":
-									[
-										1408,
-										1409
-									]
-								},
-								"icon":
-								{
-									"1":
-									[
-										"Packages/BracketHighlighter/icons/curly_bracket.png",
-										"region.purplish"
-									]
-								},
-								"open":
-								{
-									"1":
-									[
-										117,
-										118
-									]
-								},
-								"unmatched":
-								{
-								}
-							},
-							"bracket_highlighter.regions":
-							[
-								"bh_c_define",
-								"bh_c_define_center",
-								"bh_c_define_open",
-								"bh_c_define_close",
-								"bh_c_define_content",
-								"bh_regex",
-								"bh_regex_center",
-								"bh_regex_open",
-								"bh_regex_close",
-								"bh_regex_content",
-								"bh_single_quote",
-								"bh_single_quote_center",
-								"bh_single_quote_open",
-								"bh_single_quote_close",
-								"bh_single_quote_content",
-								"bh_curly",
-								"bh_curly_center",
-								"bh_curly_open",
-								"bh_curly_close",
-								"bh_curly_content",
-								"bh_double_quote",
-								"bh_double_quote_center",
-								"bh_double_quote_open",
-								"bh_double_quote_close",
-								"bh_double_quote_content",
-								"bh_tag",
-								"bh_tag_center",
-								"bh_tag_open",
-								"bh_tag_close",
-								"bh_tag_content",
-								"bh_angle",
-								"bh_angle_center",
-								"bh_angle_open",
-								"bh_angle_close",
-								"bh_angle_content",
-								"bh_round",
-								"bh_round_center",
-								"bh_round_open",
-								"bh_round_close",
-								"bh_round_content",
-								"bh_default",
-								"bh_default_center",
-								"bh_default_open",
-								"bh_default_close",
-								"bh_default_content",
-								"bh_unmatched",
-								"bh_unmatched_center",
-								"bh_unmatched_open",
-								"bh_unmatched_close",
-								"bh_unmatched_content",
-								"bh_square",
-								"bh_square_center",
-								"bh_square_open",
-								"bh_square_close",
-								"bh_square_content"
-							],
-							"syntax": "Packages/C++/C++.sublime-syntax"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 20,
-					"type": "text"
-				},
-				{
-					"buffer": 9,
-					"file": "Turtle/src/Turtle/Core/Core.h",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 1165,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1165,
-								1165
-							]
-						],
-						"settings":
-						{
-							"bracket_highlighter.busy": false,
-							"bracket_highlighter.locations":
-							{
-								"close":
-								{
-									"1":
-									[
-										1164,
-										1165
-									]
-								},
-								"icon":
-								{
-									"1":
-									[
-										"Packages/BracketHighlighter/icons/curly_bracket.png",
-										"region.purplish"
-									]
-								},
-								"open":
-								{
-									"1":
-									[
-										741,
-										742
-									]
-								},
-								"unmatched":
-								{
-								}
-							},
-							"bracket_highlighter.regions":
-							[
-								"bh_c_define",
-								"bh_c_define_center",
-								"bh_c_define_open",
-								"bh_c_define_close",
-								"bh_c_define_content",
-								"bh_regex",
-								"bh_regex_center",
-								"bh_regex_open",
-								"bh_regex_close",
-								"bh_regex_content",
-								"bh_single_quote",
-								"bh_single_quote_center",
-								"bh_single_quote_open",
-								"bh_single_quote_close",
-								"bh_single_quote_content",
-								"bh_curly",
-								"bh_curly_center",
-								"bh_curly_open",
-								"bh_curly_close",
-								"bh_curly_content",
-								"bh_double_quote",
-								"bh_double_quote_center",
-								"bh_double_quote_open",
-								"bh_double_quote_close",
-								"bh_double_quote_content",
-								"bh_tag",
-								"bh_tag_center",
-								"bh_tag_open",
-								"bh_tag_close",
-								"bh_tag_content",
-								"bh_angle",
-								"bh_angle_center",
-								"bh_angle_open",
-								"bh_angle_close",
-								"bh_angle_content",
-								"bh_round",
-								"bh_round_center",
-								"bh_round_open",
-								"bh_round_close",
-								"bh_round_content",
-								"bh_default",
-								"bh_default_center",
-								"bh_default_open",
-								"bh_default_close",
-								"bh_default_content",
-								"bh_unmatched",
-								"bh_unmatched_center",
-								"bh_unmatched_open",
-								"bh_unmatched_close",
-								"bh_unmatched_content",
-								"bh_square",
-								"bh_square_center",
-								"bh_square_open",
-								"bh_square_close",
-								"bh_square_content"
-							],
-							"syntax": "Packages/C++/C++.sublime-syntax",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 7,
-					"type": "text"
-				},
-				{
-					"buffer": 10,
-					"file": "Turtle/src/Turtle/Core/MetaRegistry.h",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 1506,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1270,
-								1430
-							]
-						],
-						"settings":
-						{
-							"bracket_highlighter.busy": false,
-							"bracket_highlighter.locations":
-							{
-								"close":
-								{
-									"1":
-									[
-										1503,
-										1504
-									]
-								},
-								"icon":
-								{
-									"1":
-									[
-										"Packages/BracketHighlighter/icons/curly_bracket.png",
-										"region.purplish"
-									]
-								},
-								"open":
-								{
-									"1":
-									[
-										202,
-										203
-									]
-								},
-								"unmatched":
-								{
-								}
-							},
-							"bracket_highlighter.regions":
-							[
-								"bh_c_define",
-								"bh_c_define_center",
-								"bh_c_define_open",
-								"bh_c_define_close",
-								"bh_c_define_content",
-								"bh_regex",
-								"bh_regex_center",
-								"bh_regex_open",
-								"bh_regex_close",
-								"bh_regex_content",
-								"bh_single_quote",
-								"bh_single_quote_center",
-								"bh_single_quote_open",
-								"bh_single_quote_close",
-								"bh_single_quote_content",
-								"bh_curly",
-								"bh_curly_center",
-								"bh_curly_open",
-								"bh_curly_close",
-								"bh_curly_content",
-								"bh_double_quote",
-								"bh_double_quote_center",
-								"bh_double_quote_open",
-								"bh_double_quote_close",
-								"bh_double_quote_content",
-								"bh_tag",
-								"bh_tag_center",
-								"bh_tag_open",
-								"bh_tag_close",
-								"bh_tag_content",
-								"bh_angle",
-								"bh_angle_center",
-								"bh_angle_open",
-								"bh_angle_close",
-								"bh_angle_content",
-								"bh_round",
-								"bh_round_center",
-								"bh_round_open",
-								"bh_round_close",
-								"bh_round_content",
-								"bh_default",
-								"bh_default_center",
-								"bh_default_open",
-								"bh_default_close",
-								"bh_default_content",
-								"bh_unmatched",
-								"bh_unmatched_center",
-								"bh_unmatched_open",
-								"bh_unmatched_close",
-								"bh_unmatched_content",
-								"bh_square",
-								"bh_square_center",
-								"bh_square_open",
-								"bh_square_close",
-								"bh_square_content"
-							],
-							"open_with_edit": true,
-							"syntax": "Packages/C++/C++.sublime-syntax",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 4,
-					"type": "text"
-				},
-				{
-					"buffer": 11,
-					"file": "Turtle/src/Turtle/Scene/Entity.h",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 1661,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								664,
-								664
-							]
-						],
-						"settings":
-						{
-							"bracket_highlighter.busy": false,
-							"bracket_highlighter.locations":
-							{
-								"close":
-								{
-									"1":
-									[
-										665,
-										666
-									]
-								},
-								"icon":
-								{
-									"1":
-									[
-										"Packages/BracketHighlighter/icons/round_bracket.png",
-										"region.yellowish"
-									]
-								},
-								"open":
-								{
-									"1":
-									[
-										660,
-										661
-									]
-								},
-								"unmatched":
-								{
-								}
-							},
-							"bracket_highlighter.regions":
-							[
-								"bh_c_define",
-								"bh_c_define_center",
-								"bh_c_define_open",
-								"bh_c_define_close",
-								"bh_c_define_content",
-								"bh_regex",
-								"bh_regex_center",
-								"bh_regex_open",
-								"bh_regex_close",
-								"bh_regex_content",
-								"bh_single_quote",
-								"bh_single_quote_center",
-								"bh_single_quote_open",
-								"bh_single_quote_close",
-								"bh_single_quote_content",
-								"bh_curly",
-								"bh_curly_center",
-								"bh_curly_open",
-								"bh_curly_close",
-								"bh_curly_content",
-								"bh_double_quote",
-								"bh_double_quote_center",
-								"bh_double_quote_open",
-								"bh_double_quote_close",
-								"bh_double_quote_content",
-								"bh_tag",
-								"bh_tag_center",
-								"bh_tag_open",
-								"bh_tag_close",
-								"bh_tag_content",
-								"bh_angle",
-								"bh_angle_center",
-								"bh_angle_open",
-								"bh_angle_close",
-								"bh_angle_content",
-								"bh_round",
-								"bh_round_center",
-								"bh_round_open",
-								"bh_round_close",
-								"bh_round_content",
-								"bh_default",
-								"bh_default_center",
-								"bh_default_open",
-								"bh_default_close",
-								"bh_default_content",
-								"bh_unmatched",
-								"bh_unmatched_center",
-								"bh_unmatched_open",
-								"bh_unmatched_close",
-								"bh_unmatched_content",
-								"bh_square",
-								"bh_square_center",
-								"bh_square_open",
-								"bh_square_close",
-								"bh_square_content"
-							],
-							"syntax": "Packages/C++/C++.sublime-syntax",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 15,
-					"type": "text"
-				},
-				{
-					"buffer": 12,
-					"file": "Turtle/src/Turtle/Core/Application.cpp",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 2793,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								358,
-								358
-							]
-						],
-						"settings":
-						{
-							"bracket_highlighter.busy": false,
-							"bracket_highlighter.locations":
-							{
-								"close":
-								{
-									"1":
-									[
-										2792,
-										2793
-									]
-								},
-								"icon":
-								{
-									"1":
-									[
-										"Packages/BracketHighlighter/icons/curly_bracket.png",
-										"region.purplish"
-									]
-								},
-								"open":
-								{
-									"1":
-									[
-										311,
-										312
-									]
-								},
-								"unmatched":
-								{
-								}
-							},
-							"bracket_highlighter.regions":
-							[
-								"bh_c_define",
-								"bh_c_define_center",
-								"bh_c_define_open",
-								"bh_c_define_close",
-								"bh_c_define_content",
-								"bh_regex",
-								"bh_regex_center",
-								"bh_regex_open",
-								"bh_regex_close",
-								"bh_regex_content",
-								"bh_single_quote",
-								"bh_single_quote_center",
-								"bh_single_quote_open",
-								"bh_single_quote_close",
-								"bh_single_quote_content",
-								"bh_curly",
-								"bh_curly_center",
-								"bh_curly_open",
-								"bh_curly_close",
-								"bh_curly_content",
-								"bh_double_quote",
-								"bh_double_quote_center",
-								"bh_double_quote_open",
-								"bh_double_quote_close",
-								"bh_double_quote_content",
-								"bh_tag",
-								"bh_tag_center",
-								"bh_tag_open",
-								"bh_tag_close",
-								"bh_tag_content",
-								"bh_angle",
-								"bh_angle_center",
-								"bh_angle_open",
-								"bh_angle_close",
-								"bh_angle_content",
-								"bh_round",
-								"bh_round_center",
-								"bh_round_open",
-								"bh_round_close",
-								"bh_round_content",
-								"bh_default",
-								"bh_default_center",
-								"bh_default_open",
-								"bh_default_close",
-								"bh_default_content",
-								"bh_unmatched",
-								"bh_unmatched_center",
-								"bh_unmatched_open",
-								"bh_unmatched_close",
-								"bh_unmatched_content",
-								"bh_square",
-								"bh_square_center",
-								"bh_square_open",
-								"bh_square_close",
-								"bh_square_content"
-							],
-							"syntax": "Packages/C++/C++.sublime-syntax",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 19,
-					"type": "text"
-				},
-				{
-					"buffer": 13,
-					"file": "Turtle/src/Turtle/Scripting/LuaScript.h",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 1629,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								895,
-								895
-							]
-						],
-						"settings":
-						{
-							"bracket_highlighter.busy": false,
-							"bracket_highlighter.locations":
-							{
-								"close":
-								{
-									"1":
-									[
-										1625,
-										1626
-									]
-								},
-								"icon":
-								{
-									"1":
-									[
-										"Packages/BracketHighlighter/icons/curly_bracket.png",
-										"region.purplish"
-									]
-								},
-								"open":
-								{
-									"1":
-									[
-										231,
-										232
-									]
-								},
-								"unmatched":
-								{
-								}
-							},
-							"bracket_highlighter.regions":
-							[
-								"bh_c_define",
-								"bh_c_define_center",
-								"bh_c_define_open",
-								"bh_c_define_close",
-								"bh_c_define_content",
-								"bh_regex",
-								"bh_regex_center",
-								"bh_regex_open",
-								"bh_regex_close",
-								"bh_regex_content",
-								"bh_single_quote",
-								"bh_single_quote_center",
-								"bh_single_quote_open",
-								"bh_single_quote_close",
-								"bh_single_quote_content",
-								"bh_curly",
-								"bh_curly_center",
-								"bh_curly_open",
-								"bh_curly_close",
-								"bh_curly_content",
-								"bh_double_quote",
-								"bh_double_quote_center",
-								"bh_double_quote_open",
-								"bh_double_quote_close",
-								"bh_double_quote_content",
-								"bh_tag",
-								"bh_tag_center",
-								"bh_tag_open",
-								"bh_tag_close",
-								"bh_tag_content",
-								"bh_angle",
-								"bh_angle_center",
-								"bh_angle_open",
-								"bh_angle_close",
-								"bh_angle_content",
-								"bh_round",
-								"bh_round_center",
-								"bh_round_open",
-								"bh_round_close",
-								"bh_round_content",
-								"bh_default",
-								"bh_default_center",
-								"bh_default_open",
-								"bh_default_close",
-								"bh_default_content",
-								"bh_unmatched",
-								"bh_unmatched_center",
-								"bh_unmatched_open",
-								"bh_unmatched_close",
-								"bh_unmatched_content",
-								"bh_square",
-								"bh_square_center",
-								"bh_square_open",
-								"bh_square_close",
-								"bh_square_content"
-							],
-							"open_with_edit": true,
-							"syntax": "Packages/C++/C++.sublime-syntax"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 12,
-					"type": "text"
-				},
-				{
-					"buffer": 14,
-					"file": "Tortuga/src/Panels/SceneHeirarchyPanel.cpp",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 4301,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								2767,
-								2767
-							]
-						],
-						"settings":
-						{
-							"bracket_highlighter.busy": false,
-							"bracket_highlighter.locations":
-							{
-								"close":
-								{
-									"1":
-									[
-										2766,
-										2767
-									]
-								},
-								"icon":
-								{
-									"1":
-									[
-										"Packages/BracketHighlighter/icons/curly_bracket.png",
-										"region.purplish"
-									]
-								},
-								"open":
-								{
-									"1":
-									[
-										2498,
-										2499
-									]
-								},
-								"unmatched":
-								{
-								}
-							},
-							"bracket_highlighter.regions":
-							[
-								"bh_c_define",
-								"bh_c_define_center",
-								"bh_c_define_open",
-								"bh_c_define_close",
-								"bh_c_define_content",
-								"bh_regex",
-								"bh_regex_center",
-								"bh_regex_open",
-								"bh_regex_close",
-								"bh_regex_content",
-								"bh_single_quote",
-								"bh_single_quote_center",
-								"bh_single_quote_open",
-								"bh_single_quote_close",
-								"bh_single_quote_content",
-								"bh_curly",
-								"bh_curly_center",
-								"bh_curly_open",
-								"bh_curly_close",
-								"bh_curly_content",
-								"bh_double_quote",
-								"bh_double_quote_center",
-								"bh_double_quote_open",
-								"bh_double_quote_close",
-								"bh_double_quote_content",
-								"bh_tag",
-								"bh_tag_center",
-								"bh_tag_open",
-								"bh_tag_close",
-								"bh_tag_content",
-								"bh_angle",
-								"bh_angle_center",
-								"bh_angle_open",
-								"bh_angle_close",
-								"bh_angle_content",
-								"bh_round",
-								"bh_round_center",
-								"bh_round_open",
-								"bh_round_close",
-								"bh_round_content",
-								"bh_default",
-								"bh_default_center",
-								"bh_default_open",
-								"bh_default_close",
-								"bh_default_content",
-								"bh_unmatched",
-								"bh_unmatched_center",
-								"bh_unmatched_open",
-								"bh_unmatched_close",
-								"bh_unmatched_content",
-								"bh_square",
-								"bh_square_center",
-								"bh_square_open",
-								"bh_square_close",
-								"bh_square_content"
-							],
-							"syntax": "Packages/C++/C++.sublime-syntax",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 1496.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 9,
-					"type": "text"
-				},
-				{
-					"buffer": 15,
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 2777,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1879,
-								1879
-							]
-						],
-						"settings":
-						{
-							"bracket_highlighter.busy": false,
-							"bracket_highlighter.locations":
-							{
-								"close":
-								{
-									"1":
-									[
-										2773,
-										2774
-									]
-								},
-								"icon":
-								{
-									"1":
-									[
-										"Packages/BracketHighlighter/icons/curly_bracket.png",
-										"region.purplish"
-									]
-								},
-								"open":
-								{
-									"1":
-									[
-										872,
-										873
-									]
-								},
-								"unmatched":
-								{
-								}
-							},
-							"bracket_highlighter.regions":
-							[
-								"bh_c_define",
-								"bh_c_define_center",
-								"bh_c_define_open",
-								"bh_c_define_close",
-								"bh_c_define_content",
-								"bh_regex",
-								"bh_regex_center",
-								"bh_regex_open",
-								"bh_regex_close",
-								"bh_regex_content",
-								"bh_single_quote",
-								"bh_single_quote_center",
-								"bh_single_quote_open",
-								"bh_single_quote_close",
-								"bh_single_quote_content",
-								"bh_curly",
-								"bh_curly_center",
-								"bh_curly_open",
-								"bh_curly_close",
-								"bh_curly_content",
-								"bh_double_quote",
-								"bh_double_quote_center",
-								"bh_double_quote_open",
-								"bh_double_quote_close",
-								"bh_double_quote_content",
-								"bh_tag",
-								"bh_tag_center",
-								"bh_tag_open",
-								"bh_tag_close",
-								"bh_tag_content",
-								"bh_angle",
-								"bh_angle_center",
-								"bh_angle_open",
-								"bh_angle_close",
-								"bh_angle_content",
-								"bh_round",
-								"bh_round_center",
-								"bh_round_open",
-								"bh_round_close",
-								"bh_round_content",
-								"bh_default",
-								"bh_default_center",
-								"bh_default_open",
-								"bh_default_close",
-								"bh_default_content",
-								"bh_unmatched",
-								"bh_unmatched_center",
-								"bh_unmatched_open",
-								"bh_unmatched_close",
-								"bh_unmatched_content",
-								"bh_square",
-								"bh_square_center",
-								"bh_square_open",
-								"bh_square_close",
-								"bh_square_content"
-							],
-							"default_dir": "C:\\Users\\Austin\\Desktop\\Turtle\\Turtle\\src\\Turtle\\Scene",
-							"syntax": "Packages/C++/C++.sublime-syntax",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 1150.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 13,
-					"type": "text"
-				},
-				{
-					"buffer": 10,
-					"file": "Turtle/src/Turtle/Core/MetaRegistry.h",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 1506,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1506,
-								1506
-							]
-						],
-						"settings":
-						{
-							"bracket_highlighter.busy": false,
-							"bracket_highlighter.locations":
-							{
-								"close":
-								{
-									"1":
-									[
-										1494,
-										1495
-									]
-								},
-								"icon":
-								{
-									"1":
-									[
-										"Packages/BracketHighlighter/icons/curly_bracket.png",
-										"region.purplish"
-									]
-								},
-								"open":
-								{
-									"1":
-									[
-										202,
-										203
-									]
-								},
-								"unmatched":
-								{
-								}
-							},
-							"bracket_highlighter.regions":
-							[
-								"bh_c_define",
-								"bh_c_define_center",
-								"bh_c_define_open",
-								"bh_c_define_close",
-								"bh_c_define_content",
-								"bh_regex",
-								"bh_regex_center",
-								"bh_regex_open",
-								"bh_regex_close",
-								"bh_regex_content",
-								"bh_single_quote",
-								"bh_single_quote_center",
-								"bh_single_quote_open",
-								"bh_single_quote_close",
-								"bh_single_quote_content",
-								"bh_curly",
-								"bh_curly_center",
-								"bh_curly_open",
-								"bh_curly_close",
-								"bh_curly_content",
-								"bh_double_quote",
-								"bh_double_quote_center",
-								"bh_double_quote_open",
-								"bh_double_quote_close",
-								"bh_double_quote_content",
-								"bh_tag",
-								"bh_tag_center",
-								"bh_tag_open",
-								"bh_tag_close",
-								"bh_tag_content",
-								"bh_angle",
-								"bh_angle_center",
-								"bh_angle_open",
-								"bh_angle_close",
-								"bh_angle_content",
-								"bh_round",
-								"bh_round_center",
-								"bh_round_open",
-								"bh_round_close",
-								"bh_round_content",
-								"bh_default",
-								"bh_default_center",
-								"bh_default_open",
-								"bh_default_close",
-								"bh_default_content",
-								"bh_unmatched",
-								"bh_unmatched_center",
-								"bh_unmatched_open",
-								"bh_unmatched_close",
-								"bh_unmatched_content",
-								"bh_square",
-								"bh_square_center",
-								"bh_square_open",
-								"bh_square_close",
-								"bh_square_content"
-							],
-							"open_with_edit": true,
-							"syntax": "Packages/C++/C++.sublime-syntax"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 18,
-					"type": "text"
-				},
-				{
-					"buffer": 16,
-					"file": "TODO",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 1130,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								229,
-								229
-							]
-						],
-						"settings":
-						{
-							"bracket_highlighter.busy": false,
-							"bracket_highlighter.locations":
-							{
-								"close":
-								{
-								},
-								"icon":
-								{
-								},
-								"open":
-								{
-								},
-								"unmatched":
-								{
-								}
-							},
-							"bracket_highlighter.regions":
-							[
-								"bh_c_define",
-								"bh_c_define_center",
-								"bh_c_define_open",
-								"bh_c_define_close",
-								"bh_c_define_content",
-								"bh_regex",
-								"bh_regex_center",
-								"bh_regex_open",
-								"bh_regex_close",
-								"bh_regex_content",
-								"bh_single_quote",
-								"bh_single_quote_center",
-								"bh_single_quote_open",
-								"bh_single_quote_close",
-								"bh_single_quote_content",
-								"bh_curly",
-								"bh_curly_center",
-								"bh_curly_open",
-								"bh_curly_close",
-								"bh_curly_content",
-								"bh_double_quote",
-								"bh_double_quote_center",
-								"bh_double_quote_open",
-								"bh_double_quote_close",
-								"bh_double_quote_content",
-								"bh_tag",
-								"bh_tag_center",
-								"bh_tag_open",
-								"bh_tag_close",
-								"bh_tag_content",
-								"bh_angle",
-								"bh_angle_center",
-								"bh_angle_open",
-								"bh_angle_close",
-								"bh_angle_content",
-								"bh_round",
-								"bh_round_center",
-								"bh_round_open",
-								"bh_round_close",
-								"bh_round_content",
-								"bh_default",
-								"bh_default_center",
-								"bh_default_open",
-								"bh_default_close",
-								"bh_default_content",
-								"bh_unmatched",
-								"bh_unmatched_center",
-								"bh_unmatched_open",
-								"bh_unmatched_close",
-								"bh_unmatched_content",
-								"bh_square",
-								"bh_square_center",
-								"bh_square_open",
-								"bh_square_close",
-								"bh_square_content"
-							],
-							"syntax": "Packages/Text/Plain text.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 10,
-					"type": "text"
-				},
-				{
-					"buffer": 17,
-					"file": "Tortuga/assets/scripts/test.lua",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 304,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								179,
-								179
-							]
-						],
-						"settings":
-						{
-							"bracket_highlighter.busy": false,
-							"bracket_highlighter.locations":
-							{
-								"close":
-								{
-								},
-								"icon":
-								{
-								},
-								"open":
-								{
-								},
-								"unmatched":
-								{
-								}
-							},
-							"bracket_highlighter.regions":
-							[
-								"bh_c_define",
-								"bh_c_define_center",
-								"bh_c_define_open",
-								"bh_c_define_close",
-								"bh_c_define_content",
-								"bh_regex",
-								"bh_regex_center",
-								"bh_regex_open",
-								"bh_regex_close",
-								"bh_regex_content",
-								"bh_single_quote",
-								"bh_single_quote_center",
-								"bh_single_quote_open",
-								"bh_single_quote_close",
-								"bh_single_quote_content",
-								"bh_curly",
-								"bh_curly_center",
-								"bh_curly_open",
-								"bh_curly_close",
-								"bh_curly_content",
-								"bh_double_quote",
-								"bh_double_quote_center",
-								"bh_double_quote_open",
-								"bh_double_quote_close",
-								"bh_double_quote_content",
-								"bh_tag",
-								"bh_tag_center",
-								"bh_tag_open",
-								"bh_tag_close",
-								"bh_tag_content",
-								"bh_angle",
-								"bh_angle_center",
-								"bh_angle_open",
-								"bh_angle_close",
-								"bh_angle_content",
-								"bh_round",
-								"bh_round_center",
-								"bh_round_open",
-								"bh_round_close",
-								"bh_round_content",
-								"bh_default",
-								"bh_default_center",
-								"bh_default_open",
-								"bh_default_close",
-								"bh_default_content",
-								"bh_unmatched",
-								"bh_unmatched_center",
-								"bh_unmatched_open",
-								"bh_unmatched_close",
-								"bh_unmatched_content",
-								"bh_square",
-								"bh_square_center",
-								"bh_square_open",
-								"bh_square_close",
-								"bh_square_content"
-							],
-							"open_with_edit": true,
-							"syntax": "Packages/Lua/Lua.sublime-syntax",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 11,
-					"type": "text"
-				},
-				{
-					"buffer": 18,
-					"file": "Turtle/src/Turtle/Scene/Components.h",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 6708,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								3604,
-								3571
-							]
-						],
-						"settings":
-						{
-							"bracket_highlighter.busy": false,
-							"bracket_highlighter.locations":
-							{
-								"close":
-								{
-									"1":
-									[
-										4330,
-										4331
-									]
-								},
-								"icon":
-								{
-									"1":
-									[
-										"Packages/BracketHighlighter/icons/curly_bracket.png",
-										"region.purplish"
-									]
-								},
-								"open":
-								{
-									"1":
-									[
-										3509,
-										3510
-									]
-								},
-								"unmatched":
-								{
-								}
-							},
-							"bracket_highlighter.regions":
-							[
-								"bh_c_define",
-								"bh_c_define_center",
-								"bh_c_define_open",
-								"bh_c_define_close",
-								"bh_c_define_content",
-								"bh_regex",
-								"bh_regex_center",
-								"bh_regex_open",
-								"bh_regex_close",
-								"bh_regex_content",
-								"bh_single_quote",
-								"bh_single_quote_center",
-								"bh_single_quote_open",
-								"bh_single_quote_close",
-								"bh_single_quote_content",
-								"bh_curly",
-								"bh_curly_center",
-								"bh_curly_open",
-								"bh_curly_close",
-								"bh_curly_content",
-								"bh_double_quote",
-								"bh_double_quote_center",
-								"bh_double_quote_open",
-								"bh_double_quote_close",
-								"bh_double_quote_content",
-								"bh_tag",
-								"bh_tag_center",
-								"bh_tag_open",
-								"bh_tag_close",
-								"bh_tag_content",
-								"bh_angle",
-								"bh_angle_center",
-								"bh_angle_open",
-								"bh_angle_close",
-								"bh_angle_content",
-								"bh_round",
-								"bh_round_center",
-								"bh_round_open",
-								"bh_round_close",
-								"bh_round_content",
-								"bh_default",
-								"bh_default_center",
-								"bh_default_open",
-								"bh_default_close",
-								"bh_default_content",
-								"bh_unmatched",
-								"bh_unmatched_center",
-								"bh_unmatched_open",
-								"bh_unmatched_close",
-								"bh_unmatched_content",
-								"bh_square",
-								"bh_square_center",
-								"bh_square_open",
-								"bh_square_close",
-								"bh_square_content"
-							],
-							"syntax": "Packages/C++/C++.sublime-syntax",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 2002.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 8,
-					"type": "text"
-				},
-				{
-					"buffer": 19,
-					"file": "Turtle/src/Turtle/Scene/ComponentSerializers.cpp",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 11347,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								6979,
-								6979
-							]
-						],
-						"settings":
-						{
-							"bracket_highlighter.busy": false,
-							"bracket_highlighter.locations":
-							{
-								"close":
-								{
-									"1":
-									[
-										7371,
-										7372
-									]
-								},
-								"icon":
-								{
-									"1":
-									[
-										"Packages/BracketHighlighter/icons/curly_bracket.png",
-										"region.purplish"
-									]
-								},
-								"open":
-								{
-									"1":
-									[
-										6359,
-										6360
-									]
-								},
-								"unmatched":
-								{
-								}
-							},
-							"bracket_highlighter.regions":
-							[
-								"bh_c_define",
-								"bh_c_define_center",
-								"bh_c_define_open",
-								"bh_c_define_close",
-								"bh_c_define_content",
-								"bh_regex",
-								"bh_regex_center",
-								"bh_regex_open",
-								"bh_regex_close",
-								"bh_regex_content",
-								"bh_single_quote",
-								"bh_single_quote_center",
-								"bh_single_quote_open",
-								"bh_single_quote_close",
-								"bh_single_quote_content",
-								"bh_curly",
-								"bh_curly_center",
-								"bh_curly_open",
-								"bh_curly_close",
-								"bh_curly_content",
-								"bh_double_quote",
-								"bh_double_quote_center",
-								"bh_double_quote_open",
-								"bh_double_quote_close",
-								"bh_double_quote_content",
-								"bh_tag",
-								"bh_tag_center",
-								"bh_tag_open",
-								"bh_tag_close",
-								"bh_tag_content",
-								"bh_angle",
-								"bh_angle_center",
-								"bh_angle_open",
-								"bh_angle_close",
-								"bh_angle_content",
-								"bh_round",
-								"bh_round_center",
-								"bh_round_open",
-								"bh_round_close",
-								"bh_round_content",
-								"bh_default",
-								"bh_default_center",
-								"bh_default_open",
-								"bh_default_close",
-								"bh_default_content",
-								"bh_unmatched",
-								"bh_unmatched_center",
-								"bh_unmatched_open",
-								"bh_unmatched_close",
-								"bh_unmatched_content",
-								"bh_square",
-								"bh_square_center",
-								"bh_square_open",
-								"bh_square_close",
-								"bh_square_content"
-							],
-							"syntax": "Packages/C++/C++.sublime-syntax",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 5142.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 21,
-					"type": "text"
-				}
-			]
-		},
-		{
-			"selected": 1,
-			"sheets":
-			[
-				{
-					"buffer": 0,
-					"file": "Turtle/src/Turtle/Scripting/LuaScript.cpp",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 10169,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								2437,
-								2437
-							]
-						],
-						"settings":
-						{
-							"bracket_highlighter.busy": false,
-							"bracket_highlighter.locations":
-							{
-								"close":
-								{
-									"1":
-									[
-										2440,
-										2441
-									]
-								},
-								"icon":
-								{
-									"1":
-									[
-										"Packages/BracketHighlighter/icons/round_bracket.png",
-										"region.yellowish"
-									]
-								},
-								"open":
-								{
-									"1":
-									[
-										2415,
-										2416
-									]
-								},
-								"unmatched":
-								{
-								}
-							},
-							"bracket_highlighter.regions":
-							[
-								"bh_c_define",
-								"bh_c_define_center",
-								"bh_c_define_open",
-								"bh_c_define_close",
-								"bh_c_define_content",
-								"bh_regex",
-								"bh_regex_center",
-								"bh_regex_open",
-								"bh_regex_close",
-								"bh_regex_content",
-								"bh_single_quote",
-								"bh_single_quote_center",
-								"bh_single_quote_open",
-								"bh_single_quote_close",
-								"bh_single_quote_content",
-								"bh_curly",
-								"bh_curly_center",
-								"bh_curly_open",
-								"bh_curly_close",
-								"bh_curly_content",
-								"bh_double_quote",
-								"bh_double_quote_center",
-								"bh_double_quote_open",
-								"bh_double_quote_close",
-								"bh_double_quote_content",
-								"bh_tag",
-								"bh_tag_center",
-								"bh_tag_open",
-								"bh_tag_close",
-								"bh_tag_content",
-								"bh_angle",
-								"bh_angle_center",
-								"bh_angle_open",
-								"bh_angle_close",
-								"bh_angle_content",
-								"bh_round",
-								"bh_round_center",
-								"bh_round_open",
-								"bh_round_close",
-								"bh_round_content",
-								"bh_default",
-								"bh_default_center",
-								"bh_default_open",
-								"bh_default_close",
-								"bh_default_content",
-								"bh_unmatched",
-								"bh_unmatched_center",
-								"bh_unmatched_open",
-								"bh_unmatched_close",
-								"bh_unmatched_content",
-								"bh_square",
-								"bh_square_center",
-								"bh_square_open",
-								"bh_square_close",
-								"bh_square_content"
-							],
-							"open_with_edit": true,
-							"syntax": "Packages/C++/C++.sublime-syntax"
-						},
-						"translation.x": 0.0,
-						"translation.y": 5.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 2,
-					"type": "text"
-				},
-				{
-					"buffer": 17,
-					"file": "Tortuga/assets/scripts/test.lua",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 304,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								304,
-								304
-							]
-						],
-						"settings":
-						{
-							"bracket_highlighter.busy": false,
-							"bracket_highlighter.locations":
-							{
-								"close":
-								{
-									"1":
-									[
-										20,
-										23
-									]
-								},
-								"icon":
-								{
-									"1":
-									[
-										"Packages/BracketHighlighter/icons/dot.png",
-										"region.yellowish brackethighlighter.default"
-									]
-								},
-								"open":
-								{
-									"1":
-									[
-										0,
-										8
-									]
-								},
-								"unmatched":
-								{
-								}
-							},
-							"bracket_highlighter.regions":
-							[
-								"bh_c_define",
-								"bh_c_define_center",
-								"bh_c_define_open",
-								"bh_c_define_close",
-								"bh_c_define_content",
-								"bh_regex",
-								"bh_regex_center",
-								"bh_regex_open",
-								"bh_regex_close",
-								"bh_regex_content",
-								"bh_single_quote",
-								"bh_single_quote_center",
-								"bh_single_quote_open",
-								"bh_single_quote_close",
-								"bh_single_quote_content",
-								"bh_curly",
-								"bh_curly_center",
-								"bh_curly_open",
-								"bh_curly_close",
-								"bh_curly_content",
-								"bh_double_quote",
-								"bh_double_quote_center",
-								"bh_double_quote_open",
-								"bh_double_quote_close",
-								"bh_double_quote_content",
-								"bh_tag",
-								"bh_tag_center",
-								"bh_tag_open",
-								"bh_tag_close",
-								"bh_tag_content",
-								"bh_angle",
-								"bh_angle_center",
-								"bh_angle_open",
-								"bh_angle_close",
-								"bh_angle_content",
-								"bh_round",
-								"bh_round_center",
-								"bh_round_open",
-								"bh_round_close",
-								"bh_round_content",
-								"bh_default",
-								"bh_default_center",
-								"bh_default_open",
-								"bh_default_close",
-								"bh_default_content",
-								"bh_unmatched",
-								"bh_unmatched_center",
-								"bh_unmatched_open",
-								"bh_unmatched_close",
-								"bh_unmatched_content",
-								"bh_square",
-								"bh_square_center",
-								"bh_square_open",
-								"bh_square_close",
-								"bh_square_content"
-							],
-							"open_with_edit": true,
-							"syntax": "Packages/Lua/Lua.sublime-syntax",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 1,
-					"type": "text"
-				},
-				{
-					"buffer": 18,
-					"file": "Turtle/src/Turtle/Scene/Components.h",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 6708,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								5326,
-								5326
-							]
-						],
-						"settings":
-						{
-							"bracket_highlighter.busy": false,
-							"bracket_highlighter.locations":
-							{
-								"close":
-								{
-									"1":
-									[
-										5550,
-										5551
-									]
-								},
-								"icon":
-								{
-									"1":
-									[
-										"Packages/BracketHighlighter/icons/curly_bracket.png",
-										"region.purplish"
-									]
-								},
-								"open":
-								{
-									"1":
-									[
-										5061,
-										5062
-									]
-								},
-								"unmatched":
-								{
-								}
-							},
-							"bracket_highlighter.regions":
-							[
-								"bh_c_define",
-								"bh_c_define_center",
-								"bh_c_define_open",
-								"bh_c_define_close",
-								"bh_c_define_content",
-								"bh_regex",
-								"bh_regex_center",
-								"bh_regex_open",
-								"bh_regex_close",
-								"bh_regex_content",
-								"bh_single_quote",
-								"bh_single_quote_center",
-								"bh_single_quote_open",
-								"bh_single_quote_close",
-								"bh_single_quote_content",
-								"bh_curly",
-								"bh_curly_center",
-								"bh_curly_open",
-								"bh_curly_close",
-								"bh_curly_content",
-								"bh_double_quote",
-								"bh_double_quote_center",
-								"bh_double_quote_open",
-								"bh_double_quote_close",
-								"bh_double_quote_content",
-								"bh_tag",
-								"bh_tag_center",
-								"bh_tag_open",
-								"bh_tag_close",
-								"bh_tag_content",
-								"bh_angle",
-								"bh_angle_center",
-								"bh_angle_open",
-								"bh_angle_close",
-								"bh_angle_content",
-								"bh_round",
-								"bh_round_center",
-								"bh_round_open",
-								"bh_round_close",
-								"bh_round_content",
-								"bh_default",
-								"bh_default_center",
-								"bh_default_open",
-								"bh_default_close",
-								"bh_default_content",
-								"bh_unmatched",
-								"bh_unmatched_center",
-								"bh_unmatched_open",
-								"bh_unmatched_close",
-								"bh_unmatched_content",
-								"bh_square",
-								"bh_square_center",
-								"bh_square_open",
-								"bh_square_close",
-								"bh_square_content"
-							],
-							"syntax": "Packages/C++/C++.sublime-syntax",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 3349.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 3,
-					"type": "text"
-				}
 			]
 		}
 	],
@@ -4480,18 +1341,11 @@
 				0,
 				1,
 				1
-			],
-			[
-				1,
-				0,
-				2,
-				1
 			]
 		],
 		"cols":
 		[
 			0.0,
-			0.537204281563,
 			1.0
 		],
 		"rows":
@@ -4527,40 +1381,168 @@
 		"selected_items":
 		[
 			[
-				"Scene.",
-				"Turtle\\src\\Turtle\\Scene\\Scene.cpp"
+				"scripts.turt",
+				"Tortuga\\assets\\scenes\\scripts.turt"
+			],
+			[
+				"todo",
+				"TODO"
+			],
+			[
+				"component",
+				"Turtle\\src\\Turtle\\Scene\\ComponentSerializers.cpp"
+			],
+			[
+				"entit",
+				"Turtle\\src\\Turtle\\Scene\\Entity.h"
+			],
+			[
+				"opengltex",
+				"Turtle\\src\\Platform\\OpenGL\\OpenGLTexture.h"
+			],
+			[
+				"componentser",
+				"Turtle\\src\\Turtle\\Scene\\ComponentSerializers.cpp"
+			],
+			[
+				"filse",
+				"Tortuga\\src\\Panels\\FileSelector.cpp"
+			],
+			[
+				"example",
+				"Tortuga\\assets\\scenes\\Example.turt"
+			],
+			[
+				"game.turt",
+				"Tortuga\\assets\\scenes\\Game.turt"
+			],
+			[
+				"windows",
+				"Turtle\\src\\Platform\\Windows\\WindowsPlatformUtils.cpp"
+			],
+			[
+				"plat",
+				"Turtle\\src\\Turtle\\Utils\\PlatformUtils.h"
+			],
+			[
+				"luascr",
+				"Turtle\\src\\Turtle\\Scripting\\LuaScript.h"
 			],
 			[
 				"test",
 				"Tortuga\\assets\\scripts\\test.lua"
 			],
 			[
-				"metare",
-				"Turtle\\src\\Turtle\\Core\\MetaRegistry.h"
+				"imguidem",
+				"Turtle\\vendor\\imgui\\imgui_demo.cpp"
 			],
 			[
-				"luascrip",
-				"Turtle\\src\\Turtle\\Scripting\\LuaScript.cpp"
+				"componentUi",
+				"Turtle\\src\\Turtle\\Scene\\ComponentUI.cpp"
+			],
+			[
+				"luasc",
+				"Turtle\\src\\Turtle\\Scripting\\LuaScript.h"
 			],
 			[
 				"components.h",
 				"Turtle\\src\\Turtle\\Scene\\Components.h"
 			],
 			[
-				"component",
+				"sce",
+				"Turtle\\src\\Turtle\\Scene\\Scene.cpp"
+			],
+			[
+				"premake",
+				"premake5.lua"
+			],
+			[
+				"luascript",
+				"Turtle\\src\\Turtle\\Scripting\\LuaScript.h"
+			],
+			[
+				"luascri",
+				"Turtle\\src\\Turtle\\Scripting\\LuaScript.cpp"
+			],
+			[
+				"componen",
 				"Turtle\\src\\Turtle\\Scene\\Components.h"
 			],
 			[
-				"luasc",
+				"metare",
+				"Turtle\\src\\Turtle\\Core\\MetaRegistry.h"
+			],
+			[
+				"editor",
+				"Tortuga\\src\\EditorLayer.cpp"
+			],
+			[
+				"components.",
+				"Turtle\\src\\Turtle\\Scene\\Components.h"
+			],
+			[
+				"lua",
+				"Turtle\\vendor\\lua\\src\\luaconf.h"
+			],
+			[
+				"meta",
+				"Turtle\\src\\Turtle\\Core\\MetaRegistry.h"
+			],
+			[
+				"alloc",
+				"Turtle\\src\\Turtle\\Scripting\\LuaAreaAllocator.h"
+			],
+			[
+				"luas",
+				"Turtle\\src\\Turtle\\Scripting\\LuaScript.cpp"
+			],
+			[
+				"",
+				"Turtle\\src\\Turtle\\Core\\MetaRegistry.h"
+			],
+			[
+				"scene.c",
+				"Turtle\\src\\Turtle\\Scene\\Scene.cpp"
+			],
+			[
+				"vector_float3",
+				"Turtle\\vendor\\glm\\glm\\ext\\vector_float3.hpp"
+			],
+			[
+				"vec3.",
+				"Turtle\\vendor\\glm\\glm\\vec3.hpp"
+			],
+			[
+				"glm",
+				"Turtle\\vendor\\glm\\glm\\glm.hpp"
+			],
+			[
+				"metareg",
+				"Turtle\\src\\Turtle\\Core\\MetaRegistry.h"
+			],
+			[
+				"edit",
+				"Tortuga\\src\\EditorLayer.cpp"
+			],
+			[
+				"SCene.cpp",
+				"Turtle\\src\\Turtle\\Scene\\Scene.cpp"
+			],
+			[
+				"scene",
+				"Turtle\\src\\Turtle\\Scene\\Scene.cpp"
+			],
+			[
+				"Scene.",
+				"Turtle\\src\\Turtle\\Scene\\Scene.cpp"
+			],
+			[
+				"luascrip",
 				"Turtle\\src\\Turtle\\Scripting\\LuaScript.cpp"
 			],
 			[
 				"components",
 				"Turtle\\src\\Turtle\\Scene\\Components.h"
-			],
-			[
-				"lua",
-				"Turtle\\src\\Turtle\\Scripting\\LuaScript.cpp"
 			],
 			[
 				"metart",
@@ -4569,26 +1551,6 @@
 			[
 				"Ent",
 				"Turtle\\src\\Turtle\\Scene\\Entity.h"
-			],
-			[
-				"entit",
-				"Turtle\\src\\Turtle\\Scene\\Entity.h"
-			],
-			[
-				"editor",
-				"Tortuga\\src\\EditorLayer.cpp"
-			],
-			[
-				"luascri",
-				"Turtle\\src\\Turtle\\Scripting\\LuaScript.cpp"
-			],
-			[
-				"luascript",
-				"Turtle\\src\\Turtle\\Scripting\\LuaScript.h"
-			],
-			[
-				"luascr",
-				"Turtle\\src\\Turtle\\Scripting\\LuaScript.cpp"
 			],
 			[
 				"edito",
@@ -4603,20 +1565,8 @@
 				"Tortuga\\assets\\scripts\\test.lua"
 			],
 			[
-				"meta",
-				"Turtle\\src\\Turtle\\Core\\MetaRegistry.h"
-			],
-			[
 				"e",
 				"Tortuga\\src\\EditorLayer.cpp"
-			],
-			[
-				"",
-				"Turtle\\src\\Turtle\\Scene\\Components.h"
-			],
-			[
-				"todo",
-				"TODO"
 			],
 			[
 				"editorla",
@@ -4633,10 +1583,6 @@
 			[
 				"entity",
 				"Turtle\\src\\Turtle\\Scene\\Entity.h"
-			],
-			[
-				"componentser",
-				"Turtle\\src\\Turtle\\Scene\\ComponentSerializers.cpp"
 			],
 			[
 				"LuaScri",
@@ -4683,23 +1629,7 @@
 				"Turtle\\src\\Turtle\\Scene\\Scene.h"
 			],
 			[
-				"premake",
-				"Turtle\\vendor\\yaml-cpp\\premake5.lua"
-			],
-			[
-				"scene",
-				"Tortuga\\src\\Panels\\SceneHeirarchyPanel.cpp"
-			],
-			[
-				"componen",
-				"Turtle\\src\\Turtle\\Scene\\Components.cpp"
-			],
-			[
 				"imguidemo",
-				"Turtle\\vendor\\imgui\\imgui_demo.cpp"
-			],
-			[
-				"imguidem",
 				"Turtle\\vendor\\imgui\\imgui_demo.cpp"
 			],
 			[
@@ -4777,10 +1707,6 @@
 			[
 				"scenedump",
 				"Tortuga\\SceneDump.yaml"
-			],
-			[
-				"edit",
-				"Tortuga\\src\\EditorLayer.cpp"
 			],
 			[
 				"editorlayer",
@@ -4965,78 +1891,6 @@
 			[
 				"core",
 				"Turtle\\src\\Turtle\\Core\\Core.h"
-			],
-			[
-				"componentadd",
-				"Tortuga\\src\\Panels\\ComponentAddPanel.cpp"
-			],
-			[
-				"imgui_examp",
-				"Turtle\\vendor\\imgui\\examples\\imgui_examples.sln"
-			],
-			[
-				"sceneheri",
-				"Tortuga\\src\\Panels\\SceneHeirarchyPanel.cpp"
-			],
-			[
-				"scenecamera",
-				"Turtle\\src\\Turtle\\Scene\\SceneCamera.cpp"
-			],
-			[
-				"entity.",
-				"Turtle\\src\\Turtle\\Scene\\Entity.cpp"
-			],
-			[
-				"scene.",
-				"Turtle\\src\\Turtle\\Scene\\Scene.h"
-			],
-			[
-				"core.h",
-				"Turtle\\src\\Turtle\\Core\\Core.h"
-			],
-			[
-				"SceneCamera",
-				"Turtle\\src\\Turtle\\Scene\\SceneCamera.h"
-			],
-			[
-				"imgui_dem",
-				"Turtle\\vendor\\imgui\\imgui_demo.cpp"
-			],
-			[
-				"imguidemp",
-				"Turtle\\vendor\\imgui\\imgui_demo.cpp"
-			],
-			[
-				"orthograp",
-				"Turtle\\src\\Turtle\\Renderer\\OrthographicCameraController.cpp"
-			],
-			[
-				"camera",
-				"Turtle\\src\\Turtle\\Renderer\\Camera.h"
-			],
-			[
-				"scenecamer",
-				"Turtle\\src\\Turtle\\Scene\\SceneCamera.h"
-			],
-			[
-				"texturemana",
-				"Turtle\\src\\Turtle\\Core\\TextureManager.h"
-			],
-			[
-				"imguilayer.h",
-				"Turtle\\src\\Turtle\\ImGui\\ImGuiLayer.h"
-			],
-			[
-				"imguila",
-				"Turtle\\src\\Turtle\\ImGui\\ImGuiLayer.cpp"
-			],
-			[
-				"Renderer2d",
-				"Turtle\\src\\Turtle\\Renderer\\renderer2d.h"
-			],
-			[
-				"tortuga",
-				"Tortuga\\src\\TortugaApp.cpp"
 			]
 		],
 		"width": 0.0
