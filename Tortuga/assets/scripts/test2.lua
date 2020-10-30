@@ -1,3 +1,9 @@
+--[[
+  Properties that will be exposed to c++
+--]]
+Props = {
+  RotationalVelocity = 1
+}
 
 --[[
 Called once a frame
@@ -6,5 +12,7 @@ Params: Entity: the entity this script belongs to
 --]]
 function OnUpdate(Entity, ts)
   local transform = Entity:Get__TransformComponent() 
-  transform.Rotation.z = transform.Rotation.z +  3 * ts
+  transform.Rotation.z = transform.Rotation.z + Props.RotationalVelocity * ts
+  -- Props.Rot = Props.Rot + 1 * ts
 end
+

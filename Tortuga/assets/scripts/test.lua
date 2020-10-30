@@ -2,8 +2,8 @@
 	Properties that will be exposed to c++
 --]]
 Props = {
-	TestVal = 10,
-	CoolerVal = 1
+	XOffset = 0,
+	YOffset = 1
 }
 
 --[[
@@ -13,10 +13,10 @@ Params: Entity: the entity this script belongs to
 --]]
 function OnUpdate(Entity, ts)
 	local transform = Entity:Get__TransformComponent() 
-	transform.Translation.x = math.sin(transform.Rotation.z)
-	transform.Translation.y = math.cos(transform.Rotation.z)
+	transform.Translation.x = math.sin(transform.Rotation.z) + Props.XOffset
+	transform.Translation.y = math.cos(transform.Rotation.z) + Props.YOffset
 	transform.Rotation.z = transform.Rotation.z +  3 * ts
 	local sprite = Entity:Get__SpriteRendererComponent()
-	sprite.Color.x = (math.sin(transform.Rotation.z)/2) + .5
-	sprite.Color.z = (math.cos(transform.Rotation.z)/2) + .5
+	sprite.Color.x = (math.sin(transform.Rotation.z)/2) + .5 
+	sprite.Color.z = (math.cos(transform.Rotation.z)/2) + .5 
 end

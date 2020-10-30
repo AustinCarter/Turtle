@@ -64,9 +64,12 @@ namespace Turtle{
 			else if(ImGui::Button("Add Texture"))
 			{
 				std::string path = FileDialogs::OpenFile("*.png\0*.png\0");
-				component.Texture = AssetManager::CreateTexture(path);
-				component.RendererID = component.Texture->GetRendererID();
-				component.Textured = true;
+				if(!path.empty())
+				{
+					component.Texture = AssetManager::CreateTexture(path);
+					component.RendererID = component.Texture->GetRendererID();
+					component.Textured = true;
+				}
 			}
 		});
 	}
@@ -150,16 +153,30 @@ namespace Turtle{
 				lua_pushnil(L);
 				if (!lua_isnil(L, top))
 				{
+					ImGui::Columns(2);
+					ImGui::SetColumnWidth(0, 150.0f);
 					while (lua_next(L, top) != 0)
 					{
 						// uses 'key' (at index -2) and 'value' (at index -1)
+						
+
 						const char* fieldName = lua_tostring(L, -2);
 						float value = lua_tonumber(L, -1);
-						ImGui::DragFloat(fieldName, &value);
+
+						ImGui::Text(fieldName);
+						ImGui::NextColumn();
+						ImGui::PushItemWidth(ImGui::GetContentRegionAvailWidth()*0.8f);
+						ImGui::PushID(fieldName);
+						ImGui::DragFloat("", &value, 0.1f);
+						ImGui::PopID();
+						ImGui::PopItemWidth();
+						ImGui::NextColumn();
+
 						lua_pushnumber(L, value);
 						lua_setfield(L, top, fieldName);
 						lua_pop(L, 1);
 					}
+					ImGui::Columns(1);
 				}
 			}
 			if(ImGui::Button("Set Script"))
@@ -195,6 +212,7 @@ namespace Turtle{
 
 			ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2{ 0, 0});
 			ImGui::PushStyleVar(ImGuiStyleVar_ItemInnerSpacing, ImVec2{ 0, 0 });
+
 			ImGui::Text("Color Begin");
 			ImGui::NextColumn();
 			ImGui::PushItemWidth(ImGui::GetContentRegionAvailWidth()*0.8f);
