@@ -32,7 +32,12 @@ namespace Turtle {
 		m_ActiveScene = CreateRef<Scene>();
 
 		m_AudioPlayer = CreateRef<AudioPlayer>();
-		m_AudioPlayer->Init("assets/audio/test.wav", false);
+		m_AudioDecoder = CreateRef<AudioDecoder>();
+		m_SongDecoder = CreateRef<AudioDecoder>();
+		m_AudioDecoder->Init("assets/audio/test.wav", false);
+		m_SongDecoder->Init("assets/audio/Lines_of_Code.wav", true);
+		m_AudioPlayer->AddSource(m_AudioDecoder);
+		m_AudioPlayer->AddSource(m_SongDecoder);
 		/*
 		ma_result result;
 		ma_decoder decoder;
@@ -187,6 +192,8 @@ namespace Turtle {
 		ImGui::Text("Textures Loaded: %d", assetStats.TexturesLoaded);
 		if(ImGui::Button("AssetManager::Unload()"))
 			AssetManager::Unload();
+		if(ImGui::Button("Play"))
+			m_AudioDecoder->Play();
 
 		ImGui::End();
 

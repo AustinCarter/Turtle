@@ -1,5 +1,6 @@
 --[[
 	Properties that will be exposed to c++
+	Currently only numeric values supported
 --]]
 Props = {
 	XOffset = 0,

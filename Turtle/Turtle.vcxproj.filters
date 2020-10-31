@@ -96,6 +96,9 @@
     <ClInclude Include="src\Turtle.h">
       <Filter>src</Filter>
     </ClInclude>
+    <ClInclude Include="src\Turtle\Audio\AudioDecoder.h">
+      <Filter>src\Turtle\Audio</Filter>
+    </ClInclude>
     <ClInclude Include="src\Turtle\Audio\AudioPlayer.h">
       <Filter>src\Turtle\Audio</Filter>
     </ClInclude>
@@ -1492,6 +1495,9 @@
     </ClCompile>
     <ClCompile Include="src\Platform\Windows\WindowsWindow.cpp">
       <Filter>src\Platform\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Turtle\Audio\AudioDecoder.cpp">
+      <Filter>src\Turtle\Audio</Filter>
     </ClCompile>
     <ClCompile Include="src\Turtle\Audio\AudioPlayer.cpp">
       <Filter>src\Turtle\Audio</Filter>

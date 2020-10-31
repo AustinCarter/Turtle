@@ -115,12 +115,14 @@ namespace Turtle {
 
 	};
 
-	struct AudioComponent
+	// TODO: figure out how to do (de)serialization to get decoder attached to correct device (could be done with assetmanger and hashing)
+	struct AudioSourceComponent
 	{
 		Ref<AudioPlayer> Player;
+		Ref<AudioDecoder> Sound; 
 
-		AudioPlayerComponent() = default;
-		AudioPlayerComponent(const AudioPlayerComponent&) = default;
+		AudioSourceComponent() = default;
+		AudioSourceComponent(const AudioSourceComponent&) = default;
 
 		void Serialize(YAML::Emitter& out);
 		void Deserialize(YAML::Node& out, Entity entity);

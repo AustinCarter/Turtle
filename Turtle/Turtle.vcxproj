@@ -153,6 +153,7 @@
     <ClInclude Include="src\Platform\OpenGL\openglcontext.h" />
     <ClInclude Include="src\Platform\Windows\WindowsWindow.h" />
     <ClInclude Include="src\Turtle.h" />
+    <ClInclude Include="src\Turtle\Audio\AudioDecoder.h" />
     <ClInclude Include="src\Turtle\Audio\AudioPlayer.h" />
     <ClInclude Include="src\Turtle\Core\Application.h" />
     <ClInclude Include="src\Turtle\Core\AssetManager.h" />
@@ -620,6 +621,7 @@
     <ClCompile Include="src\Platform\Windows\WindowsInput.cpp" />
     <ClCompile Include="src\Platform\Windows\WindowsPlatformUtils.cpp" />
     <ClCompile Include="src\Platform\Windows\WindowsWindow.cpp" />
+    <ClCompile Include="src\Turtle\Audio\AudioDecoder.cpp" />
     <ClCompile Include="src\Turtle\Audio\AudioPlayer.cpp" />
     <ClCompile Include="src\Turtle\Core\Application.cpp" />
     <ClCompile Include="src\Turtle\Core\AssetManager.cpp" />

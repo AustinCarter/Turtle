@@ -51,4 +51,4 @@ Editor:
 
 
  Need to wrap decoders in an Audio decoder class that will track things like if it loops or if it is at the end of its data. If a decoder is at the end of its data and does not loop it can be removed from the decoder list so that the device will not try and read data from it anymore. 
- 		*** Need to check if multiple Audio Devices can be used to play through same speaker. Probably want seperate Audio devices for things like music and sfx so that their master volumes can be controlled independently of each other. I think that this is the case, but should confirm.... ALSO, need to confirm that the devices playing through the same speaker won't cause issues with mixing/etc***
+ 		*** Need to check if multiple Audio Devices can be used to play through same speaker. Probably want seperate Audio devices for things like music and sfx so that their volumes can be controlled independently. I think that this is the case, but should confirm.... ALSO, need to confirm that the devices playing through the same speaker won't cause issues with mixing/etc***
