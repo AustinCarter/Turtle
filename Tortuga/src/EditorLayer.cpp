@@ -31,20 +31,41 @@ namespace Turtle {
 
 		m_ActiveScene = CreateRef<Scene>();
 
-#if 0
-		auto square = m_ActiveScene->CreateEntity("Square Entity");
-		square.AddComponent<SpriteRendererComponent>(m_CheckerboardTexture, glm::vec4{ 1.0f, 1.0f, 1.0f, 1.0f });
+		m_AudioPlayer = CreateRef<AudioPlayer>();
+		m_AudioPlayer->Init("assets/audio/test.wav", false);
+		/*
+		ma_result result;
+		ma_decoder decoder;
+		ma_device_config deviceConfig;
+		ma_device device;
 
-		auto square2 = m_ActiveScene->CreateEntity("Square Entity 2");
-		square2.AddComponent<SpriteRendererComponent>(glm::vec4{ 0.6f, 0.2f, 0.5f, 1.0f });
-		square2.GetComponent<TransformComponent>().Translation.x = rand() % 10 - 5.0f;
+		result = ma_decoder_init_file("assets/audio/test.wav", NULL, &decoder);
+		if (result != MA_SUCCESS) {
+			TURT_CORE_ERROR("Failed to load Audio file");
+		}
 
-		m_CameraEntity = m_ActiveScene->CreateEntity("Camera");
-		m_CameraEntity.AddComponent<CameraComponent>();
-	#endif
+		
+		deviceConfig = ma_device_config_init(ma_device_type_playback);
+		deviceConfig.playback.format = decoder.outputFormat;
+		deviceConfig.playback.channels = decoder.outputChannels;
+		deviceConfig.sampleRate = decoder.outputSampleRate;
+		deviceConfig.dataCallback = data_callback;
+		deviceConfig.pUserData = &decoder;
 
-		// spawn.EmissionRate = 5.0f;
-		// script.CallScriptFunction("TestGet", particleSpawn);
+		if (ma_device_init(NULL, &deviceConfig, &device) != MA_SUCCESS) {
+			ma_decoder_uninit(&decoder);
+			TURT_CORE_ERROR("Failed to open playback device.\n");
+		}
+
+		if (ma_device_start(&device) != MA_SUCCESS) {
+			ma_device_uninit(&device);
+			ma_decoder_uninit(&decoder);
+			TURT_CORE_ERROR("Failed to start playback device.\n");
+		}
+
+		ma_device_uninit(&device);
+		ma_decoder_uninit(&decoder);
+		*/
 
 		m_SceneHierarchyPanel.SetContext(m_ActiveScene);
 	}

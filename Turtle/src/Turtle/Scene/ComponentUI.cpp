@@ -145,11 +145,31 @@ namespace Turtle{
 		{
 			if(component.Script)
 			{
-				ImGui::Text("Current Script %s", component.Script->GetFilepath().c_str());
+				ImGuiIO& io = ImGui::GetIO();
+				auto boldFont = io.Fonts->Fonts[0];
+
+				ImGui::PushFont(boldFont);
+				if (ImGui::Button(component.Script->GetFilepath().c_str(), ImVec2{ ImGui::GetContentRegionAvail().x, 0.0f }))
+				{
+					std::string filepath = FileDialogs::OpenFile("*.lua\0*.lua\0");
+					if (!filepath.empty())
+					{
+						component.Script = CreateRef<LuaScript>();
+						if (component.Script->LoadScriptFromFile(filepath) != LUA_OK)
+							component.Script->LogError();
+						component.Script->ExecuteScript();
+					}
+				}
+				ImGui::PopFont();
+
 				// table is in the stack at index 't'
 				lua_State* L = component.Script->GetState();
+				// Iterate over 'Props' global table and print out all values
+					//NOTE: currently assumes that all values are numeric
+					//		could recurse on meta table of user data and print all floats 
 				lua_getglobal(L, "Props");
-				int top = lua_gettop(L);  // first key
+				int top = lua_gettop(L);
+				//first key
 				lua_pushnil(L);
 				if (!lua_isnil(L, top))
 				{
@@ -176,16 +196,19 @@ namespace Turtle{
 						lua_setfield(L, top, fieldName);
 						lua_pop(L, 1);
 					}
-					ImGui::Columns(1);
+					ImGui::Columns(1);	
 				}
 			}
-			if(ImGui::Button("Set Script"))
+			else if(ImGui::Button("Set Script"))
 			{
-				component.Script = CreateRef<LuaScript>();
 				std::string filepath = FileDialogs::OpenFile("*.lua\0*.lua\0");
-				if(component.Script->LoadScriptFromFile(filepath) != LUA_OK)
-					component.Script->LogError();
-				component.Script->ExecuteScript();
+				if(!filepath.empty())
+				{
+					component.Script = CreateRef<LuaScript>();
+					if(component.Script->LoadScriptFromFile(filepath) != LUA_OK)
+						component.Script->LogError();
+					component.Script->ExecuteScript();
+				}
 			}
 			
 		});

@@ -13,6 +13,5 @@ Params: Entity: the entity this script belongs to
 function OnUpdate(Entity, ts)
   local transform = Entity:Get__TransformComponent() 
   transform.Rotation.z = transform.Rotation.z + Props.RotationalVelocity * ts
-  -- Props.Rot = Props.Rot + 1 * ts
 end
 

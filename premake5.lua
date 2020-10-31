@@ -26,6 +26,7 @@ IncludeDir["glm"] = "Turtle/vendor/glm"
 IncludeDir["stb_image"] = "Turtle/vendor/stb_image"
 IncludeDir["entt"] = "Turtle/vendor/entt/include"
 IncludeDir["lua"] = "Turtle/vendor/lua/src"
+IncludeDir["miniaudio"] = "Turtle/vendor/miniaudio/include"
 
 group "Dependencies"
 	include "Turtle/vendor/GLFW"
@@ -74,7 +75,8 @@ project "Turtle"
 		"%{IncludeDir.stb_image}",
 		"%{IncludeDir.yaml_cpp}",
 		"%{IncludeDir.entt}",
-		"%{IncludeDir.lua}"
+		"%{IncludeDir.lua}",
+		"%{IncludeDir.miniaudio}"
 	}
 
 	links 
@@ -135,6 +137,7 @@ project "Tortuga"
 		"Turtle/vendor",
 		"%{IncludeDir.glm}",
 		"%{IncludeDir.entt}",
+		"%{IncludeDir.miniaudio}",
 		"%{IncludeDir.ImGui}",
 		"%{IncludeDir.yaml_cpp}",
 		"%{IncludeDir.lua}"
@@ -191,6 +194,7 @@ project "Sandbox"
 		"Turtle/vendor",
 		"%{IncludeDir.glm}",
 		"%{IncludeDir.entt}",
+		"%{IncludeDir.miniaudio}",
 		"%{IncludeDir.yaml_cpp}",
 		"%{IncludeDir.lua}"
 	}

@@ -15,6 +15,8 @@
 
 #include "Turtle/Scripting/LuaScript.h"
 
+#include "Turtle/Audio/AudioPlayer.h"
+
 //#include <entt.hpp>
 
 #include <fstream>
@@ -111,6 +113,18 @@ namespace Turtle {
 		void Deserialize(YAML::Node& out, Entity entity);
 		void DrawUI(Entity entity);
 
+	};
+
+	struct AudioComponent
+	{
+		Ref<AudioPlayer> Player;
+
+		AudioPlayerComponent() = default;
+		AudioPlayerComponent(const AudioPlayerComponent&) = default;
+
+		void Serialize(YAML::Emitter& out);
+		void Deserialize(YAML::Node& out, Entity entity);
+		void DrawUI(Entity entity);
 	};
 
 

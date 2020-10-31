@@ -16,6 +16,9 @@
     <Filter Include="src\Turtle">
       <UniqueIdentifier>{BCE4B431-A89C-F67E-11A4-CFDAFD7A916F}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\Turtle\Audio">
+      <UniqueIdentifier>{BD0F1181-A908-30D3-D23A-1558BE920FDF}</UniqueIdentifier>
+    </Filter>
     <Filter Include="src\Turtle\Core">
       <UniqueIdentifier>{945E66F4-00EA-D3B8-09FB-56AD750530B9}</UniqueIdentifier>
     </Filter>
@@ -92,6 +95,9 @@
     </ClInclude>
     <ClInclude Include="src\Turtle.h">
       <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Turtle\Audio\AudioPlayer.h">
+      <Filter>src\Turtle\Audio</Filter>
     </ClInclude>
     <ClInclude Include="src\Turtle\Core\Application.h">
       <Filter>src\Turtle\Core</Filter>
@@ -1486,6 +1492,9 @@
     </ClCompile>
     <ClCompile Include="src\Platform\Windows\WindowsWindow.cpp">
       <Filter>src\Platform\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Turtle\Audio\AudioPlayer.cpp">
+      <Filter>src\Turtle\Audio</Filter>
     </ClCompile>
     <ClCompile Include="src\Turtle\Core\Application.cpp">
       <Filter>src\Turtle\Core</Filter>

@@ -1,11 +1,13 @@
-\/*
+/*
 Script binding based off of tutorial series by David Poo https://www.youtube.com/playlist?list=PLLwK93hM93Z3nhfJyRRWGRXHaXgNX0Itk
  */
-
 #include "turtpch.h"
 #include "LuaScript.h"
 
 #include <glm/glm.hpp>
+
+
+
 
 
 namespace Turtle
@@ -23,10 +25,8 @@ namespace Turtle
 			{
 				// TURT_CORE_TRACE("Reallocating from {0} to {1}: {2}", osize, nsize, ptr );
 				//NOTE: allocating nsize * 2 seems to have prevented heap corruption errors that were occuring, however I probably shouldn't need to do this 
+				//TODO: find source of heap corruption, presumably sizing something incorrectly somewhere in LuaScript -> Seems to often occur during file load which causes a stack reallocation
 				return realloc(ptr, nsize * 2);
-				// free(ptr);
-				// ptr = malloc(nsize);
-				// return ptr;
 			}
 		}
 	};
@@ -71,9 +71,6 @@ namespace Turtle
 	{
 		entt::meta_type type  = entt::resolve_id(lua_tonumber(L, lua_upvalueindex(1)));
 
-		//int size = type.prop("size"_hs).value().cast<int>();
-		//TURT_CORE_ASSERT(size, "Size of type unknown");
-
 		void* ud = lua_newuserdata(L, sizeof(entt::meta_any));
 		new (ud) entt::meta_any{ type.ctor<>().invoke() };
 
@@ -89,9 +86,6 @@ namespace Turtle
 	int CreateUserDatumFromMetaObject(lua_State* L, const entt::meta_any& object)
 	{
 		entt::meta_type type = object.type();
-
-		//int size = type.prop("size"_hs).value().cast<int>();
-		//TURT_CORE_ASSERT(size, "Size of type unknown");
 
 		void* ud = lua_newuserdata(L, sizeof(entt::meta_any));
 		int userDataumStackIndex = lua_gettop( L );
@@ -112,7 +106,7 @@ namespace Turtle
 		int numReturnValues = 0;
 		if (!result)
 		{
-			TURT_CORE_ASSERT(false, "Could not send result to LUA, are parameters of correct type?");
+			TURT_CORE_ERROR("Could not send result to LUA, are parameters of correct type?");
 		}
 		else if (!result.type().is_void())
 		{
@@ -156,7 +150,7 @@ namespace Turtle
 			paramStackOffset = numLuaArgs - numNativeArgs;
 			numLuaArgs = numNativeArgs;
 		}
-		TURT_CORE_ASSERT(numLuaArgs == numNativeArgs, "Error calling native function, parameter number mismatch");
+		// TURT_CORE_ASSERT(numLuaArgs == numNativeArgs, "Error calling native function, parameter number mismatch");
 
 		std::vector<PassByValue> pbv(numNativeArgs);
 
@@ -188,11 +182,11 @@ namespace Turtle
 				}
 				else
 				{
-					TURT_CORE_ASSERT(false, "Unhandled parameter type in lua invocation");
+					TURT_CORE_ERROR("Unhandled parameter type in lua invocation");
 				}
 				break;
 			default:
-				TURT_CORE_ASSERT(false, "Unhandled parameter type in lua invocation");
+				TURT_CORE_ERROR("Unhandled parameter type in lua invocation");
 				break;
 			}
 
@@ -217,7 +211,7 @@ namespace Turtle
 		entt::meta_func& func = *(entt::meta_func*)lua_touserdata(L, lua_upvalueindex(1));
 		if (lua_isuserdata(L, 1) == false)
 		{
-			TURT_CORE_ASSERT(false, "Expected a userdatum when invoking native method");
+			TURT_CORE_ERROR(false, "Expected a userdatum when invoking native method");
 		}
 		
 		entt::meta_any& ud = *(entt::meta_any*)lua_touserdata(L, 1);
@@ -233,11 +227,11 @@ namespace Turtle
 		entt::meta_type type = entt::resolve_id(lua_tonumber(L, lua_upvalueindex(1)));
 		if (lua_isuserdata(L, 1) == false)
 		{
-			TURT_CORE_ASSERT(false, "Expected a userdatum to index on stack");
+			TURT_CORE_ERROR(false, "Expected a userdatum to index on stack");
 		}
 		if (lua_isstring(L, 2) == false)
 		{
-			TURT_CORE_ASSERT(false, "Expected a native property/method name on stack when indexing native type");
+			TURT_CORE_ERROR(false, "Expected a native property/method name on stack when indexing native type");
 		}
 
 		char const* fieldName = lua_tostring(L, -1);
@@ -291,11 +285,11 @@ namespace Turtle
 		entt::meta_type type = entt::resolve_id(lua_tonumber(L, lua_upvalueindex(1)));
 		if (lua_isuserdata(L, 1) == false)
 		{
-			TURT_CORE_ASSERT(false, "Expected a userdatum to index on stack");
+			TURT_CORE_ERROR("Expected a userdatum to index on stack");
 		}
 		if (lua_isstring(L, 2) == false)
 		{
-			TURT_CORE_ASSERT(false, "Expected a native property/method name on stack when indexing native type");
+			TURT_CORE_ERROR("Expected a native property/method name on stack when indexing native type");
 		}
 
 		char const* fieldName = lua_tostring(L, 2);
@@ -312,19 +306,19 @@ namespace Turtle
 				{
 					uint32_t val = (uint32_t)lua_tonumber(L, 3);
 					bool set = data.set(ud, val);
-					TURT_CORE_ASSERT(set, "Failed to set native uint32 value");
+					if(!set) TURT_CORE_ERROR("Failed to set native uint32 value: {0}", fieldName);
 				}
 				else if (entt::resolve<int>() == data.type())
 				{
 					int val = (int)lua_tonumber(L, 3);
 					bool set = data.set(ud, val);
-					TURT_CORE_ASSERT(set, "Failed to set native int value");
+					if(!set) TURT_CORE_ERROR("Failed to set native int value: {0}", fieldName); 
 				}
 				else if (entt::resolve<float>() == data.type())
 				{
 					float val = (float)lua_tonumber(L, 3);
 					bool set = data.set(ud, val);
-					TURT_CORE_ASSERT(set, "Failed to set native float value");
+					if(!set) TURT_CORE_ERROR("Failed to set native float value: {0}", fieldName);
 				}
 				else
 				{
@@ -333,7 +327,7 @@ namespace Turtle
 				
 				break;
 			default:
-				TURT_CORE_ASSERT(false, "Unrecognized lua Type");
+				TURT_CORE_ASSERT(false, "Unrecognized lua type");
 				break;
 			}
 			return 0;
@@ -350,10 +344,7 @@ namespace Turtle
 
 	int CallGlobalFromLua(lua_State* L)
 	{
-		//TURT_CORE_TRACE("CALLING GLOBAL FUNCTION (LUA)");
-		//entt::meta_func* f = (entt::meta_func*)lua_touserdata(L, lua_upvalueindex(1));
-		//entt::meta_func& func{ *f };
-
+		// 
 		entt::meta_type type = entt::resolve_id(lua_tonumber(L, lua_upvalueindex(1)));
 		entt::meta_func func = type.func(lua_tonumber(L, lua_upvalueindex(2)));
 		entt::meta_any instance{};
@@ -417,7 +408,7 @@ namespace Turtle
 				lua_pushnumber(L, type.id());
 				lua_pushcclosure(L, CreateUserDatum, 1);
 				lua_setfield(L, -2, "new");
-
+				
 				luaL_newmetatable(L, MetaTableName(type).c_str());
 				lua_pushstring(L, "__gc");
 				lua_pushcfunction(L,DestroyUserDatum);
@@ -427,7 +418,6 @@ namespace Turtle
 				lua_pushnumber(L, type.id());
 				lua_pushcclosure(L, IndexUserDatum, 1);
 				lua_settable(L, -3);
-
 
 				lua_pushstring(L, "__newindex");
 				lua_pushnumber(L, type.id());

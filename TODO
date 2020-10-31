@@ -2,8 +2,7 @@ Engine:
 	- Seralization*
 		- seralization*
 		- deserializaton*
-	- Particles*
-	- scripting (Lua w/entt::meta to bind)
+	- scripting (Lua w/entt::meta to bind)*
 		- Move to some sort of Script Class*
 		- Add Metadata for desired types*
 		- Serialize*
@@ -11,18 +10,31 @@ Engine:
 		- ScriptComponent*
 			- ComponentUI*
 		- read from file*
-		- Clean up error messages ~
+		- Clean up error messages*
 		- Text Editor?
 		- Expose some params to C++ (props table)*
-	- lighting	
-	- Material (Shader + Texture)
+	- Particles*
 	- Sound
-	- Shader Asset Manegment
-	- Auto Scale IMGUI UI for different screen sizes
-	- Animation : Not sure if I want to do this engine side
+		- miniaudio 
+		- sound asset managment 
+		- sound component
 	- Physics
+		- box 2d or handroll?
+	- lighting	
 	- UI system
+	- Auto Scale IMGUI UI for different screen sizes
+	- Animation : Not sure if I want to do this engine side yet
+	- Material (Shader + Texture)
+	- Shader Asset Manegment
 Editor:
+	- Load/Save Scenes (Re: Seralization)*
+		- save*
+		- load*
+	- Bind scripts*
+	- Scene play
+	- Export to application
+	- entity click to select and drag (requires mouse transform to world space) 
+		- Gizmos
 	- Tile Map/Grid Import and Placement UI
 		- import tileset/tileset component*
 		- set tileset active*
@@ -32,12 +44,11 @@ Editor:
 		- mouse transform conversion to world space
 		- add tiles to map
 		- TileMap component*
-	- Load/Save Scenes (Re: Seralization)*
-		- save*
-		- load*
-	- Scene play
-	- Bind scripts*
-	- Select Shader	(RE: Materials)
 	- layer integration
-	- entity click to select and drag (requires mouse transform to world space) 
+	- Select Shader	(RE: Materials)
 
+
+
+
+ Need to wrap decoders in an Audio decoder class that will track things like if it loops or if it is at the end of its data. If a decoder is at the end of its data and does not loop it can be removed from the decoder list so that the device will not try and read data from it anymore. 
+ 		*** Need to check if multiple Audio Devices can be used to play through same speaker. Probably want seperate Audio devices for things like music and sfx so that their master volumes can be controlled independently of each other. I think that this is the case, but should confirm.... ALSO, need to confirm that the devices playing through the same speaker won't cause issues with mixing/etc***
