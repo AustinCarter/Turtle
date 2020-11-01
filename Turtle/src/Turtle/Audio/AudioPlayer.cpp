@@ -34,11 +34,22 @@ namespace Turtle {
 		}
 	}
 
+	void AudioPlayer::Reset()
+	{
+		s_AudioData.Decoders.clear();
+	}
+
+
 	void AudioPlayer::Play(Ref<AudioDecoder> decoder)
 	{
 		s_AudioData.Decoders.emplace_back(decoder);
-	}
+	}	
 
+	void AudioPlayer::Pause(Ref<AudioDecoder> decoder)
+	{
+		decoder->Pause();
+	}
+	
 	AudioPlayer::~AudioPlayer()
 	{
 		//Might move to shutdown

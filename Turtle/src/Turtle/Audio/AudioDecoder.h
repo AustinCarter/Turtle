@@ -14,6 +14,8 @@ namespace Turtle {
 
 		void ResetCursor();
 
+		void Pause();
+
 		const std::string& GetFilepath() { return m_Filepath; }
 
 		bool IsLooping() { return m_Looping; }

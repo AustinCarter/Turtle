@@ -241,16 +241,23 @@ namespace Turtle{
 
 				ImGui::Columns(1);
 
-				if(ImGui::Button("Play Sound"))
+				if(ImGui::Button("Play"))
 				{
 					component.Sound->ResetCursor();
 					AudioPlayer::Play(component.Sound);
 				}
 
 				ImGui::SameLine();
+				
+				if(ImGui::Button("Pause"))
+					AudioPlayer::Pause(component.Sound);
+				
+				ImGui::SameLine();
 				bool loop = decoder->IsLooping();
 				if(ImGui::Checkbox("Loop", &loop))
 					decoder->SetLooping(loop);
+
+
 
 			}
 			else if(ImGui::Button("Select File"))

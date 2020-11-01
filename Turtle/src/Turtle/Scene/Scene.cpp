@@ -29,7 +29,7 @@ namespace Turtle {
 
 	Scene::~Scene()
 	{
-		
+		AudioPlayer::Reset();
 	}
 
 	Entity Scene::CreateEntity(const std::string& name)

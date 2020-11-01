@@ -1,38 +1,26 @@
 Scene: Untitled
 Entities:
   - Entity: 12837192831273
-    SpriteRendererComponent:
-      Color: [0.285714269, 0.285711408, 0.285711408, 1]
-      Textured: false
-    TagComponent:
-      Tag: BG
-    TransformComponent:
-      Translation: [0, 0, -0.200000003]
-      Rotation: [0, 0, 0]
-      Scale: [16, 16, 1]
-  - Entity: 12837192831273
-    SpriteRendererComponent:
-      Color: [0.587416351, 0.154961899, 0.891891897, 1]
-      Textured: false
-    TagComponent:
-      Tag: Stage
-    TransformComponent:
-      Translation: [0, 0, -0.100000001]
-      Rotation: [0, 0, 0]
-      Scale: [8, 8, 1]
-  - Entity: 12837192831273
-    SpriteRendererComponent:
-      Color: [0.0737913698, 0.676476181, 0.764478743, 1]
-      Textured: false
+    AudioSourceComponent:
+      Sound: assets\audio\test.wav
+      Loop: false
+      Volume: 0.180000007
     ScriptComponent:
-      Script: assets\scripts\test2.lua
+      Script: assets\scripts\test.lua
+    SpriteRendererComponent:
+      Color: [0.670336068, 0.309803933, 0.970091105, 1]
+      Textured: false
     TagComponent:
-      Tag: Player
+      Tag: Boss
     TransformComponent:
-      Translation: [0, -2.20000005, 0]
-      Rotation: [0, 0, 2689.98462]
-      Scale: [0.75, 0.75, 1]
+      Translation: [0.320395797, 1.94728374, 0]
+      Rotation: [0, 0, 3349.2854]
+      Scale: [2.5, 2.5, 1]
   - Entity: 12837192831273
+    AudioSourceComponent:
+      Sound: C:\Users\Austin\Desktop\Turtle\Tortuga\assets\audio\Lines_of_Code.wav
+      Loop: true
+      Volume: 0.0500000007
     TagComponent:
       Tag: Camera
     TransformComponent:
@@ -51,18 +39,34 @@ Entities:
       Primary: true
       FixedAspectRatio: false
   - Entity: 12837192831273
-    AudioSourceComponent:
-      Sound: assets\audio\test.wav
-      Loop: false
-      Volume: 0.180000007
-    SpriteRendererComponent:
-      Color: [0.577671647, 0.309803933, 0.00606972352, 1]
-      Textured: false
     ScriptComponent:
-      Script: assets\scripts\test.lua
+      Script: assets\scripts\test2.lua
+    SpriteRendererComponent:
+      Color: [0.0737913698, 0.676476181, 0.764478743, 1]
+      Textured: false
     TagComponent:
-      Tag: Boss
+      Tag: Player
     TransformComponent:
-      Translation: [0.175568029, 0.0155326994, 0]
-      Rotation: [0, 0, 2679.62256]
-      Scale: [2.5, 2.5, 1]
+      Translation: [0, -2.20000005, 0]
+      Rotation: [0, 0, 2912.83545]
+      Scale: [0.75, 0.75, 1]
+  - Entity: 12837192831273
+    SpriteRendererComponent:
+      Color: [0.587416351, 0.154961899, 0.891891897, 1]
+      Textured: false
+    TagComponent:
+      Tag: Stage
+    TransformComponent:
+      Translation: [0, 0, -0.100000001]
+      Rotation: [0, 0, 0]
+      Scale: [8, 8, 1]
+  - Entity: 12837192831273
+    SpriteRendererComponent:
+      Color: [0.285714269, 0.285711408, 0.285711408, 1]
+      Textured: false
+    TagComponent:
+      Tag: BG
+    TransformComponent:
+      Translation: [0, 0, -0.200000003]
+      Rotation: [0, 0, 0]
+      Scale: [16, 16, 1]

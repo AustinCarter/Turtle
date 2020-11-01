@@ -39,6 +39,11 @@ namespace Turtle {
        //ma_event_signal(&m_ResetEvent);
     }
 
+    void AudioDecoder::Pause()
+    {
+    	m_Finished = true; 
+    }
+
     uint32_t AudioDecoder::read_and_mix_s16(int16_t* outputBuffer, ma_uint32 frameCount)
 	{
         /*

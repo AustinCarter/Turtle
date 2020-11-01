@@ -18,6 +18,7 @@ Engine:
 		- miniaudio* 
 		- sound asset managment* 
 		- sound component*
+		- Way to stop playing a sound (find in vector and remove, maybe reset some things. care for threads)*
 	- Physics
 		- box 2d or handroll?
 	- lighting	
@@ -46,9 +47,3 @@ Editor:
 		- TileMap component*
 	- layer integration
 	- Select Shader	(RE: Materials)
-
-
-
-Need a way of removing a decoder from the audio player when it is done playing, but still have it possible to play it again. 
-	could move play to the audio player and pass in the source then instead of using AddSource, would then juse reset the decoder and add it to the list in the Play method. When a decoder reached the end of its data it can then beremoved from the audio decoder list.
-Might make audio player a sigleton and have it act as a audio manager, can just use the volume on decoder to adjust the volume 	of music and sound effects 

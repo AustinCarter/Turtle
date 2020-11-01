@@ -31,9 +31,9 @@ namespace Turtle {
 
 		m_ActiveScene = CreateRef<Scene>();
 
-		m_SongDecoder = CreateRef<AudioDecoder>();
-		m_SongDecoder->Init("assets/audio/Lines_of_Code.wav", true);
-		AudioPlayer::Play(m_SongDecoder);
+		//m_SongDecoder = CreateRef<AudioDecoder>();
+		//m_SongDecoder->Init("assets/audio/Lines_of_Code.wav", true);
+		//AudioPlayer::Play(m_SongDecoder);
 		
 
 		m_SceneHierarchyPanel.SetContext(m_ActiveScene);
