@@ -9,19 +9,21 @@ namespace Turtle {
 	class AudioPlayer
 	{
 	public:
-		AudioPlayer();
+		AudioPlayer() = default;
 		~AudioPlayer();
 
+		static void Init();
+
 		// void Init(const std::string& filepath, ma_bool32 looping = false);
-		void Play(Ref<AudioDecoder> decoder);
+		static void Play(Ref<AudioDecoder> decoder);
 	private:
 		static void AudioPlayerDataCallback(ma_device* pDevice, void* pOutput, const void* pInput, ma_uint32 frameCount);
 		
-		std::vector<Ref<AudioDecoder>> m_Decoders;
-		ma_device_config m_DeviceConfig;
-		ma_device m_Device;
-		//Probably don't want this to be fixed in the future so make variable to facilitate possible future refactor
-		uint32_t m_ChannelCount = 2;
+		// std::vector<Ref<AudioDecoder>> m_Decoders;
+		// ma_device_config m_DeviceConfig;
+		// ma_device m_Device;
+		// //Probably don't want this to be fixed in the future so make variable to facilitate possible future refactor
+		// uint32_t m_ChannelCount = 2;
 	};
 
 }

@@ -6,6 +6,7 @@
 #include "Turtle/Core/input.h"
 #include "Turtle/Renderer/Renderer.h"
 #include "Turtle/Core/AssetManager.h"
+#include "Turtle/Audio/AudioPlayer.h"
 #include "Turtle/Core/Random.h"
 
 #include "Turtle/Core/MetaRegistry.h"
@@ -32,6 +33,7 @@ namespace Turtle {
 		InitMetaRegistry();
 		//initiate sub-systems
 		AssetManager::Init();
+		AudioPlayer::Init();
 		Renderer::Init();
 		Random::Init();
 
@@ -45,6 +47,7 @@ namespace Turtle {
 		//shutdown sub=systems
 		// Renderer::Shutdown();
 		// AssetManager::Shutdown();
+		// AudioPlayer::Shutdown();
 	}
 
 	void Application::OnEvent(Event& e)

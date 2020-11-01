@@ -3,51 +3,62 @@
 
 
 namespace Turtle {
-	
-	AudioPlayer::AudioPlayer()
-	{
-		m_DeviceConfig = ma_device_config_init(ma_device_type_playback);
-		m_DeviceConfig.playback.format = ma_format_s16;//m_Decoder.outputFormat;
-		m_DeviceConfig.playback.channels = m_ChannelCount;//m_Decoder.outputChannels;
-		m_DeviceConfig.sampleRate = 48000;//m_Decoder.outputSampleRate;
-		m_DeviceConfig.dataCallback = AudioPlayerDataCallback;
-		m_DeviceConfig.pUserData = this;//new AudioUserData{ &m_Decoder, &m_Looping };
 
-		if (ma_device_init(NULL, &m_DeviceConfig, &m_Device) != MA_SUCCESS) {
+	struct AudioPlayerData
+	{
+		std::vector<Ref<AudioDecoder>> Decoders;
+		ma_device_config DeviceConfig;
+		ma_device Device;
+		//Probably don't want this to be fixed in the future so make variable to facilitate possible future refactor
+		uint32_t ChannelCount = 2;
+	};
+
+	static AudioPlayerData s_AudioData;
+
+	void AudioPlayer::Init()
+	{
+		s_AudioData.DeviceConfig = ma_device_config_init(ma_device_type_playback);
+		s_AudioData.DeviceConfig.playback.format = ma_format_s16;
+		s_AudioData.DeviceConfig.playback.channels = s_AudioData.ChannelCount;
+		s_AudioData.DeviceConfig.sampleRate = 48000;
+		s_AudioData.DeviceConfig.dataCallback = AudioPlayerDataCallback;
+		// s_AudioData.DeviceConfig.pUserData = this;
+
+		if (ma_device_init(NULL, &s_AudioData.DeviceConfig, &s_AudioData.Device) != MA_SUCCESS) {
 			TURT_CORE_ERROR("Failed to open playback device.\n");
 		}
 
-		if (ma_device_start(&m_Device) != MA_SUCCESS) {
-			ma_device_uninit(&m_Device);
+		if (ma_device_start(&s_AudioData.Device) != MA_SUCCESS) {
+			ma_device_uninit(&s_AudioData.Device);
 			TURT_CORE_ERROR("Failed to start playback device.\n");
 		}
 	}
 
 	void AudioPlayer::Play(Ref<AudioDecoder> decoder)
 	{
-		//ma_event_init(&decoder->m_ResetEvent);
-		//ma_event_wait(&decoder->m_ResetEvent);
-		m_Decoders.emplace_back(decoder);
+		s_AudioData.Decoders.emplace_back(decoder);
 	}
 
 	AudioPlayer::~AudioPlayer()
 	{
-		ma_device_uninit(&m_Device);
+		//Might move to shutdown
+		s_AudioData.Decoders.clear();
+		ma_device_uninit(&s_AudioData.Device);
 	}
 
 	void AudioPlayer::AudioPlayerDataCallback(ma_device* pDevice, void* pOutput, const void* pInput, ma_uint32 frameCount)
 	{
-		AudioPlayer* self = (AudioPlayer*)pDevice->pUserData;
+		// AudioPlayer* self = (AudioPlayer*)pDevice->pUserData;
 
-		auto decoder = self->m_Decoders.begin();
+		auto decoder = s_AudioData.Decoders.begin();
 
-		while(decoder != self->m_Decoders.end())
+		while(decoder != s_AudioData.Decoders.end())
 		{
 			
 			if (decoder->get()->FinishedPlaying())
 			{
 				Ref<AudioDecoder> decoderToReset = *decoder;
-				decoder = self->m_Decoders.erase(decoder);
+				decoder = s_AudioData.Decoders.erase(decoder);
 				decoderToReset->ResetCursor();
 			}
 			else
