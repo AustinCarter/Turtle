@@ -214,6 +214,58 @@ namespace Turtle{
 		});
 	}
 
+	void AudioSourceComponent::DrawUI(Entity entity)
+	{
+		DrawComponent<AudioSourceComponent>("Audio Source", entity, [](auto& component)
+		{
+			Ref<AudioDecoder> decoder = component.Sound;
+			//const std::string& path = decoder->GetFilepath(); 
+
+			if(decoder)
+			{
+				ImGuiIO& io = ImGui::GetIO();
+				auto boldFont = io.Fonts->Fonts[0];
+				//ImGui::SameLine();
+				ImGui::PushFont(boldFont);
+				ImGui::Button(decoder->GetFilepath().c_str(), ImVec2{ ImGui::GetContentRegionAvail().x, 0.0f });
+				ImGui::PopFont();
+
+				ImGui::Columns(2);
+				ImGui::Text("Volume");
+				ImGui::NextColumn();
+				float volume = decoder->GetVolume(); 
+				if(ImGui::DragFloat("##Volume", &volume, 0.01f))
+				{
+					decoder->SetVolume(volume);
+				}
+
+				ImGui::Columns(1);
+
+				if(ImGui::Button("Play Sound"))
+				{
+					component.Sound->ResetCursor();
+					AudioPlayer::Play(component.Sound);
+				}
+
+				ImGui::SameLine();
+				bool loop = decoder->IsLooping();
+				if(ImGui::Checkbox("Loop", &loop))
+					decoder->SetLooping(loop);
+
+			}
+			else if(ImGui::Button("Select File"))
+			{	
+				std::string filepath = FileDialogs::OpenFile("*.wav\0*.wav\0");
+				if (!filepath.empty())
+				{
+					component.Sound = CreateRef<AudioDecoder>();
+					component.Sound->Init(filepath, false);
+				}
+			}
+			
+		});
+	}
+
 	void ParticleSpawnerComponent::DrawUI(Entity entity)
 	{
 

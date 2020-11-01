@@ -15,9 +15,9 @@ Engine:
 		- Expose some params to C++ (props table)*
 	- Particles*
 	- Sound
-		- miniaudio 
-		- sound asset managment 
-		- sound component
+		- miniaudio* 
+		- sound asset managment* 
+		- sound component*
 	- Physics
 		- box 2d or handroll?
 	- lighting	

@@ -10,6 +10,7 @@ namespace Turtle {
 
 	void AudioDecoder::Init(const std::string& filepath, ma_bool32 looping)
 	{
+		m_Filepath = filepath;
 		ma_result result;
 
 		m_Looping = looping;

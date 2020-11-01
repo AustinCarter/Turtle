@@ -31,46 +31,10 @@ namespace Turtle {
 
 		m_ActiveScene = CreateRef<Scene>();
 
-		m_AudioPlayer = CreateRef<AudioPlayer>();
-		m_AudioDecoder = CreateRef<AudioDecoder>();
 		m_SongDecoder = CreateRef<AudioDecoder>();
-		m_AudioDecoder->Init("assets/audio/test.wav", false);
 		m_SongDecoder->Init("assets/audio/Lines_of_Code.wav", true);
-		m_AudioPlayer->Play(m_AudioDecoder);
-		m_AudioPlayer->Play(m_SongDecoder);
-		/*
-		ma_result result;
-		ma_decoder decoder;
-		ma_device_config deviceConfig;
-		ma_device device;
-
-		result = ma_decoder_init_file("assets/audio/test.wav", NULL, &decoder);
-		if (result != MA_SUCCESS) {
-			TURT_CORE_ERROR("Failed to load Audio file");
-		}
-
+		AudioPlayer::Play(m_SongDecoder);
 		
-		deviceConfig = ma_device_config_init(ma_device_type_playback);
-		deviceConfig.playback.format = decoder.outputFormat;
-		deviceConfig.playback.channels = decoder.outputChannels;
-		deviceConfig.sampleRate = decoder.outputSampleRate;
-		deviceConfig.dataCallback = data_callback;
-		deviceConfig.pUserData = &decoder;
-
-		if (ma_device_init(NULL, &deviceConfig, &device) != MA_SUCCESS) {
-			ma_decoder_uninit(&decoder);
-			TURT_CORE_ERROR("Failed to open playback device.\n");
-		}
-
-		if (ma_device_start(&device) != MA_SUCCESS) {
-			ma_device_uninit(&device);
-			ma_decoder_uninit(&decoder);
-			TURT_CORE_ERROR("Failed to start playback device.\n");
-		}
-
-		ma_device_uninit(&device);
-		ma_decoder_uninit(&decoder);
-		*/
 
 		m_SceneHierarchyPanel.SetContext(m_ActiveScene);
 	}
@@ -192,8 +156,6 @@ namespace Turtle {
 		ImGui::Text("Textures Loaded: %d", assetStats.TexturesLoaded);
 		if(ImGui::Button("AssetManager::Unload()"))
 			AssetManager::Unload();
-		if(ImGui::Button("Play"))
-			m_AudioPlayer->Play(m_AudioDecoder);
 
 		ImGui::End();
 

@@ -227,11 +227,38 @@ namespace Turtle {
 	{
 		auto& comp = entity.GetComponent < ScriptComponent >();
 
-			comp.Script = CreateRef<LuaScript>();
-			std::string path = data["Script"].as<std::string>();
-			if(comp.Script->LoadScriptFromFile(path) != LUA_OK)
-				comp.Script->LogError();
-			comp.Script->ExecuteScript();
+		comp.Script = CreateRef<LuaScript>();
+		std::string path = data["Script"].as<std::string>();
+		if(comp.Script->LoadScriptFromFile(path) != LUA_OK)
+			comp.Script->LogError();
+		comp.Script->ExecuteScript();
+	}
+
+	void AudioSourceComponent::Serialize(YAML::Emitter& out)
+	{
+		if(Sound)
+		{
+			out << YAML::Key << "AudioSourceComponent";
+			out << YAML::BeginMap; // AudioSourceComponent
+
+				out << YAML::Key << "Sound" << YAML::Value << Sound->GetFilepath();
+				out << YAML::Key << "Loop" << YAML::Value << Sound->IsLooping();
+				out << YAML::Key << "Volume" << YAML::Value << Sound->GetVolume();
+
+			out << YAML::EndMap; // AudioSourceComponent
+		}
+	}
+
+	void AudioSourceComponent::Deserialize(YAML::Node& data, Entity entity)
+	{
+		auto& comp = entity.GetComponent < AudioSourceComponent >();
+
+		comp.Sound = CreateRef<AudioDecoder>();
+		const std::string& path = data["Sound"].as<std::string>();
+		bool loop = data["Loop"].as<bool>();
+		comp.Sound->Init(path, loop);
+		float volume = data["Volume"].as<float>();
+		comp.Sound->SetVolume(volume);
 	}
 	
 

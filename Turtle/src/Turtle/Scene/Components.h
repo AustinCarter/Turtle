@@ -115,7 +115,6 @@ namespace Turtle {
 
 	};
 
-	// TODO: figure out how to do (de)serialization to get decoder attached to correct device (could be done with assetmanger and hashing)
 	struct AudioSourceComponent
 	{
 		Ref<AudioDecoder> Sound; 

@@ -48,8 +48,7 @@ namespace Turtle {
 		ParticleSpawner m_Particles;
 		ParticleProps m_Particle;
 
-		Ref<AudioPlayer> m_AudioPlayer;
-		Ref<AudioDecoder> m_AudioDecoder, m_SongDecoder;
+		Ref<AudioDecoder> m_SongDecoder;
 
 	};
 

@@ -47,6 +47,7 @@ namespace Turtle {
 		
 		RegisterComponent<TagComponent>("TagComponent");
 
+
 		RegisterComponent<TransformComponent>("TransformComponent")
 			.data<&TransformComponent::Translation, entt::as_ref_t>("Translation"_hs)
 		 	.data<&TransformComponent::Rotation, entt::as_ref_t>("Rotation"_hs)
@@ -59,6 +60,9 @@ namespace Turtle {
 			.data<&CameraComponent::Primary, entt::as_ref_t>("Primary"_hs);
 
 		RegisterComponent<ScriptComponent>("ScriptComponent");
+
+		RegisterComponent<AudioSourceComponent>("AudioSourceComponent")
+			.data<&AudioSourceComponent::Sound, entt::as_ref_t>("Sound"_hs);
 
 		RegisterComponent<ParticleSpawnerComponent>("ParticleSpawnerComponent")
 			.data<&ParticleSpawnerComponent::EmissionRate>("EmissionRate"_hs)
