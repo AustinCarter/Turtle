@@ -37,7 +37,7 @@ namespace Turtle {
 		m_AudioDecoder->Init("assets/audio/test.wav", false);
 		m_SongDecoder->Init("assets/audio/Lines_of_Code.wav", true);
 		m_AudioPlayer->Play(m_AudioDecoder);
-		//m_AudioPlayer->Play(m_SongDecoder);
+		m_AudioPlayer->Play(m_SongDecoder);
 		/*
 		ma_result result;
 		ma_decoder decoder;

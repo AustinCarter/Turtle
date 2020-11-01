@@ -25,16 +25,14 @@ namespace Turtle {
 
 	bool AudioDecoder::FinishedPlaying()
 	{
-		ma_uint64 cursorPos;
-		ma_decoder_get_cursor_in_pcm_frames(&m_Decoder, &cursorPos);
-		if (!m_Looping && cursorPos >= ma_decoder_get_length_in_pcm_frames(&m_Decoder))
-			return true;
-		return false;
+        return m_Finished;
 	}
 
     void AudioDecoder::ResetCursor()
     {
+       
        ma_decoder_seek_to_pcm_frame(&m_Decoder, 0);
+       m_Finished = false;
        //ma_uint64 cursorPos;
        //ma_decoder_get_cursor_in_pcm_frames(&m_Decoder, &cursorPos);
        //ma_event_signal(&m_ResetEvent);
@@ -74,7 +72,8 @@ namespace Turtle {
             totalFramesRead += framesReadThisIteration;
 
             if (framesReadThisIteration < framesToReadThisIteration) {
-            	if(m_Looping) ma_decoder_seek_to_pcm_frame(&m_Decoder, 0);
+                if (m_Looping) ma_decoder_seek_to_pcm_frame(&m_Decoder, 0);
+                else m_Finished = true;
                 break;  /* Reached EOF. */
             }
         }

@@ -23,6 +23,7 @@ namespace Turtle {
 		ma_decoder m_Decoder;
 		//ma_event m_ResetEvent;
 		float m_Volume = 0.05f; 
+		bool m_Finished = false;
 
 
 		//Probably don't want this to be fixed in the future so make variable to facilitate possible future refactor
