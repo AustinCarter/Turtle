@@ -13,7 +13,7 @@ namespace Turtle {
 		~AudioPlayer();
 
 		// void Init(const std::string& filepath, ma_bool32 looping = false);
-		void AddSource(Ref<AudioDecoder> decoder);
+		void Play(Ref<AudioDecoder> decoder);
 	private:
 		static void AudioPlayerDataCallback(ma_device* pDevice, void* pOutput, const void* pInput, ma_uint32 frameCount);
 		

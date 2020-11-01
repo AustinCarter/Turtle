@@ -49,6 +49,6 @@ Editor:
 
 
 
-
- Need to wrap decoders in an Audio decoder class that will track things like if it loops or if it is at the end of its data. If a decoder is at the end of its data and does not loop it can be removed from the decoder list so that the device will not try and read data from it anymore. 
- 		*** Need to check if multiple Audio Devices can be used to play through same speaker. Probably want seperate Audio devices for things like music and sfx so that their volumes can be controlled independently. I think that this is the case, but should confirm.... ALSO, need to confirm that the devices playing through the same speaker won't cause issues with mixing/etc***
+Need a way of removing a decoder from the audio player when it is done playing, but still have it possible to play it again. 
+	could move play to the audio player and pass in the source then instead of using AddSource, would then juse reset the decoder and add it to the list in the Play method. When a decoder reached the end of its data it can then beremoved from the audio decoder list.
+Might make audio player a sigleton and have it act as a audio manager, can just use the volume on decoder to adjust the volume 	of music and sound effects 

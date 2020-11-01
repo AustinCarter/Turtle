@@ -12,7 +12,7 @@ namespace Turtle {
 
 		void Init(const std::string& filepath, ma_bool32 looping = false);
 
-		void Play();
+		void ResetCursor();
 
 		uint32_t read_and_mix_s16(int16_t* outputBuffer, ma_uint32 frameCount);
 
@@ -21,7 +21,8 @@ namespace Turtle {
 
 		ma_bool32 m_Looping = false;
 		ma_decoder m_Decoder;
-		float m_Volume = 0.08f; 
+		//ma_event m_ResetEvent;
+		float m_Volume = 0.05f; 
 
 
 		//Probably don't want this to be fixed in the future so make variable to facilitate possible future refactor

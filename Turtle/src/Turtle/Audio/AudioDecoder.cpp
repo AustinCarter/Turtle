@@ -32,17 +32,19 @@ namespace Turtle {
 		return false;
 	}
 
-    void AudioDecoder::Play()
+    void AudioDecoder::ResetCursor()
     {
-        ma_decoder_seek_to_pcm_frame(&m_Decoder, 0);
+       ma_decoder_seek_to_pcm_frame(&m_Decoder, 0);
+       //ma_uint64 cursorPos;
+       //ma_decoder_get_cursor_in_pcm_frames(&m_Decoder, &cursorPos);
+       //ma_event_signal(&m_ResetEvent);
     }
 
     uint32_t AudioDecoder::read_and_mix_s16(int16_t* outputBuffer, ma_uint32 frameCount)
 	{
         /*
        The way mixing works is that we just read into a temporary buffer, then take the contents of that buffer and mix it with the
-       contents of the output buffer by simply adding the samples together. You could also clip the samples to -1..+1, but I'm not
-       doing that in this example.
+       contents of the output buffer by simply adding the samples together and then clipping to the max value of 32766
        */
         int16_t temp[4096];
         ma_uint32 tempCapInFrames = ma_countof(temp) / m_ChannelCount;

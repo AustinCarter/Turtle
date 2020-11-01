@@ -36,8 +36,8 @@ namespace Turtle {
 		m_SongDecoder = CreateRef<AudioDecoder>();
 		m_AudioDecoder->Init("assets/audio/test.wav", false);
 		m_SongDecoder->Init("assets/audio/Lines_of_Code.wav", true);
-		m_AudioPlayer->AddSource(m_AudioDecoder);
-		m_AudioPlayer->AddSource(m_SongDecoder);
+		m_AudioPlayer->Play(m_AudioDecoder);
+		//m_AudioPlayer->Play(m_SongDecoder);
 		/*
 		ma_result result;
 		ma_decoder decoder;
@@ -193,7 +193,7 @@ namespace Turtle {
 		if(ImGui::Button("AssetManager::Unload()"))
 			AssetManager::Unload();
 		if(ImGui::Button("Play"))
-			m_AudioDecoder->Play();
+			m_AudioPlayer->Play(m_AudioDecoder);
 
 		ImGui::End();
 

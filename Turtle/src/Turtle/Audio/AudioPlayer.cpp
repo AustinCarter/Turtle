@@ -23,8 +23,10 @@ namespace Turtle {
 		}
 	}
 
-	void AudioPlayer::AddSource(Ref<AudioDecoder> decoder)
+	void AudioPlayer::Play(Ref<AudioDecoder> decoder)
 	{
+		//ma_event_init(&decoder->m_ResetEvent);
+		//ma_event_wait(&decoder->m_ResetEvent);
 		m_Decoders.emplace_back(decoder);
 	}
 
@@ -35,36 +37,25 @@ namespace Turtle {
 
 	void AudioPlayer::AudioPlayerDataCallback(ma_device* pDevice, void* pOutput, const void* pInput, ma_uint32 frameCount)
 	{
-		// AudioUserData userData = *(AudioUserData*)(pDevice->pUserData);
-		// ma_bool32 isLooping = *userData.Looping;
-
-		
-		// ma_decoder* pDecoder = userData.Decoder;
-
-		//ma_uint64 cursorPos;
-		//ma_decoder_get_cursor_in_pcm_frames(pDecoder, &cursorPos);
-		//if (cursorPos >= ma_decoder_get_length_in_pcm_frames(pDecoder) && !isLooping)
-		//	userData.Finished = true; 
-
-		// 	ma_decoder_seek_to_pcm_frame(pDecoder, 0);
-
-		//if (pDecoder == NULL) {
-		//	return;
-		//}
-
 		AudioPlayer* self = (AudioPlayer*)pDevice->pUserData;
 
-		for(auto& decoder : self->m_Decoders)
-		{
-			//ma_data_source_read_pcm_frames(&(decoder->m_Decoder), pOutput, frameCount, NULL, decoder->m_Looping);
-			uint32_t framesRead = decoder->read_and_mix_s16((int16_t*)pOutput, frameCount);
-		}
+		auto decoder = self->m_Decoders.begin();
 
-		/*
-		A decoder is a data source which means you can seemlessly plug it into the ma_data_source API. We can therefore take advantage
-		of the "loop" parameter of ma_data_source_read_pcm_frames() to handle looping for us.
-		*/
-		// ma_data_source_read_pcm_frames(pDecoder, pOutput, frameCount, NULL, isLooping);
+		while(decoder != self->m_Decoders.end())
+		{
+			
+			if (decoder->get()->FinishedPlaying())
+			{
+				Ref<AudioDecoder> decoderToReset = *decoder;
+				decoder = self->m_Decoders.erase(decoder);
+				decoderToReset->ResetCursor();
+			}
+			else
+			{
+				uint32_t framesRead = decoder->get()->read_and_mix_s16((int16_t*)pOutput, frameCount);
+				decoder++;
+			}
+		}
 
 		(void)pInput;
 	}
