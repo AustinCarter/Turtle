@@ -1,7 +1,7 @@
 # Turtle
 
 ## Building
-Currently developed on Windows!
+Currently only builds on Windows!
 1. Either use  --recurse-submodules when cloning, or do 
 ``` 
     git submodule init
