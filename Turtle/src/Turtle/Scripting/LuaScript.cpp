@@ -117,6 +117,8 @@ namespace Turtle
 				lua_pushnumber(L, result.cast<uint32_t>());
 			else if (entt::resolve<float>() == result.type())
 				lua_pushnumber(L, result.cast<float>());
+			else if (entt::resolve<bool>() == result.type())
+				lua_pushnumber(L, result.cast<bool>());
 			else if (result.type().is_class())
 			{
 				CreateUserDatumFromMetaObject(L, std::ref(result));
@@ -362,33 +364,35 @@ namespace Turtle
 		lua_setglobal(L, "Global");
 
 		luaL_openlibs(L);
+		// Allows to include libs such as keycodes, might want to have it point to dir in turtle or somewhere else that will work for client app
+		luaL_dostring(L, "package.path = package.path .. ';./assets/scripts/?.lua'");
 
 		lua_pushvalue(L, -1);
 		entt::meta_range<entt::meta_type> range{ entt::internal::meta_context::local() };
-		for (auto& type : range)
-		{
-			auto funcs = type.func();
-			for (auto& func : funcs)
-			{
+		// for (auto& type : range)
+		// {
+		// 	auto funcs = type.func();
+		// 	for (auto& func : funcs)
+		// 	{
 				
-				//TURT_CORE_ASSERT(name, "Nameless Global Meta Function while binding lua.");
-				if (func.is_static())
-				{
-					entt::meta_prop nameProp = func.prop("Name"_hs);
-					if(nameProp)
-					{
-						entt::meta_any name = nameProp.value();
-						char const** cName = name.try_cast<char const*>();
-						lua_pushstring(L, *cName);
-						lua_pushnumber(L, type.id());
-						lua_pushnumber(L, func.id());
-						lua_pushcclosure(L, CallGlobalFromLua, 2);
-						lua_settable(L, -3);
-					}	
-				}
-			}
+		// 		//TURT_CORE_ASSERT(name, "Nameless Global Meta Function while binding lua.");
+		// 		if (func.is_static())
+		// 		{
+		// 			entt::meta_prop nameProp = func.prop("Name"_hs);
+		// 			if(nameProp)
+		// 			{
+		// 				entt::meta_any name = nameProp.value();
+		// 				char const** cName = name.try_cast<char const*>();
+		// 				lua_pushstring(L, *cName);
+		// 				lua_pushnumber(L, type.id());
+		// 				lua_pushnumber(L, func.id());
+		// 				lua_pushcclosure(L, CallGlobalFromLua, 2);
+		// 				lua_settable(L, -3);
+		// 			}	
+		// 		}
+		// 	}
 
-		}
+		// }
 
 		int stackSize = lua_gettop(L);
 		lua_pop(L, stackSize);
@@ -423,6 +427,29 @@ namespace Turtle
 				lua_pushnumber(L, type.id());
 				lua_pushcclosure(L, NewIndexUserDatum, 1);
 				lua_settable(L, -3);
+
+				auto funcs = type.func();
+				
+				for (auto& func : funcs)
+				{
+					
+					//TURT_CORE_ASSERT(name, "Nameless Global Meta Function while binding lua.");
+					if (func.is_static())
+					{
+						entt::meta_prop funcNameProp = func.prop("Name"_hs);
+						if(funcNameProp)
+						{
+							entt::meta_any funcName = funcNameProp.value();
+							char const** funcCName = funcName.try_cast<char const*>();
+							lua_pushstring(L, *funcCName);
+							lua_pushnumber(L, type.id());
+							lua_pushnumber(L, func.id());
+							lua_pushcclosure(L, CallGlobalFromLua, 2);
+							lua_settable(L, -4);
+						}	
+					}
+				}
+
 			}
 		}
 

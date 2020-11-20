@@ -18,7 +18,7 @@ Entities:
       Scale: [2.5, 2.5, 1]
   - Entity: 12837192831273
     AudioSourceComponent:
-      Sound: C:\Users\Austin\Desktop\Turtle\Tortuga\assets\audio\Lines_of_Code.wav
+      Sound: assets\audio\Lines_of_Code.wav
       Loop: true
       Volume: 0.0500000007
     TagComponent:

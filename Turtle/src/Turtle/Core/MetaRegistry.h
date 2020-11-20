@@ -1,11 +1,12 @@
 #pragma once
 
 #include "Turtle/Scene/Components.h"
+#include "Turtle/Core/Input.h"
 
 #include <entt.hpp>
 
 namespace Turtle {
-	// Add meta data for types that we want to use run time type reflection for
+	// Add meta data for types that we want to use run time type reflection
 	static void InitMetaRegistry()
 	{
 		entt::meta<Entity>().type("Entity"_hs)
@@ -44,6 +45,14 @@ namespace Turtle {
 			.data<&ParticleProps::SizeBegin, entt::as_ref_t>("SizeBegin"_hs)
 			.data<&ParticleProps::SizeVariation, entt::as_ref_t>("SizeVariation"_hs)
 			.data<&ParticleProps::LifeTime, entt::as_ref_t>("LifeTime"_hs);
+
+		entt::meta<Input>().type("Input"_hs)
+			.prop("Name"_hs, "Input")
+			.func<&Input::IsKeyPressed>("IsKeyPressed"_hs).prop("Name"_hs,"IsKeyPressed")
+			.func<&Input::IsMouseButtonPressed>("IsMouseButtonPressed"_hs)
+			.func<&Input::GetMouseX>("GetMouseX"_hs)
+			.func<&Input::GetMouseY>("GetMouseY"_hs)
+			.func<&Input::GetMousePos>("GetMousePos"_hs);
 		
 		RegisterComponent<TagComponent>("TagComponent");
 

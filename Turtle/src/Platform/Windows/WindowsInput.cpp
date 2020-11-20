@@ -23,24 +23,22 @@ namespace Turtle {
 		return state == GLFW_PRESS;
 	}
 
-	std::pair<float, float> Input::GetMousePos()
+	glm::vec2 Input::GetMousePos()
 	{
 		auto window = static_cast<GLFWwindow*>(Application::Get().GetWindow().GetNativeWindow());
 		double xpos, ypos;
 		glfwGetCursorPos(window, &xpos, &ypos);
 
-		return {(float)xpos, (float)ypos};
+		return glm::vec2{(float)xpos, (float)ypos};
 	}
 
 	float Input::GetMouseX()
 	{
-		auto[x, y] = GetMousePos();
-		return x;
+		return GetMousePos().x;
 	}
 
 	float Input::GetMouseY()
 	{
-		auto[x, y] = GetMousePos();
-		return y;
+		return GetMousePos().y;
 	}
 }

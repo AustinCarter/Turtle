@@ -1,3 +1,4 @@
+require("KeyCodes")
 --[[
 	  Properties that will be exposed to c++
 	  Currently only numeric values supported

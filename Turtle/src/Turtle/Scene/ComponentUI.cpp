@@ -234,7 +234,7 @@ namespace Turtle{
 				ImGui::Text("Volume");
 				ImGui::NextColumn();
 				float volume = decoder->GetVolume(); 
-				if(ImGui::DragFloat("##Volume", &volume, 0.01f))
+				if(ImGui::DragFloat("##Volume", &volume, 0.001f))
 				{
 					decoder->SetVolume(volume);
 				}
@@ -256,8 +256,6 @@ namespace Turtle{
 				bool loop = decoder->IsLooping();
 				if(ImGui::Checkbox("Loop", &loop))
 					decoder->SetLooping(loop);
-
-
 
 			}
 			else if(ImGui::Button("Select File"))

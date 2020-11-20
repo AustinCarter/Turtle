@@ -2,6 +2,8 @@
 
 #include "Turtle/Core/Core.h"
 
+#include "glm/glm.hpp"
+
 namespace Turtle {
 	class Input 
 	{
@@ -11,6 +13,6 @@ namespace Turtle {
 		static bool IsMouseButtonPressed(int button);
 		static float GetMouseX();
 		static float GetMouseY();
-		static std::pair<float,float> GetMousePos();
+		static glm::vec2 GetMousePos();
 	};
 }

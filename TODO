@@ -1,3 +1,10 @@
+
+SHORT TERM GOALS:
+	get lua to do onkey/key pressed
+		- access to input*
+		- refactor how globals are handled (dont want to have to type Global. for all statics, would rather have them use table specific totheir function, such as Input. for key and mouse info)*
+	physics/collisions
+
 Engine:
 	- Seralization*
 		- seralization*
@@ -14,7 +21,7 @@ Engine:
 		- Text Editor?
 		- Expose some params to C++ (props table)*
 	- Particles*
-	- Sound
+	- Sound*
 		- miniaudio* 
 		- sound asset managment* 
 		- sound component*
@@ -23,6 +30,7 @@ Engine:
 		- box 2d or handroll?
 	- lighting	
 	- UI system
+	
 	- Auto Scale IMGUI UI for different screen sizes
 	- Animation : Not sure if I want to do this engine side yet
 	- Material (Shader + Texture)
@@ -36,7 +44,9 @@ Editor:
 	- Export to application
 	- entity click to select and drag (requires mouse transform to world space) 
 		- Gizmos
-	- Tile Map/Grid Import and Placement UI
+		- Pixel perfect selection (https://www.youtube.com/watch?v=8fAJ1AzWFTs)
+
+- Tile Map/Grid Import and Placement UI
 		- import tileset/tileset component*
 		- set tileset active*
 		- display grid viewport panel*
