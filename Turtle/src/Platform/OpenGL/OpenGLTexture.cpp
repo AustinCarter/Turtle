@@ -63,8 +63,8 @@ OpenGLTexture2D::OpenGLTexture2D(uint32_t width, uint32_t height)
 
   glGenTextures(1, &m_RendererID);
   glBindTexture(GL_TEXTURE_2D, m_RendererID);
-  glTexImage2D(m_RendererID, 0, m_InternalFormat, m_Width, m_Height, 0,
-               GL_TEXTURE_2D, GL_UNSIGNED_INT_8_8_8_8, NULL);
+  glTexImage2D(GL_TEXTURE_2D, 0, m_InternalFormat, m_Width, m_Height, 0,
+               GL_RGBA, GL_UNSIGNED_INT_8_8_8_8, NULL);
 
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
