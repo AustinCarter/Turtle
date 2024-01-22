@@ -13,3 +13,6 @@
 [submodule "Turtle/vendor/yaml-cpp"]
 	path = Turtle/vendor/yaml-cpp
 	url = https://github.com/thecherno/yaml-cpp
+[submodule "Turtle/vendor/portable-file-dialogs"]
+	path = Turtle/vendor/portable-file-dialogs
+	url = git@github.com:samhocevar/portable-file-dialogs.git

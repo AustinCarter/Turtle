@@ -22,9 +22,9 @@
 #include "Turtle/ImGui/ImGuiLayer.h"
 
 //--- Scene -----------------------
-#include "Turtle/Scene/Scene.h"
 #include "Turtle/Scene/Components.h"
 #include "Turtle/Scene/Entity.h"
+#include "Turtle/Scene/Scene.h"
 #include "Turtle/Scene/ScriptableEntity.h"
 // --------------------------------
 
@@ -32,20 +32,19 @@
 #include "Turtle/Scripting/LuaScript.h"
 //----------------------------------
 
-
 // #include "Turtle/Utils/PlatformUtils.h"
 
 // --- Renderer  ---------------------
+#include "Turtle/Renderer/RenderCommand.h"
 #include "Turtle/Renderer/Renderer.h"
 #include "Turtle/Renderer/Renderer2D.h"
-#include "Turtle/Renderer/RenderCommand.h"
 
-#include "Turtle/Renderer/VertexArray.h"
-#include "Turtle/Renderer/Shader.h"
-#include "Turtle/Renderer/Framebuffer.h"
-#include "Turtle/Renderer/Texture.h"
-#include "Turtle/Renderer/SubTexture2D.h"
 #include "Turtle/Renderer/Buffer.h"
+#include "Turtle/Renderer/Framebuffer.h"
+#include "Turtle/Renderer/Shader.h"
+#include "Turtle/Renderer/SubTexture2D.h"
+#include "Turtle/Renderer/Texture.h"
+#include "Turtle/Renderer/VertexArray.h"
 
 #include "Turtle/Renderer/OrthographicCamera.h"
 

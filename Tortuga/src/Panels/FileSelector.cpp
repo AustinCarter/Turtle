@@ -1,7 +1,8 @@
+#if 0
 #include "FileSelector.h"
 
-#include <iostream>
 #include "Turtle/Core/Log.h"
+#include <iostream>
 
 
 namespace Turtle {
@@ -136,3 +137,4 @@ namespace Turtle {
 		return "";
 	}
 }
+#endif

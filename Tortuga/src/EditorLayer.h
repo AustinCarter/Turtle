@@ -3,53 +3,51 @@
 #include <Turtle.h>
 
 #include "Panels/SceneHeirarchyPanel.h"
-#include "Panels/FileSelector.h"
 
 namespace Turtle {
 
-	class EditorLayer : public Layer
-	{
-	public:
-		EditorLayer();
-		virtual ~EditorLayer() = default;
-		virtual void OnAttach() override;
-		virtual void OnDetach() override;
+class EditorLayer : public Layer {
+public:
+  EditorLayer();
+  virtual ~EditorLayer() = default;
+  virtual void OnAttach() override;
+  virtual void OnDetach() override;
 
-		virtual void OnUpdate(Timestep ts) override;
-		virtual void OnImGuiRender() override;
-		virtual void OnEvent(Event& event) override;
-	private:
-		bool OnKeyPressed(KeyPressedEvent& event);
+  virtual void OnUpdate(Timestep ts) override;
+  virtual void OnImGuiRender() override;
+  virtual void OnEvent(Event &event) override;
 
-		void NewScene();
-		void OpenSceneFile();
-		void SaveSceneFileAs();
-	private:
-		OrthographicCameraController m_CameraController;
-		Ref<Framebuffer> m_Framebuffer;
+private:
+  bool OnKeyPressed(KeyPressedEvent &event);
 
-		Ref<Scene> m_ActiveScene;
-		Entity m_CameraEntity;
-		// Entity m_SecondCamera;
+  void NewScene();
+  void OpenSceneFile();
+  void SaveSceneFileAs();
 
-		bool m_PrimaryCamera = true;
+private:
+  OrthographicCameraController m_CameraController;
+  Ref<Framebuffer> m_Framebuffer;
 
-		Ref<Texture2D> m_CheckerboardTexture;
+  Ref<Scene> m_ActiveScene;
+  Entity m_CameraEntity;
+  // Entity m_SecondCamera;
 
-		glm::vec4 m_SquareColor = {1.0f, 1.0f, 1.0f, 1.0f};
+  bool m_PrimaryCamera = true;
 
-		glm::vec2 m_ViewportSize = { 0.0f, 0.0f };
-		bool m_ViewportFocused = false;
-		bool m_ViewportHovered = false;
+  Ref<Texture2D> m_CheckerboardTexture;
 
-		SceneHeirarchyPanel m_SceneHierarchyPanel;
-		FileSelector m_FileDialogue;
+  glm::vec4 m_SquareColor = {1.0f, 1.0f, 1.0f, 1.0f};
 
-		ParticleSpawner m_Particles;
-		ParticleProps m_Particle;
+  glm::vec2 m_ViewportSize = {0.0f, 0.0f};
+  bool m_ViewportFocused = false;
+  bool m_ViewportHovered = false;
 
-		Ref<AudioDecoder> m_SongDecoder;
+  SceneHeirarchyPanel m_SceneHierarchyPanel;
 
-	};
+  ParticleSpawner m_Particles;
+  ParticleProps m_Particle;
 
-}
+  Ref<AudioDecoder> m_SongDecoder;
+};
+
+} // namespace Turtle

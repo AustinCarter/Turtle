@@ -1,0 +1,835 @@
+[
+          {
+            "directory": "/home/acar/turtle/Turtle/vendor/GLFW",
+            "file": "/home/acar/turtle/Turtle/vendor/GLFW/src/context.c",
+            "command": "cc -MD -MP -D_GLFW_X11 -m64 -fPIC -g -o /home/acar/turtle/Turtle/vendor/GLFW/bin-int/Debug-linux-x86_64/GLFW/context.o -MF /home/acar/turtle/Turtle/vendor/GLFW/bin-int/Debug-linux-x86_64/GLFW/context.d -c /home/acar/turtle/Turtle/vendor/GLFW/src/context.c"
+          }
+,
+          {
+            "directory": "/home/acar/turtle/Turtle/vendor/GLFW",
+            "file": "/home/acar/turtle/Turtle/vendor/GLFW/src/egl_context.c",
+            "command": "cc -MD -MP -D_GLFW_X11 -m64 -fPIC -g -o /home/acar/turtle/Turtle/vendor/GLFW/bin-int/Debug-linux-x86_64/GLFW/egl_context.o -MF /home/acar/turtle/Turtle/vendor/GLFW/bin-int/Debug-linux-x86_64/GLFW/egl_context.d -c /home/acar/turtle/Turtle/vendor/GLFW/src/egl_context.c"
+          }
+,
+          {
+            "directory": "/home/acar/turtle/Turtle/vendor/GLFW",
+            "file": "/home/acar/turtle/Turtle/vendor/GLFW/src/glx_context.c",
+            "command": "cc -MD -MP -D_GLFW_X11 -m64 -fPIC -g -o /home/acar/turtle/Turtle/vendor/GLFW/bin-int/Debug-linux-x86_64/GLFW/glx_context.o -MF /home/acar/turtle/Turtle/vendor/GLFW/bin-int/Debug-linux-x86_64/GLFW/glx_context.d -c /home/acar/turtle/Turtle/vendor/GLFW/src/glx_context.c"
+          }
+,
+          {
+            "directory": "/home/acar/turtle/Turtle/vendor/GLFW",
+            "file": "/home/acar/turtle/Turtle/vendor/GLFW/src/init.c",
+            "command": "cc -MD -MP -D_GLFW_X11 -m64 -fPIC -g -o /home/acar/turtle/Turtle/vendor/GLFW/bin-int/Debug-linux-x86_64/GLFW/init.o -MF /home/acar/turtle/Turtle/vendor/GLFW/bin-int/Debug-linux-x86_64/GLFW/init.d -c /home/acar/turtle/Turtle/vendor/GLFW/src/init.c"
+          }
+,
+          {
+            "directory": "/home/acar/turtle/Turtle/vendor/GLFW",
+            "file": "/home/acar/turtle/Turtle/vendor/GLFW/src/input.c",
+            "command": "cc -MD -MP -D_GLFW_X11 -m64 -fPIC -g -o /home/acar/turtle/Turtle/vendor/GLFW/bin-int/Debug-linux-x86_64/GLFW/input.o -MF /home/acar/turtle/Turtle/vendor/GLFW/bin-int/Debug-linux-x86_64/GLFW/input.d -c /home/acar/turtle/Turtle/vendor/GLFW/src/input.c"
+          }
+,
+          {
+            "directory": "/home/acar/turtle/Turtle/vendor/GLFW",
+            "file": "/home/acar/turtle/Turtle/vendor/GLFW/src/linux_joystick.c",
+            "command": "cc -MD -MP -D_GLFW_X11 -m64 -fPIC -g -o /home/acar/turtle/Turtle/vendor/GLFW/bin-int/Debug-linux-x86_64/GLFW/linux_joystick.o -MF /home/acar/turtle/Turtle/vendor/GLFW/bin-int/Debug-linux-x86_64/GLFW/linux_joystick.d -c /home/acar/turtle/Turtle/vendor/GLFW/src/linux_joystick.c"
+          }
+,
+          {
+            "directory": "/home/acar/turtle/Turtle/vendor/GLFW",
+            "file": "/home/acar/turtle/Turtle/vendor/GLFW/src/monitor.c",
+            "command": "cc -MD -MP -D_GLFW_X11 -m64 -fPIC -g -o /home/acar/turtle/Turtle/vendor/GLFW/bin-int/Debug-linux-x86_64/GLFW/monitor.o -MF /home/acar/turtle/Turtle/vendor/GLFW/bin-int/Debug-linux-x86_64/GLFW/monitor.d -c /home/acar/turtle/Turtle/vendor/GLFW/src/monitor.c"
+          }
+,
+          {
+            "directory": "/home/acar/turtle/Turtle/vendor/GLFW",
+            "file": "/home/acar/turtle/Turtle/vendor/GLFW/src/osmesa_context.c",
+            "command": "cc -MD -MP -D_GLFW_X11 -m64 -fPIC -g -o /home/acar/turtle/Turtle/vendor/GLFW/bin-int/Debug-linux-x86_64/GLFW/osmesa_context.o -MF /home/acar/turtle/Turtle/vendor/GLFW/bin-int/Debug-linux-x86_64/GLFW/osmesa_context.d -c /home/acar/turtle/Turtle/vendor/GLFW/src/osmesa_context.c"
+          }
+,
+          {
+            "directory": "/home/acar/turtle/Turtle/vendor/GLFW",
+            "file": "/home/acar/turtle/Turtle/vendor/GLFW/src/posix_thread.c",
+            "command": "cc -MD -MP -D_GLFW_X11 -m64 -fPIC -g -o /home/acar/turtle/Turtle/vendor/GLFW/bin-int/Debug-linux-x86_64/GLFW/posix_thread.o -MF /home/acar/turtle/Turtle/vendor/GLFW/bin-int/Debug-linux-x86_64/GLFW/posix_thread.d -c /home/acar/turtle/Turtle/vendor/GLFW/src/posix_thread.c"
+          }
+,
+          {
+            "directory": "/home/acar/turtle/Turtle/vendor/GLFW",
+            "file": "/home/acar/turtle/Turtle/vendor/GLFW/src/posix_time.c",
+            "command": "cc -MD -MP -D_GLFW_X11 -m64 -fPIC -g -o /home/acar/turtle/Turtle/vendor/GLFW/bin-int/Debug-linux-x86_64/GLFW/posix_time.o -MF /home/acar/turtle/Turtle/vendor/GLFW/bin-int/Debug-linux-x86_64/GLFW/posix_time.d -c /home/acar/turtle/Turtle/vendor/GLFW/src/posix_time.c"
+          }
+,
+          {
+            "directory": "/home/acar/turtle/Turtle/vendor/GLFW",
+            "file": "/home/acar/turtle/Turtle/vendor/GLFW/src/vulkan.c",
+            "command": "cc -MD -MP -D_GLFW_X11 -m64 -fPIC -g -o /home/acar/turtle/Turtle/vendor/GLFW/bin-int/Debug-linux-x86_64/GLFW/vulkan.o -MF /home/acar/turtle/Turtle/vendor/GLFW/bin-int/Debug-linux-x86_64/GLFW/vulkan.d -c /home/acar/turtle/Turtle/vendor/GLFW/src/vulkan.c"
+          }
+,
+          {
+            "directory": "/home/acar/turtle/Turtle/vendor/GLFW",
+            "file": "/home/acar/turtle/Turtle/vendor/GLFW/src/window.c",
+            "command": "cc -MD -MP -D_GLFW_X11 -m64 -fPIC -g -o /home/acar/turtle/Turtle/vendor/GLFW/bin-int/Debug-linux-x86_64/GLFW/window.o -MF /home/acar/turtle/Turtle/vendor/GLFW/bin-int/Debug-linux-x86_64/GLFW/window.d -c /home/acar/turtle/Turtle/vendor/GLFW/src/window.c"
+          }
+,
+          {
+            "directory": "/home/acar/turtle/Turtle/vendor/GLFW",
+            "file": "/home/acar/turtle/Turtle/vendor/GLFW/src/x11_init.c",
+            "command": "cc -MD -MP -D_GLFW_X11 -m64 -fPIC -g -o /home/acar/turtle/Turtle/vendor/GLFW/bin-int/Debug-linux-x86_64/GLFW/x11_init.o -MF /home/acar/turtle/Turtle/vendor/GLFW/bin-int/Debug-linux-x86_64/GLFW/x11_init.d -c /home/acar/turtle/Turtle/vendor/GLFW/src/x11_init.c"
+          }
+,
+          {
+            "directory": "/home/acar/turtle/Turtle/vendor/GLFW",
+            "file": "/home/acar/turtle/Turtle/vendor/GLFW/src/x11_monitor.c",
+            "command": "cc -MD -MP -D_GLFW_X11 -m64 -fPIC -g -o /home/acar/turtle/Turtle/vendor/GLFW/bin-int/Debug-linux-x86_64/GLFW/x11_monitor.o -MF /home/acar/turtle/Turtle/vendor/GLFW/bin-int/Debug-linux-x86_64/GLFW/x11_monitor.d -c /home/acar/turtle/Turtle/vendor/GLFW/src/x11_monitor.c"
+          }
+,
+          {
+            "directory": "/home/acar/turtle/Turtle/vendor/GLFW",
+            "file": "/home/acar/turtle/Turtle/vendor/GLFW/src/x11_window.c",
+            "command": "cc -MD -MP -D_GLFW_X11 -m64 -fPIC -g -o /home/acar/turtle/Turtle/vendor/GLFW/bin-int/Debug-linux-x86_64/GLFW/x11_window.o -MF /home/acar/turtle/Turtle/vendor/GLFW/bin-int/Debug-linux-x86_64/GLFW/x11_window.d -c /home/acar/turtle/Turtle/vendor/GLFW/src/x11_window.c"
+          }
+,
+          {
+            "directory": "/home/acar/turtle/Turtle/vendor/GLFW",
+            "file": "/home/acar/turtle/Turtle/vendor/GLFW/src/xkb_unicode.c",
+            "command": "cc -MD -MP -D_GLFW_X11 -m64 -fPIC -g -o /home/acar/turtle/Turtle/vendor/GLFW/bin-int/Debug-linux-x86_64/GLFW/xkb_unicode.o -MF /home/acar/turtle/Turtle/vendor/GLFW/bin-int/Debug-linux-x86_64/GLFW/xkb_unicode.d -c /home/acar/turtle/Turtle/vendor/GLFW/src/xkb_unicode.c"
+          }
+,
+          {
+            "directory": "/home/acar/turtle/Turtle/vendor/Glad",
+            "file": "/home/acar/turtle/Turtle/vendor/Glad/src/glad.c",
+            "command": "cc -MD -MP -I /home/acar/turtle/Turtle/vendor/Glad/include -m64 -g -o /home/acar/turtle/Turtle/vendor/Glad/bin-int/Debug-linux-x86_64/Glad/glad.o -MF /home/acar/turtle/Turtle/vendor/Glad/bin-int/Debug-linux-x86_64/Glad/glad.d -c /home/acar/turtle/Turtle/vendor/Glad/src/glad.c"
+          }
+,
+          {
+            "directory": "/home/acar/turtle/Turtle/vendor/imgui",
+            "file": "/home/acar/turtle/Turtle/vendor/imgui/imgui.cpp",
+            "command": "cc -MD -MP -m64 -fPIC -g -o /home/acar/turtle/Turtle/vendor/imgui/bin-int/Debug-linux-x86_64/ImGui/imgui.o -MF /home/acar/turtle/Turtle/vendor/imgui/bin-int/Debug-linux-x86_64/ImGui/imgui.d -c /home/acar/turtle/Turtle/vendor/imgui/imgui.cpp"
+          }
+,
+          {
+            "directory": "/home/acar/turtle/Turtle/vendor/imgui",
+            "file": "/home/acar/turtle/Turtle/vendor/imgui/imgui_demo.cpp",
+            "command": "cc -MD -MP -m64 -fPIC -g -o /home/acar/turtle/Turtle/vendor/imgui/bin-int/Debug-linux-x86_64/ImGui/imgui_demo.o -MF /home/acar/turtle/Turtle/vendor/imgui/bin-int/Debug-linux-x86_64/ImGui/imgui_demo.d -c /home/acar/turtle/Turtle/vendor/imgui/imgui_demo.cpp"
+          }
+,
+          {
+            "directory": "/home/acar/turtle/Turtle/vendor/imgui",
+            "file": "/home/acar/turtle/Turtle/vendor/imgui/imgui_draw.cpp",
+            "command": "cc -MD -MP -m64 -fPIC -g -o /home/acar/turtle/Turtle/vendor/imgui/bin-int/Debug-linux-x86_64/ImGui/imgui_draw.o -MF /home/acar/turtle/Turtle/vendor/imgui/bin-int/Debug-linux-x86_64/ImGui/imgui_draw.d -c /home/acar/turtle/Turtle/vendor/imgui/imgui_draw.cpp"
+          }
+,
+          {
+            "directory": "/home/acar/turtle/Turtle/vendor/imgui",
+            "file": "/home/acar/turtle/Turtle/vendor/imgui/imgui_widgets.cpp",
+            "command": "cc -MD -MP -m64 -fPIC -g -o /home/acar/turtle/Turtle/vendor/imgui/bin-int/Debug-linux-x86_64/ImGui/imgui_widgets.o -MF /home/acar/turtle/Turtle/vendor/imgui/bin-int/Debug-linux-x86_64/ImGui/imgui_widgets.d -c /home/acar/turtle/Turtle/vendor/imgui/imgui_widgets.cpp"
+          }
+,
+          {
+            "directory": "/home/acar/turtle/Turtle/vendor/yaml-cpp",
+            "file": "/home/acar/turtle/Turtle/vendor/yaml-cpp/src/binary.cpp",
+            "command": "cc -MD -MP -I /home/acar/turtle/Turtle/vendor/yaml-cpp/include -m64 -fPIC -g -o /home/acar/turtle/Turtle/vendor/yaml-cpp/bin-int/Debug-linux-x86_64/yaml-cpp/binary.o -MF /home/acar/turtle/Turtle/vendor/yaml-cpp/bin-int/Debug-linux-x86_64/yaml-cpp/binary.d -c /home/acar/turtle/Turtle/vendor/yaml-cpp/src/binary.cpp"
+          }
+,
+          {
+            "directory": "/home/acar/turtle/Turtle/vendor/yaml-cpp",
+            "file": "/home/acar/turtle/Turtle/vendor/yaml-cpp/src/contrib/graphbuilder.cpp",
+            "command": "cc -MD -MP -I /home/acar/turtle/Turtle/vendor/yaml-cpp/include -m64 -fPIC -g -o /home/acar/turtle/Turtle/vendor/yaml-cpp/bin-int/Debug-linux-x86_64/yaml-cpp/graphbuilder.o -MF /home/acar/turtle/Turtle/vendor/yaml-cpp/bin-int/Debug-linux-x86_64/yaml-cpp/graphbuilder.d -c /home/acar/turtle/Turtle/vendor/yaml-cpp/src/contrib/graphbuilder.cpp"
+          }
+,
+          {
+            "directory": "/home/acar/turtle/Turtle/vendor/yaml-cpp",
+            "file": "/home/acar/turtle/Turtle/vendor/yaml-cpp/src/contrib/graphbuilderadapter.cpp",
+            "command": "cc -MD -MP -I /home/acar/turtle/Turtle/vendor/yaml-cpp/include -m64 -fPIC -g -o /home/acar/turtle/Turtle/vendor/yaml-cpp/bin-int/Debug-linux-x86_64/yaml-cpp/graphbuilderadapter.o -MF /home/acar/turtle/Turtle/vendor/yaml-cpp/bin-int/Debug-linux-x86_64/yaml-cpp/graphbuilderadapter.d -c /home/acar/turtle/Turtle/vendor/yaml-cpp/src/contrib/graphbuilderadapter.cpp"
+          }
+,
+          {
+            "directory": "/home/acar/turtle/Turtle/vendor/yaml-cpp",
+            "file": "/home/acar/turtle/Turtle/vendor/yaml-cpp/src/convert.cpp",
+            "command": "cc -MD -MP -I /home/acar/turtle/Turtle/vendor/yaml-cpp/include -m64 -fPIC -g -o /home/acar/turtle/Turtle/vendor/yaml-cpp/bin-int/Debug-linux-x86_64/yaml-cpp/convert.o -MF /home/acar/turtle/Turtle/vendor/yaml-cpp/bin-int/Debug-linux-x86_64/yaml-cpp/convert.d -c /home/acar/turtle/Turtle/vendor/yaml-cpp/src/convert.cpp"
+          }
+,
+          {
+            "directory": "/home/acar/turtle/Turtle/vendor/yaml-cpp",
+            "file": "/home/acar/turtle/Turtle/vendor/yaml-cpp/src/depthguard.cpp",
+            "command": "cc -MD -MP -I /home/acar/turtle/Turtle/vendor/yaml-cpp/include -m64 -fPIC -g -o /home/acar/turtle/Turtle/vendor/yaml-cpp/bin-int/Debug-linux-x86_64/yaml-cpp/depthguard.o -MF /home/acar/turtle/Turtle/vendor/yaml-cpp/bin-int/Debug-linux-x86_64/yaml-cpp/depthguard.d -c /home/acar/turtle/Turtle/vendor/yaml-cpp/src/depthguard.cpp"
+          }
+,
+          {
+            "directory": "/home/acar/turtle/Turtle/vendor/yaml-cpp",
+            "file": "/home/acar/turtle/Turtle/vendor/yaml-cpp/src/directives.cpp",
+            "command": "cc -MD -MP -I /home/acar/turtle/Turtle/vendor/yaml-cpp/include -m64 -fPIC -g -o /home/acar/turtle/Turtle/vendor/yaml-cpp/bin-int/Debug-linux-x86_64/yaml-cpp/directives.o -MF /home/acar/turtle/Turtle/vendor/yaml-cpp/bin-int/Debug-linux-x86_64/yaml-cpp/directives.d -c /home/acar/turtle/Turtle/vendor/yaml-cpp/src/directives.cpp"
+          }
+,
+          {
+            "directory": "/home/acar/turtle/Turtle/vendor/yaml-cpp",
+            "file": "/home/acar/turtle/Turtle/vendor/yaml-cpp/src/emit.cpp",
+            "command": "cc -MD -MP -I /home/acar/turtle/Turtle/vendor/yaml-cpp/include -m64 -fPIC -g -o /home/acar/turtle/Turtle/vendor/yaml-cpp/bin-int/Debug-linux-x86_64/yaml-cpp/emit.o -MF /home/acar/turtle/Turtle/vendor/yaml-cpp/bin-int/Debug-linux-x86_64/yaml-cpp/emit.d -c /home/acar/turtle/Turtle/vendor/yaml-cpp/src/emit.cpp"
+          }
+,
+          {
+            "directory": "/home/acar/turtle/Turtle/vendor/yaml-cpp",
+            "file": "/home/acar/turtle/Turtle/vendor/yaml-cpp/src/emitfromevents.cpp",
+            "command": "cc -MD -MP -I /home/acar/turtle/Turtle/vendor/yaml-cpp/include -m64 -fPIC -g -o /home/acar/turtle/Turtle/vendor/yaml-cpp/bin-int/Debug-linux-x86_64/yaml-cpp/emitfromevents.o -MF /home/acar/turtle/Turtle/vendor/yaml-cpp/bin-int/Debug-linux-x86_64/yaml-cpp/emitfromevents.d -c /home/acar/turtle/Turtle/vendor/yaml-cpp/src/emitfromevents.cpp"
+          }
+,
+          {
+            "directory": "/home/acar/turtle/Turtle/vendor/yaml-cpp",
+            "file": "/home/acar/turtle/Turtle/vendor/yaml-cpp/src/emitter.cpp",
+            "command": "cc -MD -MP -I /home/acar/turtle/Turtle/vendor/yaml-cpp/include -m64 -fPIC -g -o /home/acar/turtle/Turtle/vendor/yaml-cpp/bin-int/Debug-linux-x86_64/yaml-cpp/emitter.o -MF /home/acar/turtle/Turtle/vendor/yaml-cpp/bin-int/Debug-linux-x86_64/yaml-cpp/emitter.d -c /home/acar/turtle/Turtle/vendor/yaml-cpp/src/emitter.cpp"
+          }
+,
+          {
+            "directory": "/home/acar/turtle/Turtle/vendor/yaml-cpp",
+            "file": "/home/acar/turtle/Turtle/vendor/yaml-cpp/src/emitterstate.cpp",
+            "command": "cc -MD -MP -I /home/acar/turtle/Turtle/vendor/yaml-cpp/include -m64 -fPIC -g -o /home/acar/turtle/Turtle/vendor/yaml-cpp/bin-int/Debug-linux-x86_64/yaml-cpp/emitterstate.o -MF /home/acar/turtle/Turtle/vendor/yaml-cpp/bin-int/Debug-linux-x86_64/yaml-cpp/emitterstate.d -c /home/acar/turtle/Turtle/vendor/yaml-cpp/src/emitterstate.cpp"
+          }
+,
+          {
+            "directory": "/home/acar/turtle/Turtle/vendor/yaml-cpp",
+            "file": "/home/acar/turtle/Turtle/vendor/yaml-cpp/src/emitterutils.cpp",
+            "command": "cc -MD -MP -I /home/acar/turtle/Turtle/vendor/yaml-cpp/include -m64 -fPIC -g -o /home/acar/turtle/Turtle/vendor/yaml-cpp/bin-int/Debug-linux-x86_64/yaml-cpp/emitterutils.o -MF /home/acar/turtle/Turtle/vendor/yaml-cpp/bin-int/Debug-linux-x86_64/yaml-cpp/emitterutils.d -c /home/acar/turtle/Turtle/vendor/yaml-cpp/src/emitterutils.cpp"
+          }
+,
+          {
+            "directory": "/home/acar/turtle/Turtle/vendor/yaml-cpp",
+            "file": "/home/acar/turtle/Turtle/vendor/yaml-cpp/src/exceptions.cpp",
+            "command": "cc -MD -MP -I /home/acar/turtle/Turtle/vendor/yaml-cpp/include -m64 -fPIC -g -o /home/acar/turtle/Turtle/vendor/yaml-cpp/bin-int/Debug-linux-x86_64/yaml-cpp/exceptions.o -MF /home/acar/turtle/Turtle/vendor/yaml-cpp/bin-int/Debug-linux-x86_64/yaml-cpp/exceptions.d -c /home/acar/turtle/Turtle/vendor/yaml-cpp/src/exceptions.cpp"
+          }
+,
+          {
+            "directory": "/home/acar/turtle/Turtle/vendor/yaml-cpp",
+            "file": "/home/acar/turtle/Turtle/vendor/yaml-cpp/src/exp.cpp",
+            "command": "cc -MD -MP -I /home/acar/turtle/Turtle/vendor/yaml-cpp/include -m64 -fPIC -g -o /home/acar/turtle/Turtle/vendor/yaml-cpp/bin-int/Debug-linux-x86_64/yaml-cpp/exp.o -MF /home/acar/turtle/Turtle/vendor/yaml-cpp/bin-int/Debug-linux-x86_64/yaml-cpp/exp.d -c /home/acar/turtle/Turtle/vendor/yaml-cpp/src/exp.cpp"
+          }
+,
+          {
+            "directory": "/home/acar/turtle/Turtle/vendor/yaml-cpp",
+            "file": "/home/acar/turtle/Turtle/vendor/yaml-cpp/src/memory.cpp",
+            "command": "cc -MD -MP -I /home/acar/turtle/Turtle/vendor/yaml-cpp/include -m64 -fPIC -g -o /home/acar/turtle/Turtle/vendor/yaml-cpp/bin-int/Debug-linux-x86_64/yaml-cpp/memory.o -MF /home/acar/turtle/Turtle/vendor/yaml-cpp/bin-int/Debug-linux-x86_64/yaml-cpp/memory.d -c /home/acar/turtle/Turtle/vendor/yaml-cpp/src/memory.cpp"
+          }
+,
+          {
+            "directory": "/home/acar/turtle/Turtle/vendor/yaml-cpp",
+            "file": "/home/acar/turtle/Turtle/vendor/yaml-cpp/src/node.cpp",
+            "command": "cc -MD -MP -I /home/acar/turtle/Turtle/vendor/yaml-cpp/include -m64 -fPIC -g -o /home/acar/turtle/Turtle/vendor/yaml-cpp/bin-int/Debug-linux-x86_64/yaml-cpp/node.o -MF /home/acar/turtle/Turtle/vendor/yaml-cpp/bin-int/Debug-linux-x86_64/yaml-cpp/node.d -c /home/acar/turtle/Turtle/vendor/yaml-cpp/src/node.cpp"
+          }
+,
+          {
+            "directory": "/home/acar/turtle/Turtle/vendor/yaml-cpp",
+            "file": "/home/acar/turtle/Turtle/vendor/yaml-cpp/src/node_data.cpp",
+            "command": "cc -MD -MP -I /home/acar/turtle/Turtle/vendor/yaml-cpp/include -m64 -fPIC -g -o /home/acar/turtle/Turtle/vendor/yaml-cpp/bin-int/Debug-linux-x86_64/yaml-cpp/node_data.o -MF /home/acar/turtle/Turtle/vendor/yaml-cpp/bin-int/Debug-linux-x86_64/yaml-cpp/node_data.d -c /home/acar/turtle/Turtle/vendor/yaml-cpp/src/node_data.cpp"
+          }
+,
+          {
+            "directory": "/home/acar/turtle/Turtle/vendor/yaml-cpp",
+            "file": "/home/acar/turtle/Turtle/vendor/yaml-cpp/src/nodebuilder.cpp",
+            "command": "cc -MD -MP -I /home/acar/turtle/Turtle/vendor/yaml-cpp/include -m64 -fPIC -g -o /home/acar/turtle/Turtle/vendor/yaml-cpp/bin-int/Debug-linux-x86_64/yaml-cpp/nodebuilder.o -MF /home/acar/turtle/Turtle/vendor/yaml-cpp/bin-int/Debug-linux-x86_64/yaml-cpp/nodebuilder.d -c /home/acar/turtle/Turtle/vendor/yaml-cpp/src/nodebuilder.cpp"
+          }
+,
+          {
+            "directory": "/home/acar/turtle/Turtle/vendor/yaml-cpp",
+            "file": "/home/acar/turtle/Turtle/vendor/yaml-cpp/src/nodeevents.cpp",
+            "command": "cc -MD -MP -I /home/acar/turtle/Turtle/vendor/yaml-cpp/include -m64 -fPIC -g -o /home/acar/turtle/Turtle/vendor/yaml-cpp/bin-int/Debug-linux-x86_64/yaml-cpp/nodeevents.o -MF /home/acar/turtle/Turtle/vendor/yaml-cpp/bin-int/Debug-linux-x86_64/yaml-cpp/nodeevents.d -c /home/acar/turtle/Turtle/vendor/yaml-cpp/src/nodeevents.cpp"
+          }
+,
+          {
+            "directory": "/home/acar/turtle/Turtle/vendor/yaml-cpp",
+            "file": "/home/acar/turtle/Turtle/vendor/yaml-cpp/src/null.cpp",
+            "command": "cc -MD -MP -I /home/acar/turtle/Turtle/vendor/yaml-cpp/include -m64 -fPIC -g -o /home/acar/turtle/Turtle/vendor/yaml-cpp/bin-int/Debug-linux-x86_64/yaml-cpp/null.o -MF /home/acar/turtle/Turtle/vendor/yaml-cpp/bin-int/Debug-linux-x86_64/yaml-cpp/null.d -c /home/acar/turtle/Turtle/vendor/yaml-cpp/src/null.cpp"
+          }
+,
+          {
+            "directory": "/home/acar/turtle/Turtle/vendor/yaml-cpp",
+            "file": "/home/acar/turtle/Turtle/vendor/yaml-cpp/src/ostream_wrapper.cpp",
+            "command": "cc -MD -MP -I /home/acar/turtle/Turtle/vendor/yaml-cpp/include -m64 -fPIC -g -o /home/acar/turtle/Turtle/vendor/yaml-cpp/bin-int/Debug-linux-x86_64/yaml-cpp/ostream_wrapper.o -MF /home/acar/turtle/Turtle/vendor/yaml-cpp/bin-int/Debug-linux-x86_64/yaml-cpp/ostream_wrapper.d -c /home/acar/turtle/Turtle/vendor/yaml-cpp/src/ostream_wrapper.cpp"
+          }
+,
+          {
+            "directory": "/home/acar/turtle/Turtle/vendor/yaml-cpp",
+            "file": "/home/acar/turtle/Turtle/vendor/yaml-cpp/src/parse.cpp",
+            "command": "cc -MD -MP -I /home/acar/turtle/Turtle/vendor/yaml-cpp/include -m64 -fPIC -g -o /home/acar/turtle/Turtle/vendor/yaml-cpp/bin-int/Debug-linux-x86_64/yaml-cpp/parse.o -MF /home/acar/turtle/Turtle/vendor/yaml-cpp/bin-int/Debug-linux-x86_64/yaml-cpp/parse.d -c /home/acar/turtle/Turtle/vendor/yaml-cpp/src/parse.cpp"
+          }
+,
+          {
+            "directory": "/home/acar/turtle/Turtle/vendor/yaml-cpp",
+            "file": "/home/acar/turtle/Turtle/vendor/yaml-cpp/src/parser.cpp",
+            "command": "cc -MD -MP -I /home/acar/turtle/Turtle/vendor/yaml-cpp/include -m64 -fPIC -g -o /home/acar/turtle/Turtle/vendor/yaml-cpp/bin-int/Debug-linux-x86_64/yaml-cpp/parser.o -MF /home/acar/turtle/Turtle/vendor/yaml-cpp/bin-int/Debug-linux-x86_64/yaml-cpp/parser.d -c /home/acar/turtle/Turtle/vendor/yaml-cpp/src/parser.cpp"
+          }
+,
+          {
+            "directory": "/home/acar/turtle/Turtle/vendor/yaml-cpp",
+            "file": "/home/acar/turtle/Turtle/vendor/yaml-cpp/src/regex_yaml.cpp",
+            "command": "cc -MD -MP -I /home/acar/turtle/Turtle/vendor/yaml-cpp/include -m64 -fPIC -g -o /home/acar/turtle/Turtle/vendor/yaml-cpp/bin-int/Debug-linux-x86_64/yaml-cpp/regex_yaml.o -MF /home/acar/turtle/Turtle/vendor/yaml-cpp/bin-int/Debug-linux-x86_64/yaml-cpp/regex_yaml.d -c /home/acar/turtle/Turtle/vendor/yaml-cpp/src/regex_yaml.cpp"
+          }
+,
+          {
+            "directory": "/home/acar/turtle/Turtle/vendor/yaml-cpp",
+            "file": "/home/acar/turtle/Turtle/vendor/yaml-cpp/src/scanner.cpp",
+            "command": "cc -MD -MP -I /home/acar/turtle/Turtle/vendor/yaml-cpp/include -m64 -fPIC -g -o /home/acar/turtle/Turtle/vendor/yaml-cpp/bin-int/Debug-linux-x86_64/yaml-cpp/scanner.o -MF /home/acar/turtle/Turtle/vendor/yaml-cpp/bin-int/Debug-linux-x86_64/yaml-cpp/scanner.d -c /home/acar/turtle/Turtle/vendor/yaml-cpp/src/scanner.cpp"
+          }
+,
+          {
+            "directory": "/home/acar/turtle/Turtle/vendor/yaml-cpp",
+            "file": "/home/acar/turtle/Turtle/vendor/yaml-cpp/src/scanscalar.cpp",
+            "command": "cc -MD -MP -I /home/acar/turtle/Turtle/vendor/yaml-cpp/include -m64 -fPIC -g -o /home/acar/turtle/Turtle/vendor/yaml-cpp/bin-int/Debug-linux-x86_64/yaml-cpp/scanscalar.o -MF /home/acar/turtle/Turtle/vendor/yaml-cpp/bin-int/Debug-linux-x86_64/yaml-cpp/scanscalar.d -c /home/acar/turtle/Turtle/vendor/yaml-cpp/src/scanscalar.cpp"
+          }
+,
+          {
+            "directory": "/home/acar/turtle/Turtle/vendor/yaml-cpp",
+            "file": "/home/acar/turtle/Turtle/vendor/yaml-cpp/src/scantag.cpp",
+            "command": "cc -MD -MP -I /home/acar/turtle/Turtle/vendor/yaml-cpp/include -m64 -fPIC -g -o /home/acar/turtle/Turtle/vendor/yaml-cpp/bin-int/Debug-linux-x86_64/yaml-cpp/scantag.o -MF /home/acar/turtle/Turtle/vendor/yaml-cpp/bin-int/Debug-linux-x86_64/yaml-cpp/scantag.d -c /home/acar/turtle/Turtle/vendor/yaml-cpp/src/scantag.cpp"
+          }
+,
+          {
+            "directory": "/home/acar/turtle/Turtle/vendor/yaml-cpp",
+            "file": "/home/acar/turtle/Turtle/vendor/yaml-cpp/src/scantoken.cpp",
+            "command": "cc -MD -MP -I /home/acar/turtle/Turtle/vendor/yaml-cpp/include -m64 -fPIC -g -o /home/acar/turtle/Turtle/vendor/yaml-cpp/bin-int/Debug-linux-x86_64/yaml-cpp/scantoken.o -MF /home/acar/turtle/Turtle/vendor/yaml-cpp/bin-int/Debug-linux-x86_64/yaml-cpp/scantoken.d -c /home/acar/turtle/Turtle/vendor/yaml-cpp/src/scantoken.cpp"
+          }
+,
+          {
+            "directory": "/home/acar/turtle/Turtle/vendor/yaml-cpp",
+            "file": "/home/acar/turtle/Turtle/vendor/yaml-cpp/src/simplekey.cpp",
+            "command": "cc -MD -MP -I /home/acar/turtle/Turtle/vendor/yaml-cpp/include -m64 -fPIC -g -o /home/acar/turtle/Turtle/vendor/yaml-cpp/bin-int/Debug-linux-x86_64/yaml-cpp/simplekey.o -MF /home/acar/turtle/Turtle/vendor/yaml-cpp/bin-int/Debug-linux-x86_64/yaml-cpp/simplekey.d -c /home/acar/turtle/Turtle/vendor/yaml-cpp/src/simplekey.cpp"
+          }
+,
+          {
+            "directory": "/home/acar/turtle/Turtle/vendor/yaml-cpp",
+            "file": "/home/acar/turtle/Turtle/vendor/yaml-cpp/src/singledocparser.cpp",
+            "command": "cc -MD -MP -I /home/acar/turtle/Turtle/vendor/yaml-cpp/include -m64 -fPIC -g -o /home/acar/turtle/Turtle/vendor/yaml-cpp/bin-int/Debug-linux-x86_64/yaml-cpp/singledocparser.o -MF /home/acar/turtle/Turtle/vendor/yaml-cpp/bin-int/Debug-linux-x86_64/yaml-cpp/singledocparser.d -c /home/acar/turtle/Turtle/vendor/yaml-cpp/src/singledocparser.cpp"
+          }
+,
+          {
+            "directory": "/home/acar/turtle/Turtle/vendor/yaml-cpp",
+            "file": "/home/acar/turtle/Turtle/vendor/yaml-cpp/src/stream.cpp",
+            "command": "cc -MD -MP -I /home/acar/turtle/Turtle/vendor/yaml-cpp/include -m64 -fPIC -g -o /home/acar/turtle/Turtle/vendor/yaml-cpp/bin-int/Debug-linux-x86_64/yaml-cpp/stream.o -MF /home/acar/turtle/Turtle/vendor/yaml-cpp/bin-int/Debug-linux-x86_64/yaml-cpp/stream.d -c /home/acar/turtle/Turtle/vendor/yaml-cpp/src/stream.cpp"
+          }
+,
+          {
+            "directory": "/home/acar/turtle/Turtle/vendor/yaml-cpp",
+            "file": "/home/acar/turtle/Turtle/vendor/yaml-cpp/src/tag.cpp",
+            "command": "cc -MD -MP -I /home/acar/turtle/Turtle/vendor/yaml-cpp/include -m64 -fPIC -g -o /home/acar/turtle/Turtle/vendor/yaml-cpp/bin-int/Debug-linux-x86_64/yaml-cpp/tag.o -MF /home/acar/turtle/Turtle/vendor/yaml-cpp/bin-int/Debug-linux-x86_64/yaml-cpp/tag.d -c /home/acar/turtle/Turtle/vendor/yaml-cpp/src/tag.cpp"
+          }
+,
+          {
+            "directory": "/home/acar/turtle/Turtle/vendor/lua",
+            "file": "/home/acar/turtle/Turtle/vendor/lua/src/lapi.c",
+            "command": "cc -MD -MP -m64 -fPIC -g -o /home/acar/turtle/Turtle/vendor/lua/bin-int/Debug-linux-x86_64/lua/lapi.o -MF /home/acar/turtle/Turtle/vendor/lua/bin-int/Debug-linux-x86_64/lua/lapi.d -c /home/acar/turtle/Turtle/vendor/lua/src/lapi.c"
+          }
+,
+          {
+            "directory": "/home/acar/turtle/Turtle/vendor/lua",
+            "file": "/home/acar/turtle/Turtle/vendor/lua/src/lauxlib.c",
+            "command": "cc -MD -MP -m64 -fPIC -g -o /home/acar/turtle/Turtle/vendor/lua/bin-int/Debug-linux-x86_64/lua/lauxlib.o -MF /home/acar/turtle/Turtle/vendor/lua/bin-int/Debug-linux-x86_64/lua/lauxlib.d -c /home/acar/turtle/Turtle/vendor/lua/src/lauxlib.c"
+          }
+,
+          {
+            "directory": "/home/acar/turtle/Turtle/vendor/lua",
+            "file": "/home/acar/turtle/Turtle/vendor/lua/src/lbaselib.c",
+            "command": "cc -MD -MP -m64 -fPIC -g -o /home/acar/turtle/Turtle/vendor/lua/bin-int/Debug-linux-x86_64/lua/lbaselib.o -MF /home/acar/turtle/Turtle/vendor/lua/bin-int/Debug-linux-x86_64/lua/lbaselib.d -c /home/acar/turtle/Turtle/vendor/lua/src/lbaselib.c"
+          }
+,
+          {
+            "directory": "/home/acar/turtle/Turtle/vendor/lua",
+            "file": "/home/acar/turtle/Turtle/vendor/lua/src/lcode.c",
+            "command": "cc -MD -MP -m64 -fPIC -g -o /home/acar/turtle/Turtle/vendor/lua/bin-int/Debug-linux-x86_64/lua/lcode.o -MF /home/acar/turtle/Turtle/vendor/lua/bin-int/Debug-linux-x86_64/lua/lcode.d -c /home/acar/turtle/Turtle/vendor/lua/src/lcode.c"
+          }
+,
+          {
+            "directory": "/home/acar/turtle/Turtle/vendor/lua",
+            "file": "/home/acar/turtle/Turtle/vendor/lua/src/lcorolib.c",
+            "command": "cc -MD -MP -m64 -fPIC -g -o /home/acar/turtle/Turtle/vendor/lua/bin-int/Debug-linux-x86_64/lua/lcorolib.o -MF /home/acar/turtle/Turtle/vendor/lua/bin-int/Debug-linux-x86_64/lua/lcorolib.d -c /home/acar/turtle/Turtle/vendor/lua/src/lcorolib.c"
+          }
+,
+          {
+            "directory": "/home/acar/turtle/Turtle/vendor/lua",
+            "file": "/home/acar/turtle/Turtle/vendor/lua/src/lctype.c",
+            "command": "cc -MD -MP -m64 -fPIC -g -o /home/acar/turtle/Turtle/vendor/lua/bin-int/Debug-linux-x86_64/lua/lctype.o -MF /home/acar/turtle/Turtle/vendor/lua/bin-int/Debug-linux-x86_64/lua/lctype.d -c /home/acar/turtle/Turtle/vendor/lua/src/lctype.c"
+          }
+,
+          {
+            "directory": "/home/acar/turtle/Turtle/vendor/lua",
+            "file": "/home/acar/turtle/Turtle/vendor/lua/src/ldblib.c",
+            "command": "cc -MD -MP -m64 -fPIC -g -o /home/acar/turtle/Turtle/vendor/lua/bin-int/Debug-linux-x86_64/lua/ldblib.o -MF /home/acar/turtle/Turtle/vendor/lua/bin-int/Debug-linux-x86_64/lua/ldblib.d -c /home/acar/turtle/Turtle/vendor/lua/src/ldblib.c"
+          }
+,
+          {
+            "directory": "/home/acar/turtle/Turtle/vendor/lua",
+            "file": "/home/acar/turtle/Turtle/vendor/lua/src/ldebug.c",
+            "command": "cc -MD -MP -m64 -fPIC -g -o /home/acar/turtle/Turtle/vendor/lua/bin-int/Debug-linux-x86_64/lua/ldebug.o -MF /home/acar/turtle/Turtle/vendor/lua/bin-int/Debug-linux-x86_64/lua/ldebug.d -c /home/acar/turtle/Turtle/vendor/lua/src/ldebug.c"
+          }
+,
+          {
+            "directory": "/home/acar/turtle/Turtle/vendor/lua",
+            "file": "/home/acar/turtle/Turtle/vendor/lua/src/ldo.c",
+            "command": "cc -MD -MP -m64 -fPIC -g -o /home/acar/turtle/Turtle/vendor/lua/bin-int/Debug-linux-x86_64/lua/ldo.o -MF /home/acar/turtle/Turtle/vendor/lua/bin-int/Debug-linux-x86_64/lua/ldo.d -c /home/acar/turtle/Turtle/vendor/lua/src/ldo.c"
+          }
+,
+          {
+            "directory": "/home/acar/turtle/Turtle/vendor/lua",
+            "file": "/home/acar/turtle/Turtle/vendor/lua/src/ldump.c",
+            "command": "cc -MD -MP -m64 -fPIC -g -o /home/acar/turtle/Turtle/vendor/lua/bin-int/Debug-linux-x86_64/lua/ldump.o -MF /home/acar/turtle/Turtle/vendor/lua/bin-int/Debug-linux-x86_64/lua/ldump.d -c /home/acar/turtle/Turtle/vendor/lua/src/ldump.c"
+          }
+,
+          {
+            "directory": "/home/acar/turtle/Turtle/vendor/lua",
+            "file": "/home/acar/turtle/Turtle/vendor/lua/src/lfunc.c",
+            "command": "cc -MD -MP -m64 -fPIC -g -o /home/acar/turtle/Turtle/vendor/lua/bin-int/Debug-linux-x86_64/lua/lfunc.o -MF /home/acar/turtle/Turtle/vendor/lua/bin-int/Debug-linux-x86_64/lua/lfunc.d -c /home/acar/turtle/Turtle/vendor/lua/src/lfunc.c"
+          }
+,
+          {
+            "directory": "/home/acar/turtle/Turtle/vendor/lua",
+            "file": "/home/acar/turtle/Turtle/vendor/lua/src/lgc.c",
+            "command": "cc -MD -MP -m64 -fPIC -g -o /home/acar/turtle/Turtle/vendor/lua/bin-int/Debug-linux-x86_64/lua/lgc.o -MF /home/acar/turtle/Turtle/vendor/lua/bin-int/Debug-linux-x86_64/lua/lgc.d -c /home/acar/turtle/Turtle/vendor/lua/src/lgc.c"
+          }
+,
+          {
+            "directory": "/home/acar/turtle/Turtle/vendor/lua",
+            "file": "/home/acar/turtle/Turtle/vendor/lua/src/linit.c",
+            "command": "cc -MD -MP -m64 -fPIC -g -o /home/acar/turtle/Turtle/vendor/lua/bin-int/Debug-linux-x86_64/lua/linit.o -MF /home/acar/turtle/Turtle/vendor/lua/bin-int/Debug-linux-x86_64/lua/linit.d -c /home/acar/turtle/Turtle/vendor/lua/src/linit.c"
+          }
+,
+          {
+            "directory": "/home/acar/turtle/Turtle/vendor/lua",
+            "file": "/home/acar/turtle/Turtle/vendor/lua/src/liolib.c",
+            "command": "cc -MD -MP -m64 -fPIC -g -o /home/acar/turtle/Turtle/vendor/lua/bin-int/Debug-linux-x86_64/lua/liolib.o -MF /home/acar/turtle/Turtle/vendor/lua/bin-int/Debug-linux-x86_64/lua/liolib.d -c /home/acar/turtle/Turtle/vendor/lua/src/liolib.c"
+          }
+,
+          {
+            "directory": "/home/acar/turtle/Turtle/vendor/lua",
+            "file": "/home/acar/turtle/Turtle/vendor/lua/src/llex.c",
+            "command": "cc -MD -MP -m64 -fPIC -g -o /home/acar/turtle/Turtle/vendor/lua/bin-int/Debug-linux-x86_64/lua/llex.o -MF /home/acar/turtle/Turtle/vendor/lua/bin-int/Debug-linux-x86_64/lua/llex.d -c /home/acar/turtle/Turtle/vendor/lua/src/llex.c"
+          }
+,
+          {
+            "directory": "/home/acar/turtle/Turtle/vendor/lua",
+            "file": "/home/acar/turtle/Turtle/vendor/lua/src/lmathlib.c",
+            "command": "cc -MD -MP -m64 -fPIC -g -o /home/acar/turtle/Turtle/vendor/lua/bin-int/Debug-linux-x86_64/lua/lmathlib.o -MF /home/acar/turtle/Turtle/vendor/lua/bin-int/Debug-linux-x86_64/lua/lmathlib.d -c /home/acar/turtle/Turtle/vendor/lua/src/lmathlib.c"
+          }
+,
+          {
+            "directory": "/home/acar/turtle/Turtle/vendor/lua",
+            "file": "/home/acar/turtle/Turtle/vendor/lua/src/lmem.c",
+            "command": "cc -MD -MP -m64 -fPIC -g -o /home/acar/turtle/Turtle/vendor/lua/bin-int/Debug-linux-x86_64/lua/lmem.o -MF /home/acar/turtle/Turtle/vendor/lua/bin-int/Debug-linux-x86_64/lua/lmem.d -c /home/acar/turtle/Turtle/vendor/lua/src/lmem.c"
+          }
+,
+          {
+            "directory": "/home/acar/turtle/Turtle/vendor/lua",
+            "file": "/home/acar/turtle/Turtle/vendor/lua/src/loadlib.c",
+            "command": "cc -MD -MP -m64 -fPIC -g -o /home/acar/turtle/Turtle/vendor/lua/bin-int/Debug-linux-x86_64/lua/loadlib.o -MF /home/acar/turtle/Turtle/vendor/lua/bin-int/Debug-linux-x86_64/lua/loadlib.d -c /home/acar/turtle/Turtle/vendor/lua/src/loadlib.c"
+          }
+,
+          {
+            "directory": "/home/acar/turtle/Turtle/vendor/lua",
+            "file": "/home/acar/turtle/Turtle/vendor/lua/src/lobject.c",
+            "command": "cc -MD -MP -m64 -fPIC -g -o /home/acar/turtle/Turtle/vendor/lua/bin-int/Debug-linux-x86_64/lua/lobject.o -MF /home/acar/turtle/Turtle/vendor/lua/bin-int/Debug-linux-x86_64/lua/lobject.d -c /home/acar/turtle/Turtle/vendor/lua/src/lobject.c"
+          }
+,
+          {
+            "directory": "/home/acar/turtle/Turtle/vendor/lua",
+            "file": "/home/acar/turtle/Turtle/vendor/lua/src/lopcodes.c",
+            "command": "cc -MD -MP -m64 -fPIC -g -o /home/acar/turtle/Turtle/vendor/lua/bin-int/Debug-linux-x86_64/lua/lopcodes.o -MF /home/acar/turtle/Turtle/vendor/lua/bin-int/Debug-linux-x86_64/lua/lopcodes.d -c /home/acar/turtle/Turtle/vendor/lua/src/lopcodes.c"
+          }
+,
+          {
+            "directory": "/home/acar/turtle/Turtle/vendor/lua",
+            "file": "/home/acar/turtle/Turtle/vendor/lua/src/loslib.c",
+            "command": "cc -MD -MP -m64 -fPIC -g -o /home/acar/turtle/Turtle/vendor/lua/bin-int/Debug-linux-x86_64/lua/loslib.o -MF /home/acar/turtle/Turtle/vendor/lua/bin-int/Debug-linux-x86_64/lua/loslib.d -c /home/acar/turtle/Turtle/vendor/lua/src/loslib.c"
+          }
+,
+          {
+            "directory": "/home/acar/turtle/Turtle/vendor/lua",
+            "file": "/home/acar/turtle/Turtle/vendor/lua/src/lparser.c",
+            "command": "cc -MD -MP -m64 -fPIC -g -o /home/acar/turtle/Turtle/vendor/lua/bin-int/Debug-linux-x86_64/lua/lparser.o -MF /home/acar/turtle/Turtle/vendor/lua/bin-int/Debug-linux-x86_64/lua/lparser.d -c /home/acar/turtle/Turtle/vendor/lua/src/lparser.c"
+          }
+,
+          {
+            "directory": "/home/acar/turtle/Turtle/vendor/lua",
+            "file": "/home/acar/turtle/Turtle/vendor/lua/src/lstate.c",
+            "command": "cc -MD -MP -m64 -fPIC -g -o /home/acar/turtle/Turtle/vendor/lua/bin-int/Debug-linux-x86_64/lua/lstate.o -MF /home/acar/turtle/Turtle/vendor/lua/bin-int/Debug-linux-x86_64/lua/lstate.d -c /home/acar/turtle/Turtle/vendor/lua/src/lstate.c"
+          }
+,
+          {
+            "directory": "/home/acar/turtle/Turtle/vendor/lua",
+            "file": "/home/acar/turtle/Turtle/vendor/lua/src/lstring.c",
+            "command": "cc -MD -MP -m64 -fPIC -g -o /home/acar/turtle/Turtle/vendor/lua/bin-int/Debug-linux-x86_64/lua/lstring.o -MF /home/acar/turtle/Turtle/vendor/lua/bin-int/Debug-linux-x86_64/lua/lstring.d -c /home/acar/turtle/Turtle/vendor/lua/src/lstring.c"
+          }
+,
+          {
+            "directory": "/home/acar/turtle/Turtle/vendor/lua",
+            "file": "/home/acar/turtle/Turtle/vendor/lua/src/lstrlib.c",
+            "command": "cc -MD -MP -m64 -fPIC -g -o /home/acar/turtle/Turtle/vendor/lua/bin-int/Debug-linux-x86_64/lua/lstrlib.o -MF /home/acar/turtle/Turtle/vendor/lua/bin-int/Debug-linux-x86_64/lua/lstrlib.d -c /home/acar/turtle/Turtle/vendor/lua/src/lstrlib.c"
+          }
+,
+          {
+            "directory": "/home/acar/turtle/Turtle/vendor/lua",
+            "file": "/home/acar/turtle/Turtle/vendor/lua/src/ltable.c",
+            "command": "cc -MD -MP -m64 -fPIC -g -o /home/acar/turtle/Turtle/vendor/lua/bin-int/Debug-linux-x86_64/lua/ltable.o -MF /home/acar/turtle/Turtle/vendor/lua/bin-int/Debug-linux-x86_64/lua/ltable.d -c /home/acar/turtle/Turtle/vendor/lua/src/ltable.c"
+          }
+,
+          {
+            "directory": "/home/acar/turtle/Turtle/vendor/lua",
+            "file": "/home/acar/turtle/Turtle/vendor/lua/src/ltablib.c",
+            "command": "cc -MD -MP -m64 -fPIC -g -o /home/acar/turtle/Turtle/vendor/lua/bin-int/Debug-linux-x86_64/lua/ltablib.o -MF /home/acar/turtle/Turtle/vendor/lua/bin-int/Debug-linux-x86_64/lua/ltablib.d -c /home/acar/turtle/Turtle/vendor/lua/src/ltablib.c"
+          }
+,
+          {
+            "directory": "/home/acar/turtle/Turtle/vendor/lua",
+            "file": "/home/acar/turtle/Turtle/vendor/lua/src/ltm.c",
+            "command": "cc -MD -MP -m64 -fPIC -g -o /home/acar/turtle/Turtle/vendor/lua/bin-int/Debug-linux-x86_64/lua/ltm.o -MF /home/acar/turtle/Turtle/vendor/lua/bin-int/Debug-linux-x86_64/lua/ltm.d -c /home/acar/turtle/Turtle/vendor/lua/src/ltm.c"
+          }
+,
+          {
+            "directory": "/home/acar/turtle/Turtle/vendor/lua",
+            "file": "/home/acar/turtle/Turtle/vendor/lua/src/lua.c",
+            "command": "cc -MD -MP -m64 -fPIC -g -o /home/acar/turtle/Turtle/vendor/lua/bin-int/Debug-linux-x86_64/lua/lua.o -MF /home/acar/turtle/Turtle/vendor/lua/bin-int/Debug-linux-x86_64/lua/lua.d -c /home/acar/turtle/Turtle/vendor/lua/src/lua.c"
+          }
+,
+          {
+            "directory": "/home/acar/turtle/Turtle/vendor/lua",
+            "file": "/home/acar/turtle/Turtle/vendor/lua/src/luac.c",
+            "command": "cc -MD -MP -m64 -fPIC -g -o /home/acar/turtle/Turtle/vendor/lua/bin-int/Debug-linux-x86_64/lua/luac.o -MF /home/acar/turtle/Turtle/vendor/lua/bin-int/Debug-linux-x86_64/lua/luac.d -c /home/acar/turtle/Turtle/vendor/lua/src/luac.c"
+          }
+,
+          {
+            "directory": "/home/acar/turtle/Turtle/vendor/lua",
+            "file": "/home/acar/turtle/Turtle/vendor/lua/src/lundump.c",
+            "command": "cc -MD -MP -m64 -fPIC -g -o /home/acar/turtle/Turtle/vendor/lua/bin-int/Debug-linux-x86_64/lua/lundump.o -MF /home/acar/turtle/Turtle/vendor/lua/bin-int/Debug-linux-x86_64/lua/lundump.d -c /home/acar/turtle/Turtle/vendor/lua/src/lundump.c"
+          }
+,
+          {
+            "directory": "/home/acar/turtle/Turtle/vendor/lua",
+            "file": "/home/acar/turtle/Turtle/vendor/lua/src/lutf8lib.c",
+            "command": "cc -MD -MP -m64 -fPIC -g -o /home/acar/turtle/Turtle/vendor/lua/bin-int/Debug-linux-x86_64/lua/lutf8lib.o -MF /home/acar/turtle/Turtle/vendor/lua/bin-int/Debug-linux-x86_64/lua/lutf8lib.d -c /home/acar/turtle/Turtle/vendor/lua/src/lutf8lib.c"
+          }
+,
+          {
+            "directory": "/home/acar/turtle/Turtle/vendor/lua",
+            "file": "/home/acar/turtle/Turtle/vendor/lua/src/lvm.c",
+            "command": "cc -MD -MP -m64 -fPIC -g -o /home/acar/turtle/Turtle/vendor/lua/bin-int/Debug-linux-x86_64/lua/lvm.o -MF /home/acar/turtle/Turtle/vendor/lua/bin-int/Debug-linux-x86_64/lua/lvm.d -c /home/acar/turtle/Turtle/vendor/lua/src/lvm.c"
+          }
+,
+          {
+            "directory": "/home/acar/turtle/Turtle/vendor/lua",
+            "file": "/home/acar/turtle/Turtle/vendor/lua/src/lzio.c",
+            "command": "cc -MD -MP -m64 -fPIC -g -o /home/acar/turtle/Turtle/vendor/lua/bin-int/Debug-linux-x86_64/lua/lzio.o -MF /home/acar/turtle/Turtle/vendor/lua/bin-int/Debug-linux-x86_64/lua/lzio.d -c /home/acar/turtle/Turtle/vendor/lua/src/lzio.c"
+          }
+,
+          {
+            "directory": "/home/acar/turtle/Turtle",
+            "file": "/home/acar/turtle/Turtle/src/Platform/Linux/LinuxPlatformUtils.cpp",
+            "command": "cc -MD -MP -D_CRT_SECURE_NO_WARNINGS -DTURT_DEBUG -I /home/acar/turtle/Turtle/src -I /home/acar/turtle/Turtle/vendor/spdlog/include -I /home/acar/turtle/Turtle/vendor/GLFW/include -I /home/acar/turtle/Turtle/vendor/Glad/include -I /home/acar/turtle/Turtle/vendor/imgui -I /home/acar/turtle/Turtle/vendor/glm -I /home/acar/turtle/Turtle/vendor/stb_image -I /home/acar/turtle/Turtle/vendor/yaml-cpp/include -I /home/acar/turtle/Turtle/vendor/entt/include -I /home/acar/turtle/Turtle/vendor/lua/src -I /home/acar/turtle/Turtle/vendor/miniaudio/include -I /home/acar/turtle/Turtle/vendor/portable-file-dialog -m64 -g -o /home/acar/turtle/bin-int/Debug-linux-x86_64/Turtle/LinuxPlatformUtils.o -MF /home/acar/turtle/bin-int/Debug-linux-x86_64/Turtle/LinuxPlatformUtils.d -c /home/acar/turtle/Turtle/src/Platform/Linux/LinuxPlatformUtils.cpp"
+          }
+,
+          {
+            "directory": "/home/acar/turtle/Turtle",
+            "file": "/home/acar/turtle/Turtle/src/Platform/OpenGL/OpenGLBuffer.cpp",
+            "command": "cc -MD -MP -D_CRT_SECURE_NO_WARNINGS -DTURT_DEBUG -I /home/acar/turtle/Turtle/src -I /home/acar/turtle/Turtle/vendor/spdlog/include -I /home/acar/turtle/Turtle/vendor/GLFW/include -I /home/acar/turtle/Turtle/vendor/Glad/include -I /home/acar/turtle/Turtle/vendor/imgui -I /home/acar/turtle/Turtle/vendor/glm -I /home/acar/turtle/Turtle/vendor/stb_image -I /home/acar/turtle/Turtle/vendor/yaml-cpp/include -I /home/acar/turtle/Turtle/vendor/entt/include -I /home/acar/turtle/Turtle/vendor/lua/src -I /home/acar/turtle/Turtle/vendor/miniaudio/include -I /home/acar/turtle/Turtle/vendor/portable-file-dialog -m64 -g -o /home/acar/turtle/bin-int/Debug-linux-x86_64/Turtle/OpenGLBuffer.o -MF /home/acar/turtle/bin-int/Debug-linux-x86_64/Turtle/OpenGLBuffer.d -c /home/acar/turtle/Turtle/src/Platform/OpenGL/OpenGLBuffer.cpp"
+          }
+,
+          {
+            "directory": "/home/acar/turtle/Turtle",
+            "file": "/home/acar/turtle/Turtle/src/Platform/OpenGL/OpenGLContext.cpp",
+            "command": "cc -MD -MP -D_CRT_SECURE_NO_WARNINGS -DTURT_DEBUG -I /home/acar/turtle/Turtle/src -I /home/acar/turtle/Turtle/vendor/spdlog/include -I /home/acar/turtle/Turtle/vendor/GLFW/include -I /home/acar/turtle/Turtle/vendor/Glad/include -I /home/acar/turtle/Turtle/vendor/imgui -I /home/acar/turtle/Turtle/vendor/glm -I /home/acar/turtle/Turtle/vendor/stb_image -I /home/acar/turtle/Turtle/vendor/yaml-cpp/include -I /home/acar/turtle/Turtle/vendor/entt/include -I /home/acar/turtle/Turtle/vendor/lua/src -I /home/acar/turtle/Turtle/vendor/miniaudio/include -I /home/acar/turtle/Turtle/vendor/portable-file-dialog -m64 -g -o /home/acar/turtle/bin-int/Debug-linux-x86_64/Turtle/OpenGLContext.o -MF /home/acar/turtle/bin-int/Debug-linux-x86_64/Turtle/OpenGLContext.d -c /home/acar/turtle/Turtle/src/Platform/OpenGL/OpenGLContext.cpp"
+          }
+,
+          {
+            "directory": "/home/acar/turtle/Turtle",
+            "file": "/home/acar/turtle/Turtle/src/Platform/OpenGL/OpenGLFramebuffer.cpp",
+            "command": "cc -MD -MP -D_CRT_SECURE_NO_WARNINGS -DTURT_DEBUG -I /home/acar/turtle/Turtle/src -I /home/acar/turtle/Turtle/vendor/spdlog/include -I /home/acar/turtle/Turtle/vendor/GLFW/include -I /home/acar/turtle/Turtle/vendor/Glad/include -I /home/acar/turtle/Turtle/vendor/imgui -I /home/acar/turtle/Turtle/vendor/glm -I /home/acar/turtle/Turtle/vendor/stb_image -I /home/acar/turtle/Turtle/vendor/yaml-cpp/include -I /home/acar/turtle/Turtle/vendor/entt/include -I /home/acar/turtle/Turtle/vendor/lua/src -I /home/acar/turtle/Turtle/vendor/miniaudio/include -I /home/acar/turtle/Turtle/vendor/portable-file-dialog -m64 -g -o /home/acar/turtle/bin-int/Debug-linux-x86_64/Turtle/OpenGLFramebuffer.o -MF /home/acar/turtle/bin-int/Debug-linux-x86_64/Turtle/OpenGLFramebuffer.d -c /home/acar/turtle/Turtle/src/Platform/OpenGL/OpenGLFramebuffer.cpp"
+          }
+,
+          {
+            "directory": "/home/acar/turtle/Turtle",
+            "file": "/home/acar/turtle/Turtle/src/Platform/OpenGL/OpenGLRendererAPI.cpp",
+            "command": "cc -MD -MP -D_CRT_SECURE_NO_WARNINGS -DTURT_DEBUG -I /home/acar/turtle/Turtle/src -I /home/acar/turtle/Turtle/vendor/spdlog/include -I /home/acar/turtle/Turtle/vendor/GLFW/include -I /home/acar/turtle/Turtle/vendor/Glad/include -I /home/acar/turtle/Turtle/vendor/imgui -I /home/acar/turtle/Turtle/vendor/glm -I /home/acar/turtle/Turtle/vendor/stb_image -I /home/acar/turtle/Turtle/vendor/yaml-cpp/include -I /home/acar/turtle/Turtle/vendor/entt/include -I /home/acar/turtle/Turtle/vendor/lua/src -I /home/acar/turtle/Turtle/vendor/miniaudio/include -I /home/acar/turtle/Turtle/vendor/portable-file-dialog -m64 -g -o /home/acar/turtle/bin-int/Debug-linux-x86_64/Turtle/OpenGLRendererAPI.o -MF /home/acar/turtle/bin-int/Debug-linux-x86_64/Turtle/OpenGLRendererAPI.d -c /home/acar/turtle/Turtle/src/Platform/OpenGL/OpenGLRendererAPI.cpp"
+          }
+,
+          {
+            "directory": "/home/acar/turtle/Turtle",
+            "file": "/home/acar/turtle/Turtle/src/Platform/OpenGL/OpenGLShader.cpp",
+            "command": "cc -MD -MP -D_CRT_SECURE_NO_WARNINGS -DTURT_DEBUG -I /home/acar/turtle/Turtle/src -I /home/acar/turtle/Turtle/vendor/spdlog/include -I /home/acar/turtle/Turtle/vendor/GLFW/include -I /home/acar/turtle/Turtle/vendor/Glad/include -I /home/acar/turtle/Turtle/vendor/imgui -I /home/acar/turtle/Turtle/vendor/glm -I /home/acar/turtle/Turtle/vendor/stb_image -I /home/acar/turtle/Turtle/vendor/yaml-cpp/include -I /home/acar/turtle/Turtle/vendor/entt/include -I /home/acar/turtle/Turtle/vendor/lua/src -I /home/acar/turtle/Turtle/vendor/miniaudio/include -I /home/acar/turtle/Turtle/vendor/portable-file-dialog -m64 -g -o /home/acar/turtle/bin-int/Debug-linux-x86_64/Turtle/OpenGLShader.o -MF /home/acar/turtle/bin-int/Debug-linux-x86_64/Turtle/OpenGLShader.d -c /home/acar/turtle/Turtle/src/Platform/OpenGL/OpenGLShader.cpp"
+          }
+,
+          {
+            "directory": "/home/acar/turtle/Turtle",
+            "file": "/home/acar/turtle/Turtle/src/Platform/OpenGL/OpenGLTexture.cpp",
+            "command": "cc -MD -MP -D_CRT_SECURE_NO_WARNINGS -DTURT_DEBUG -I /home/acar/turtle/Turtle/src -I /home/acar/turtle/Turtle/vendor/spdlog/include -I /home/acar/turtle/Turtle/vendor/GLFW/include -I /home/acar/turtle/Turtle/vendor/Glad/include -I /home/acar/turtle/Turtle/vendor/imgui -I /home/acar/turtle/Turtle/vendor/glm -I /home/acar/turtle/Turtle/vendor/stb_image -I /home/acar/turtle/Turtle/vendor/yaml-cpp/include -I /home/acar/turtle/Turtle/vendor/entt/include -I /home/acar/turtle/Turtle/vendor/lua/src -I /home/acar/turtle/Turtle/vendor/miniaudio/include -I /home/acar/turtle/Turtle/vendor/portable-file-dialog -m64 -g -o /home/acar/turtle/bin-int/Debug-linux-x86_64/Turtle/OpenGLTexture.o -MF /home/acar/turtle/bin-int/Debug-linux-x86_64/Turtle/OpenGLTexture.d -c /home/acar/turtle/Turtle/src/Platform/OpenGL/OpenGLTexture.cpp"
+          }
+,
+          {
+            "directory": "/home/acar/turtle/Turtle",
+            "file": "/home/acar/turtle/Turtle/src/Platform/OpenGL/OpenGLVertexArray.cpp",
+            "command": "cc -MD -MP -D_CRT_SECURE_NO_WARNINGS -DTURT_DEBUG -I /home/acar/turtle/Turtle/src -I /home/acar/turtle/Turtle/vendor/spdlog/include -I /home/acar/turtle/Turtle/vendor/GLFW/include -I /home/acar/turtle/Turtle/vendor/Glad/include -I /home/acar/turtle/Turtle/vendor/imgui -I /home/acar/turtle/Turtle/vendor/glm -I /home/acar/turtle/Turtle/vendor/stb_image -I /home/acar/turtle/Turtle/vendor/yaml-cpp/include -I /home/acar/turtle/Turtle/vendor/entt/include -I /home/acar/turtle/Turtle/vendor/lua/src -I /home/acar/turtle/Turtle/vendor/miniaudio/include -I /home/acar/turtle/Turtle/vendor/portable-file-dialog -m64 -g -o /home/acar/turtle/bin-int/Debug-linux-x86_64/Turtle/OpenGLVertexArray.o -MF /home/acar/turtle/bin-int/Debug-linux-x86_64/Turtle/OpenGLVertexArray.d -c /home/acar/turtle/Turtle/src/Platform/OpenGL/OpenGLVertexArray.cpp"
+          }
+,
+          {
+            "directory": "/home/acar/turtle/Turtle",
+            "file": "/home/acar/turtle/Turtle/src/Platform/Windows/WindowsInput.cpp",
+            "command": "cc -MD -MP -D_CRT_SECURE_NO_WARNINGS -DTURT_DEBUG -I /home/acar/turtle/Turtle/src -I /home/acar/turtle/Turtle/vendor/spdlog/include -I /home/acar/turtle/Turtle/vendor/GLFW/include -I /home/acar/turtle/Turtle/vendor/Glad/include -I /home/acar/turtle/Turtle/vendor/imgui -I /home/acar/turtle/Turtle/vendor/glm -I /home/acar/turtle/Turtle/vendor/stb_image -I /home/acar/turtle/Turtle/vendor/yaml-cpp/include -I /home/acar/turtle/Turtle/vendor/entt/include -I /home/acar/turtle/Turtle/vendor/lua/src -I /home/acar/turtle/Turtle/vendor/miniaudio/include -I /home/acar/turtle/Turtle/vendor/portable-file-dialog -m64 -g -o /home/acar/turtle/bin-int/Debug-linux-x86_64/Turtle/WindowsInput.o -MF /home/acar/turtle/bin-int/Debug-linux-x86_64/Turtle/WindowsInput.d -c /home/acar/turtle/Turtle/src/Platform/Windows/WindowsInput.cpp"
+          }
+,
+          {
+            "directory": "/home/acar/turtle/Turtle",
+            "file": "/home/acar/turtle/Turtle/src/Platform/Windows/WindowsPlatformUtils.cpp",
+            "command": "cc -MD -MP -D_CRT_SECURE_NO_WARNINGS -DTURT_DEBUG -I /home/acar/turtle/Turtle/src -I /home/acar/turtle/Turtle/vendor/spdlog/include -I /home/acar/turtle/Turtle/vendor/GLFW/include -I /home/acar/turtle/Turtle/vendor/Glad/include -I /home/acar/turtle/Turtle/vendor/imgui -I /home/acar/turtle/Turtle/vendor/glm -I /home/acar/turtle/Turtle/vendor/stb_image -I /home/acar/turtle/Turtle/vendor/yaml-cpp/include -I /home/acar/turtle/Turtle/vendor/entt/include -I /home/acar/turtle/Turtle/vendor/lua/src -I /home/acar/turtle/Turtle/vendor/miniaudio/include -I /home/acar/turtle/Turtle/vendor/portable-file-dialog -m64 -g -o /home/acar/turtle/bin-int/Debug-linux-x86_64/Turtle/WindowsPlatformUtils.o -MF /home/acar/turtle/bin-int/Debug-linux-x86_64/Turtle/WindowsPlatformUtils.d -c /home/acar/turtle/Turtle/src/Platform/Windows/WindowsPlatformUtils.cpp"
+          }
+,
+          {
+            "directory": "/home/acar/turtle/Turtle",
+            "file": "/home/acar/turtle/Turtle/src/Platform/Windows/WindowsWindow.cpp",
+            "command": "cc -MD -MP -D_CRT_SECURE_NO_WARNINGS -DTURT_DEBUG -I /home/acar/turtle/Turtle/src -I /home/acar/turtle/Turtle/vendor/spdlog/include -I /home/acar/turtle/Turtle/vendor/GLFW/include -I /home/acar/turtle/Turtle/vendor/Glad/include -I /home/acar/turtle/Turtle/vendor/imgui -I /home/acar/turtle/Turtle/vendor/glm -I /home/acar/turtle/Turtle/vendor/stb_image -I /home/acar/turtle/Turtle/vendor/yaml-cpp/include -I /home/acar/turtle/Turtle/vendor/entt/include -I /home/acar/turtle/Turtle/vendor/lua/src -I /home/acar/turtle/Turtle/vendor/miniaudio/include -I /home/acar/turtle/Turtle/vendor/portable-file-dialog -m64 -g -o /home/acar/turtle/bin-int/Debug-linux-x86_64/Turtle/WindowsWindow.o -MF /home/acar/turtle/bin-int/Debug-linux-x86_64/Turtle/WindowsWindow.d -c /home/acar/turtle/Turtle/src/Platform/Windows/WindowsWindow.cpp"
+          }
+,
+          {
+            "directory": "/home/acar/turtle/Turtle",
+            "file": "/home/acar/turtle/Turtle/src/Turtle/Audio/AudioDecoder.cpp",
+            "command": "cc -MD -MP -D_CRT_SECURE_NO_WARNINGS -DTURT_DEBUG -I /home/acar/turtle/Turtle/src -I /home/acar/turtle/Turtle/vendor/spdlog/include -I /home/acar/turtle/Turtle/vendor/GLFW/include -I /home/acar/turtle/Turtle/vendor/Glad/include -I /home/acar/turtle/Turtle/vendor/imgui -I /home/acar/turtle/Turtle/vendor/glm -I /home/acar/turtle/Turtle/vendor/stb_image -I /home/acar/turtle/Turtle/vendor/yaml-cpp/include -I /home/acar/turtle/Turtle/vendor/entt/include -I /home/acar/turtle/Turtle/vendor/lua/src -I /home/acar/turtle/Turtle/vendor/miniaudio/include -I /home/acar/turtle/Turtle/vendor/portable-file-dialog -m64 -g -o /home/acar/turtle/bin-int/Debug-linux-x86_64/Turtle/AudioDecoder.o -MF /home/acar/turtle/bin-int/Debug-linux-x86_64/Turtle/AudioDecoder.d -c /home/acar/turtle/Turtle/src/Turtle/Audio/AudioDecoder.cpp"
+          }
+,
+          {
+            "directory": "/home/acar/turtle/Turtle",
+            "file": "/home/acar/turtle/Turtle/src/Turtle/Audio/AudioPlayer.cpp",
+            "command": "cc -MD -MP -D_CRT_SECURE_NO_WARNINGS -DTURT_DEBUG -I /home/acar/turtle/Turtle/src -I /home/acar/turtle/Turtle/vendor/spdlog/include -I /home/acar/turtle/Turtle/vendor/GLFW/include -I /home/acar/turtle/Turtle/vendor/Glad/include -I /home/acar/turtle/Turtle/vendor/imgui -I /home/acar/turtle/Turtle/vendor/glm -I /home/acar/turtle/Turtle/vendor/stb_image -I /home/acar/turtle/Turtle/vendor/yaml-cpp/include -I /home/acar/turtle/Turtle/vendor/entt/include -I /home/acar/turtle/Turtle/vendor/lua/src -I /home/acar/turtle/Turtle/vendor/miniaudio/include -I /home/acar/turtle/Turtle/vendor/portable-file-dialog -m64 -g -o /home/acar/turtle/bin-int/Debug-linux-x86_64/Turtle/AudioPlayer.o -MF /home/acar/turtle/bin-int/Debug-linux-x86_64/Turtle/AudioPlayer.d -c /home/acar/turtle/Turtle/src/Turtle/Audio/AudioPlayer.cpp"
+          }
+,
+          {
+            "directory": "/home/acar/turtle/Turtle",
+            "file": "/home/acar/turtle/Turtle/src/Turtle/Core/Application.cpp",
+            "command": "cc -MD -MP -D_CRT_SECURE_NO_WARNINGS -DTURT_DEBUG -I /home/acar/turtle/Turtle/src -I /home/acar/turtle/Turtle/vendor/spdlog/include -I /home/acar/turtle/Turtle/vendor/GLFW/include -I /home/acar/turtle/Turtle/vendor/Glad/include -I /home/acar/turtle/Turtle/vendor/imgui -I /home/acar/turtle/Turtle/vendor/glm -I /home/acar/turtle/Turtle/vendor/stb_image -I /home/acar/turtle/Turtle/vendor/yaml-cpp/include -I /home/acar/turtle/Turtle/vendor/entt/include -I /home/acar/turtle/Turtle/vendor/lua/src -I /home/acar/turtle/Turtle/vendor/miniaudio/include -I /home/acar/turtle/Turtle/vendor/portable-file-dialog -m64 -g -o /home/acar/turtle/bin-int/Debug-linux-x86_64/Turtle/Application.o -MF /home/acar/turtle/bin-int/Debug-linux-x86_64/Turtle/Application.d -c /home/acar/turtle/Turtle/src/Turtle/Core/Application.cpp"
+          }
+,
+          {
+            "directory": "/home/acar/turtle/Turtle",
+            "file": "/home/acar/turtle/Turtle/src/Turtle/Core/AssetManager.cpp",
+            "command": "cc -MD -MP -D_CRT_SECURE_NO_WARNINGS -DTURT_DEBUG -I /home/acar/turtle/Turtle/src -I /home/acar/turtle/Turtle/vendor/spdlog/include -I /home/acar/turtle/Turtle/vendor/GLFW/include -I /home/acar/turtle/Turtle/vendor/Glad/include -I /home/acar/turtle/Turtle/vendor/imgui -I /home/acar/turtle/Turtle/vendor/glm -I /home/acar/turtle/Turtle/vendor/stb_image -I /home/acar/turtle/Turtle/vendor/yaml-cpp/include -I /home/acar/turtle/Turtle/vendor/entt/include -I /home/acar/turtle/Turtle/vendor/lua/src -I /home/acar/turtle/Turtle/vendor/miniaudio/include -I /home/acar/turtle/Turtle/vendor/portable-file-dialog -m64 -g -o /home/acar/turtle/bin-int/Debug-linux-x86_64/Turtle/AssetManager.o -MF /home/acar/turtle/bin-int/Debug-linux-x86_64/Turtle/AssetManager.d -c /home/acar/turtle/Turtle/src/Turtle/Core/AssetManager.cpp"
+          }
+,
+          {
+            "directory": "/home/acar/turtle/Turtle",
+            "file": "/home/acar/turtle/Turtle/src/Turtle/Core/Hash.cpp",
+            "command": "cc -MD -MP -D_CRT_SECURE_NO_WARNINGS -DTURT_DEBUG -I /home/acar/turtle/Turtle/src -I /home/acar/turtle/Turtle/vendor/spdlog/include -I /home/acar/turtle/Turtle/vendor/GLFW/include -I /home/acar/turtle/Turtle/vendor/Glad/include -I /home/acar/turtle/Turtle/vendor/imgui -I /home/acar/turtle/Turtle/vendor/glm -I /home/acar/turtle/Turtle/vendor/stb_image -I /home/acar/turtle/Turtle/vendor/yaml-cpp/include -I /home/acar/turtle/Turtle/vendor/entt/include -I /home/acar/turtle/Turtle/vendor/lua/src -I /home/acar/turtle/Turtle/vendor/miniaudio/include -I /home/acar/turtle/Turtle/vendor/portable-file-dialog -m64 -g -o /home/acar/turtle/bin-int/Debug-linux-x86_64/Turtle/Hash.o -MF /home/acar/turtle/bin-int/Debug-linux-x86_64/Turtle/Hash.d -c /home/acar/turtle/Turtle/src/Turtle/Core/Hash.cpp"
+          }
+,
+          {
+            "directory": "/home/acar/turtle/Turtle",
+            "file": "/home/acar/turtle/Turtle/src/Turtle/Core/Layer.cpp",
+            "command": "cc -MD -MP -D_CRT_SECURE_NO_WARNINGS -DTURT_DEBUG -I /home/acar/turtle/Turtle/src -I /home/acar/turtle/Turtle/vendor/spdlog/include -I /home/acar/turtle/Turtle/vendor/GLFW/include -I /home/acar/turtle/Turtle/vendor/Glad/include -I /home/acar/turtle/Turtle/vendor/imgui -I /home/acar/turtle/Turtle/vendor/glm -I /home/acar/turtle/Turtle/vendor/stb_image -I /home/acar/turtle/Turtle/vendor/yaml-cpp/include -I /home/acar/turtle/Turtle/vendor/entt/include -I /home/acar/turtle/Turtle/vendor/lua/src -I /home/acar/turtle/Turtle/vendor/miniaudio/include -I /home/acar/turtle/Turtle/vendor/portable-file-dialog -m64 -g -o /home/acar/turtle/bin-int/Debug-linux-x86_64/Turtle/Layer.o -MF /home/acar/turtle/bin-int/Debug-linux-x86_64/Turtle/Layer.d -c /home/acar/turtle/Turtle/src/Turtle/Core/Layer.cpp"
+          }
+,
+          {
+            "directory": "/home/acar/turtle/Turtle",
+            "file": "/home/acar/turtle/Turtle/src/Turtle/Core/LayerStack.cpp",
+            "command": "cc -MD -MP -D_CRT_SECURE_NO_WARNINGS -DTURT_DEBUG -I /home/acar/turtle/Turtle/src -I /home/acar/turtle/Turtle/vendor/spdlog/include -I /home/acar/turtle/Turtle/vendor/GLFW/include -I /home/acar/turtle/Turtle/vendor/Glad/include -I /home/acar/turtle/Turtle/vendor/imgui -I /home/acar/turtle/Turtle/vendor/glm -I /home/acar/turtle/Turtle/vendor/stb_image -I /home/acar/turtle/Turtle/vendor/yaml-cpp/include -I /home/acar/turtle/Turtle/vendor/entt/include -I /home/acar/turtle/Turtle/vendor/lua/src -I /home/acar/turtle/Turtle/vendor/miniaudio/include -I /home/acar/turtle/Turtle/vendor/portable-file-dialog -m64 -g -o /home/acar/turtle/bin-int/Debug-linux-x86_64/Turtle/LayerStack.o -MF /home/acar/turtle/bin-int/Debug-linux-x86_64/Turtle/LayerStack.d -c /home/acar/turtle/Turtle/src/Turtle/Core/LayerStack.cpp"
+          }
+,
+          {
+            "directory": "/home/acar/turtle/Turtle",
+            "file": "/home/acar/turtle/Turtle/src/Turtle/Core/Log.cpp",
+            "command": "cc -MD -MP -D_CRT_SECURE_NO_WARNINGS -DTURT_DEBUG -I /home/acar/turtle/Turtle/src -I /home/acar/turtle/Turtle/vendor/spdlog/include -I /home/acar/turtle/Turtle/vendor/GLFW/include -I /home/acar/turtle/Turtle/vendor/Glad/include -I /home/acar/turtle/Turtle/vendor/imgui -I /home/acar/turtle/Turtle/vendor/glm -I /home/acar/turtle/Turtle/vendor/stb_image -I /home/acar/turtle/Turtle/vendor/yaml-cpp/include -I /home/acar/turtle/Turtle/vendor/entt/include -I /home/acar/turtle/Turtle/vendor/lua/src -I /home/acar/turtle/Turtle/vendor/miniaudio/include -I /home/acar/turtle/Turtle/vendor/portable-file-dialog -m64 -g -o /home/acar/turtle/bin-int/Debug-linux-x86_64/Turtle/Log.o -MF /home/acar/turtle/bin-int/Debug-linux-x86_64/Turtle/Log.d -c /home/acar/turtle/Turtle/src/Turtle/Core/Log.cpp"
+          }
+,
+          {
+            "directory": "/home/acar/turtle/Turtle",
+            "file": "/home/acar/turtle/Turtle/src/Turtle/Core/Random.cpp",
+            "command": "cc -MD -MP -D_CRT_SECURE_NO_WARNINGS -DTURT_DEBUG -I /home/acar/turtle/Turtle/src -I /home/acar/turtle/Turtle/vendor/spdlog/include -I /home/acar/turtle/Turtle/vendor/GLFW/include -I /home/acar/turtle/Turtle/vendor/Glad/include -I /home/acar/turtle/Turtle/vendor/imgui -I /home/acar/turtle/Turtle/vendor/glm -I /home/acar/turtle/Turtle/vendor/stb_image -I /home/acar/turtle/Turtle/vendor/yaml-cpp/include -I /home/acar/turtle/Turtle/vendor/entt/include -I /home/acar/turtle/Turtle/vendor/lua/src -I /home/acar/turtle/Turtle/vendor/miniaudio/include -I /home/acar/turtle/Turtle/vendor/portable-file-dialog -m64 -g -o /home/acar/turtle/bin-int/Debug-linux-x86_64/Turtle/Random.o -MF /home/acar/turtle/bin-int/Debug-linux-x86_64/Turtle/Random.d -c /home/acar/turtle/Turtle/src/Turtle/Core/Random.cpp"
+          }
+,
+          {
+            "directory": "/home/acar/turtle/Turtle",
+            "file": "/home/acar/turtle/Turtle/src/Turtle/Core/Window.cpp",
+            "command": "cc -MD -MP -D_CRT_SECURE_NO_WARNINGS -DTURT_DEBUG -I /home/acar/turtle/Turtle/src -I /home/acar/turtle/Turtle/vendor/spdlog/include -I /home/acar/turtle/Turtle/vendor/GLFW/include -I /home/acar/turtle/Turtle/vendor/Glad/include -I /home/acar/turtle/Turtle/vendor/imgui -I /home/acar/turtle/Turtle/vendor/glm -I /home/acar/turtle/Turtle/vendor/stb_image -I /home/acar/turtle/Turtle/vendor/yaml-cpp/include -I /home/acar/turtle/Turtle/vendor/entt/include -I /home/acar/turtle/Turtle/vendor/lua/src -I /home/acar/turtle/Turtle/vendor/miniaudio/include -I /home/acar/turtle/Turtle/vendor/portable-file-dialog -m64 -g -o /home/acar/turtle/bin-int/Debug-linux-x86_64/Turtle/Window.o -MF /home/acar/turtle/bin-int/Debug-linux-x86_64/Turtle/Window.d -c /home/acar/turtle/Turtle/src/Turtle/Core/Window.cpp"
+          }
+,
+          {
+            "directory": "/home/acar/turtle/Turtle",
+            "file": "/home/acar/turtle/Turtle/src/Turtle/ImGui/ImGuiBuild.cpp",
+            "command": "cc -MD -MP -D_CRT_SECURE_NO_WARNINGS -DTURT_DEBUG -I /home/acar/turtle/Turtle/src -I /home/acar/turtle/Turtle/vendor/spdlog/include -I /home/acar/turtle/Turtle/vendor/GLFW/include -I /home/acar/turtle/Turtle/vendor/Glad/include -I /home/acar/turtle/Turtle/vendor/imgui -I /home/acar/turtle/Turtle/vendor/glm -I /home/acar/turtle/Turtle/vendor/stb_image -I /home/acar/turtle/Turtle/vendor/yaml-cpp/include -I /home/acar/turtle/Turtle/vendor/entt/include -I /home/acar/turtle/Turtle/vendor/lua/src -I /home/acar/turtle/Turtle/vendor/miniaudio/include -I /home/acar/turtle/Turtle/vendor/portable-file-dialog -m64 -g -o /home/acar/turtle/bin-int/Debug-linux-x86_64/Turtle/ImGuiBuild.o -MF /home/acar/turtle/bin-int/Debug-linux-x86_64/Turtle/ImGuiBuild.d -c /home/acar/turtle/Turtle/src/Turtle/ImGui/ImGuiBuild.cpp"
+          }
+,
+          {
+            "directory": "/home/acar/turtle/Turtle",
+            "file": "/home/acar/turtle/Turtle/src/Turtle/ImGui/ImGuiLayer.cpp",
+            "command": "cc -MD -MP -D_CRT_SECURE_NO_WARNINGS -DTURT_DEBUG -I /home/acar/turtle/Turtle/src -I /home/acar/turtle/Turtle/vendor/spdlog/include -I /home/acar/turtle/Turtle/vendor/GLFW/include -I /home/acar/turtle/Turtle/vendor/Glad/include -I /home/acar/turtle/Turtle/vendor/imgui -I /home/acar/turtle/Turtle/vendor/glm -I /home/acar/turtle/Turtle/vendor/stb_image -I /home/acar/turtle/Turtle/vendor/yaml-cpp/include -I /home/acar/turtle/Turtle/vendor/entt/include -I /home/acar/turtle/Turtle/vendor/lua/src -I /home/acar/turtle/Turtle/vendor/miniaudio/include -I /home/acar/turtle/Turtle/vendor/portable-file-dialog -m64 -g -o /home/acar/turtle/bin-int/Debug-linux-x86_64/Turtle/ImGuiLayer.o -MF /home/acar/turtle/bin-int/Debug-linux-x86_64/Turtle/ImGuiLayer.d -c /home/acar/turtle/Turtle/src/Turtle/ImGui/ImGuiLayer.cpp"
+          }
+,
+          {
+            "directory": "/home/acar/turtle/Turtle",
+            "file": "/home/acar/turtle/Turtle/src/Turtle/Renderer/Buffer.cpp",
+            "command": "cc -MD -MP -D_CRT_SECURE_NO_WARNINGS -DTURT_DEBUG -I /home/acar/turtle/Turtle/src -I /home/acar/turtle/Turtle/vendor/spdlog/include -I /home/acar/turtle/Turtle/vendor/GLFW/include -I /home/acar/turtle/Turtle/vendor/Glad/include -I /home/acar/turtle/Turtle/vendor/imgui -I /home/acar/turtle/Turtle/vendor/glm -I /home/acar/turtle/Turtle/vendor/stb_image -I /home/acar/turtle/Turtle/vendor/yaml-cpp/include -I /home/acar/turtle/Turtle/vendor/entt/include -I /home/acar/turtle/Turtle/vendor/lua/src -I /home/acar/turtle/Turtle/vendor/miniaudio/include -I /home/acar/turtle/Turtle/vendor/portable-file-dialog -m64 -g -o /home/acar/turtle/bin-int/Debug-linux-x86_64/Turtle/Buffer.o -MF /home/acar/turtle/bin-int/Debug-linux-x86_64/Turtle/Buffer.d -c /home/acar/turtle/Turtle/src/Turtle/Renderer/Buffer.cpp"
+          }
+,
+          {
+            "directory": "/home/acar/turtle/Turtle",
+            "file": "/home/acar/turtle/Turtle/src/Turtle/Renderer/Framebuffer.cpp",
+            "command": "cc -MD -MP -D_CRT_SECURE_NO_WARNINGS -DTURT_DEBUG -I /home/acar/turtle/Turtle/src -I /home/acar/turtle/Turtle/vendor/spdlog/include -I /home/acar/turtle/Turtle/vendor/GLFW/include -I /home/acar/turtle/Turtle/vendor/Glad/include -I /home/acar/turtle/Turtle/vendor/imgui -I /home/acar/turtle/Turtle/vendor/glm -I /home/acar/turtle/Turtle/vendor/stb_image -I /home/acar/turtle/Turtle/vendor/yaml-cpp/include -I /home/acar/turtle/Turtle/vendor/entt/include -I /home/acar/turtle/Turtle/vendor/lua/src -I /home/acar/turtle/Turtle/vendor/miniaudio/include -I /home/acar/turtle/Turtle/vendor/portable-file-dialog -m64 -g -o /home/acar/turtle/bin-int/Debug-linux-x86_64/Turtle/Framebuffer.o -MF /home/acar/turtle/bin-int/Debug-linux-x86_64/Turtle/Framebuffer.d -c /home/acar/turtle/Turtle/src/Turtle/Renderer/Framebuffer.cpp"
+          }
+,
+          {
+            "directory": "/home/acar/turtle/Turtle",
+            "file": "/home/acar/turtle/Turtle/src/Turtle/Renderer/OrthographicCamera.cpp",
+            "command": "cc -MD -MP -D_CRT_SECURE_NO_WARNINGS -DTURT_DEBUG -I /home/acar/turtle/Turtle/src -I /home/acar/turtle/Turtle/vendor/spdlog/include -I /home/acar/turtle/Turtle/vendor/GLFW/include -I /home/acar/turtle/Turtle/vendor/Glad/include -I /home/acar/turtle/Turtle/vendor/imgui -I /home/acar/turtle/Turtle/vendor/glm -I /home/acar/turtle/Turtle/vendor/stb_image -I /home/acar/turtle/Turtle/vendor/yaml-cpp/include -I /home/acar/turtle/Turtle/vendor/entt/include -I /home/acar/turtle/Turtle/vendor/lua/src -I /home/acar/turtle/Turtle/vendor/miniaudio/include -I /home/acar/turtle/Turtle/vendor/portable-file-dialog -m64 -g -o /home/acar/turtle/bin-int/Debug-linux-x86_64/Turtle/OrthographicCamera.o -MF /home/acar/turtle/bin-int/Debug-linux-x86_64/Turtle/OrthographicCamera.d -c /home/acar/turtle/Turtle/src/Turtle/Renderer/OrthographicCamera.cpp"
+          }
+,
+          {
+            "directory": "/home/acar/turtle/Turtle",
+            "file": "/home/acar/turtle/Turtle/src/Turtle/Renderer/OrthographicCameraController.cpp",
+            "command": "cc -MD -MP -D_CRT_SECURE_NO_WARNINGS -DTURT_DEBUG -I /home/acar/turtle/Turtle/src -I /home/acar/turtle/Turtle/vendor/spdlog/include -I /home/acar/turtle/Turtle/vendor/GLFW/include -I /home/acar/turtle/Turtle/vendor/Glad/include -I /home/acar/turtle/Turtle/vendor/imgui -I /home/acar/turtle/Turtle/vendor/glm -I /home/acar/turtle/Turtle/vendor/stb_image -I /home/acar/turtle/Turtle/vendor/yaml-cpp/include -I /home/acar/turtle/Turtle/vendor/entt/include -I /home/acar/turtle/Turtle/vendor/lua/src -I /home/acar/turtle/Turtle/vendor/miniaudio/include -I /home/acar/turtle/Turtle/vendor/portable-file-dialog -m64 -g -o /home/acar/turtle/bin-int/Debug-linux-x86_64/Turtle/OrthographicCameraController.o -MF /home/acar/turtle/bin-int/Debug-linux-x86_64/Turtle/OrthographicCameraController.d -c /home/acar/turtle/Turtle/src/Turtle/Renderer/OrthographicCameraController.cpp"
+          }
+,
+          {
+            "directory": "/home/acar/turtle/Turtle",
+            "file": "/home/acar/turtle/Turtle/src/Turtle/Renderer/ParticleSpawner.cpp",
+            "command": "cc -MD -MP -D_CRT_SECURE_NO_WARNINGS -DTURT_DEBUG -I /home/acar/turtle/Turtle/src -I /home/acar/turtle/Turtle/vendor/spdlog/include -I /home/acar/turtle/Turtle/vendor/GLFW/include -I /home/acar/turtle/Turtle/vendor/Glad/include -I /home/acar/turtle/Turtle/vendor/imgui -I /home/acar/turtle/Turtle/vendor/glm -I /home/acar/turtle/Turtle/vendor/stb_image -I /home/acar/turtle/Turtle/vendor/yaml-cpp/include -I /home/acar/turtle/Turtle/vendor/entt/include -I /home/acar/turtle/Turtle/vendor/lua/src -I /home/acar/turtle/Turtle/vendor/miniaudio/include -I /home/acar/turtle/Turtle/vendor/portable-file-dialog -m64 -g -o /home/acar/turtle/bin-int/Debug-linux-x86_64/Turtle/ParticleSpawner.o -MF /home/acar/turtle/bin-int/Debug-linux-x86_64/Turtle/ParticleSpawner.d -c /home/acar/turtle/Turtle/src/Turtle/Renderer/ParticleSpawner.cpp"
+          }
+,
+          {
+            "directory": "/home/acar/turtle/Turtle",
+            "file": "/home/acar/turtle/Turtle/src/Turtle/Renderer/RenderCommand.cpp",
+            "command": "cc -MD -MP -D_CRT_SECURE_NO_WARNINGS -DTURT_DEBUG -I /home/acar/turtle/Turtle/src -I /home/acar/turtle/Turtle/vendor/spdlog/include -I /home/acar/turtle/Turtle/vendor/GLFW/include -I /home/acar/turtle/Turtle/vendor/Glad/include -I /home/acar/turtle/Turtle/vendor/imgui -I /home/acar/turtle/Turtle/vendor/glm -I /home/acar/turtle/Turtle/vendor/stb_image -I /home/acar/turtle/Turtle/vendor/yaml-cpp/include -I /home/acar/turtle/Turtle/vendor/entt/include -I /home/acar/turtle/Turtle/vendor/lua/src -I /home/acar/turtle/Turtle/vendor/miniaudio/include -I /home/acar/turtle/Turtle/vendor/portable-file-dialog -m64 -g -o /home/acar/turtle/bin-int/Debug-linux-x86_64/Turtle/RenderCommand.o -MF /home/acar/turtle/bin-int/Debug-linux-x86_64/Turtle/RenderCommand.d -c /home/acar/turtle/Turtle/src/Turtle/Renderer/RenderCommand.cpp"
+          }
+,
+          {
+            "directory": "/home/acar/turtle/Turtle",
+            "file": "/home/acar/turtle/Turtle/src/Turtle/Renderer/Renderer.cpp",
+            "command": "cc -MD -MP -D_CRT_SECURE_NO_WARNINGS -DTURT_DEBUG -I /home/acar/turtle/Turtle/src -I /home/acar/turtle/Turtle/vendor/spdlog/include -I /home/acar/turtle/Turtle/vendor/GLFW/include -I /home/acar/turtle/Turtle/vendor/Glad/include -I /home/acar/turtle/Turtle/vendor/imgui -I /home/acar/turtle/Turtle/vendor/glm -I /home/acar/turtle/Turtle/vendor/stb_image -I /home/acar/turtle/Turtle/vendor/yaml-cpp/include -I /home/acar/turtle/Turtle/vendor/entt/include -I /home/acar/turtle/Turtle/vendor/lua/src -I /home/acar/turtle/Turtle/vendor/miniaudio/include -I /home/acar/turtle/Turtle/vendor/portable-file-dialog -m64 -g -o /home/acar/turtle/bin-int/Debug-linux-x86_64/Turtle/Renderer.o -MF /home/acar/turtle/bin-int/Debug-linux-x86_64/Turtle/Renderer.d -c /home/acar/turtle/Turtle/src/Turtle/Renderer/Renderer.cpp"
+          }
+,
+          {
+            "directory": "/home/acar/turtle/Turtle",
+            "file": "/home/acar/turtle/Turtle/src/Turtle/Renderer/Renderer2D.cpp",
+            "command": "cc -MD -MP -D_CRT_SECURE_NO_WARNINGS -DTURT_DEBUG -I /home/acar/turtle/Turtle/src -I /home/acar/turtle/Turtle/vendor/spdlog/include -I /home/acar/turtle/Turtle/vendor/GLFW/include -I /home/acar/turtle/Turtle/vendor/Glad/include -I /home/acar/turtle/Turtle/vendor/imgui -I /home/acar/turtle/Turtle/vendor/glm -I /home/acar/turtle/Turtle/vendor/stb_image -I /home/acar/turtle/Turtle/vendor/yaml-cpp/include -I /home/acar/turtle/Turtle/vendor/entt/include -I /home/acar/turtle/Turtle/vendor/lua/src -I /home/acar/turtle/Turtle/vendor/miniaudio/include -I /home/acar/turtle/Turtle/vendor/portable-file-dialog -m64 -g -o /home/acar/turtle/bin-int/Debug-linux-x86_64/Turtle/Renderer2D.o -MF /home/acar/turtle/bin-int/Debug-linux-x86_64/Turtle/Renderer2D.d -c /home/acar/turtle/Turtle/src/Turtle/Renderer/Renderer2D.cpp"
+          }
+,
+          {
+            "directory": "/home/acar/turtle/Turtle",
+            "file": "/home/acar/turtle/Turtle/src/Turtle/Renderer/RendererAPI.cpp",
+            "command": "cc -MD -MP -D_CRT_SECURE_NO_WARNINGS -DTURT_DEBUG -I /home/acar/turtle/Turtle/src -I /home/acar/turtle/Turtle/vendor/spdlog/include -I /home/acar/turtle/Turtle/vendor/GLFW/include -I /home/acar/turtle/Turtle/vendor/Glad/include -I /home/acar/turtle/Turtle/vendor/imgui -I /home/acar/turtle/Turtle/vendor/glm -I /home/acar/turtle/Turtle/vendor/stb_image -I /home/acar/turtle/Turtle/vendor/yaml-cpp/include -I /home/acar/turtle/Turtle/vendor/entt/include -I /home/acar/turtle/Turtle/vendor/lua/src -I /home/acar/turtle/Turtle/vendor/miniaudio/include -I /home/acar/turtle/Turtle/vendor/portable-file-dialog -m64 -g -o /home/acar/turtle/bin-int/Debug-linux-x86_64/Turtle/RendererAPI.o -MF /home/acar/turtle/bin-int/Debug-linux-x86_64/Turtle/RendererAPI.d -c /home/acar/turtle/Turtle/src/Turtle/Renderer/RendererAPI.cpp"
+          }
+,
+          {
+            "directory": "/home/acar/turtle/Turtle",
+            "file": "/home/acar/turtle/Turtle/src/Turtle/Renderer/Shader.cpp",
+            "command": "cc -MD -MP -D_CRT_SECURE_NO_WARNINGS -DTURT_DEBUG -I /home/acar/turtle/Turtle/src -I /home/acar/turtle/Turtle/vendor/spdlog/include -I /home/acar/turtle/Turtle/vendor/GLFW/include -I /home/acar/turtle/Turtle/vendor/Glad/include -I /home/acar/turtle/Turtle/vendor/imgui -I /home/acar/turtle/Turtle/vendor/glm -I /home/acar/turtle/Turtle/vendor/stb_image -I /home/acar/turtle/Turtle/vendor/yaml-cpp/include -I /home/acar/turtle/Turtle/vendor/entt/include -I /home/acar/turtle/Turtle/vendor/lua/src -I /home/acar/turtle/Turtle/vendor/miniaudio/include -I /home/acar/turtle/Turtle/vendor/portable-file-dialog -m64 -g -o /home/acar/turtle/bin-int/Debug-linux-x86_64/Turtle/Shader.o -MF /home/acar/turtle/bin-int/Debug-linux-x86_64/Turtle/Shader.d -c /home/acar/turtle/Turtle/src/Turtle/Renderer/Shader.cpp"
+          }
+,
+          {
+            "directory": "/home/acar/turtle/Turtle",
+            "file": "/home/acar/turtle/Turtle/src/Turtle/Renderer/SubTexture2D.cpp",
+            "command": "cc -MD -MP -D_CRT_SECURE_NO_WARNINGS -DTURT_DEBUG -I /home/acar/turtle/Turtle/src -I /home/acar/turtle/Turtle/vendor/spdlog/include -I /home/acar/turtle/Turtle/vendor/GLFW/include -I /home/acar/turtle/Turtle/vendor/Glad/include -I /home/acar/turtle/Turtle/vendor/imgui -I /home/acar/turtle/Turtle/vendor/glm -I /home/acar/turtle/Turtle/vendor/stb_image -I /home/acar/turtle/Turtle/vendor/yaml-cpp/include -I /home/acar/turtle/Turtle/vendor/entt/include -I /home/acar/turtle/Turtle/vendor/lua/src -I /home/acar/turtle/Turtle/vendor/miniaudio/include -I /home/acar/turtle/Turtle/vendor/portable-file-dialog -m64 -g -o /home/acar/turtle/bin-int/Debug-linux-x86_64/Turtle/SubTexture2D.o -MF /home/acar/turtle/bin-int/Debug-linux-x86_64/Turtle/SubTexture2D.d -c /home/acar/turtle/Turtle/src/Turtle/Renderer/SubTexture2D.cpp"
+          }
+,
+          {
+            "directory": "/home/acar/turtle/Turtle",
+            "file": "/home/acar/turtle/Turtle/src/Turtle/Renderer/Texture.cpp",
+            "command": "cc -MD -MP -D_CRT_SECURE_NO_WARNINGS -DTURT_DEBUG -I /home/acar/turtle/Turtle/src -I /home/acar/turtle/Turtle/vendor/spdlog/include -I /home/acar/turtle/Turtle/vendor/GLFW/include -I /home/acar/turtle/Turtle/vendor/Glad/include -I /home/acar/turtle/Turtle/vendor/imgui -I /home/acar/turtle/Turtle/vendor/glm -I /home/acar/turtle/Turtle/vendor/stb_image -I /home/acar/turtle/Turtle/vendor/yaml-cpp/include -I /home/acar/turtle/Turtle/vendor/entt/include -I /home/acar/turtle/Turtle/vendor/lua/src -I /home/acar/turtle/Turtle/vendor/miniaudio/include -I /home/acar/turtle/Turtle/vendor/portable-file-dialog -m64 -g -o /home/acar/turtle/bin-int/Debug-linux-x86_64/Turtle/Texture.o -MF /home/acar/turtle/bin-int/Debug-linux-x86_64/Turtle/Texture.d -c /home/acar/turtle/Turtle/src/Turtle/Renderer/Texture.cpp"
+          }
+,
+          {
+            "directory": "/home/acar/turtle/Turtle",
+            "file": "/home/acar/turtle/Turtle/src/Turtle/Renderer/VertexArray.cpp",
+            "command": "cc -MD -MP -D_CRT_SECURE_NO_WARNINGS -DTURT_DEBUG -I /home/acar/turtle/Turtle/src -I /home/acar/turtle/Turtle/vendor/spdlog/include -I /home/acar/turtle/Turtle/vendor/GLFW/include -I /home/acar/turtle/Turtle/vendor/Glad/include -I /home/acar/turtle/Turtle/vendor/imgui -I /home/acar/turtle/Turtle/vendor/glm -I /home/acar/turtle/Turtle/vendor/stb_image -I /home/acar/turtle/Turtle/vendor/yaml-cpp/include -I /home/acar/turtle/Turtle/vendor/entt/include -I /home/acar/turtle/Turtle/vendor/lua/src -I /home/acar/turtle/Turtle/vendor/miniaudio/include -I /home/acar/turtle/Turtle/vendor/portable-file-dialog -m64 -g -o /home/acar/turtle/bin-int/Debug-linux-x86_64/Turtle/VertexArray.o -MF /home/acar/turtle/bin-int/Debug-linux-x86_64/Turtle/VertexArray.d -c /home/acar/turtle/Turtle/src/Turtle/Renderer/VertexArray.cpp"
+          }
+,
+          {
+            "directory": "/home/acar/turtle/Turtle",
+            "file": "/home/acar/turtle/Turtle/src/Turtle/Scene/ComponentConnections.cpp",
+            "command": "cc -MD -MP -D_CRT_SECURE_NO_WARNINGS -DTURT_DEBUG -I /home/acar/turtle/Turtle/src -I /home/acar/turtle/Turtle/vendor/spdlog/include -I /home/acar/turtle/Turtle/vendor/GLFW/include -I /home/acar/turtle/Turtle/vendor/Glad/include -I /home/acar/turtle/Turtle/vendor/imgui -I /home/acar/turtle/Turtle/vendor/glm -I /home/acar/turtle/Turtle/vendor/stb_image -I /home/acar/turtle/Turtle/vendor/yaml-cpp/include -I /home/acar/turtle/Turtle/vendor/entt/include -I /home/acar/turtle/Turtle/vendor/lua/src -I /home/acar/turtle/Turtle/vendor/miniaudio/include -I /home/acar/turtle/Turtle/vendor/portable-file-dialog -m64 -g -o /home/acar/turtle/bin-int/Debug-linux-x86_64/Turtle/ComponentConnections.o -MF /home/acar/turtle/bin-int/Debug-linux-x86_64/Turtle/ComponentConnections.d -c /home/acar/turtle/Turtle/src/Turtle/Scene/ComponentConnections.cpp"
+          }
+,
+          {
+            "directory": "/home/acar/turtle/Turtle",
+            "file": "/home/acar/turtle/Turtle/src/Turtle/Scene/ComponentSerializers.cpp",
+            "command": "cc -MD -MP -D_CRT_SECURE_NO_WARNINGS -DTURT_DEBUG -I /home/acar/turtle/Turtle/src -I /home/acar/turtle/Turtle/vendor/spdlog/include -I /home/acar/turtle/Turtle/vendor/GLFW/include -I /home/acar/turtle/Turtle/vendor/Glad/include -I /home/acar/turtle/Turtle/vendor/imgui -I /home/acar/turtle/Turtle/vendor/glm -I /home/acar/turtle/Turtle/vendor/stb_image -I /home/acar/turtle/Turtle/vendor/yaml-cpp/include -I /home/acar/turtle/Turtle/vendor/entt/include -I /home/acar/turtle/Turtle/vendor/lua/src -I /home/acar/turtle/Turtle/vendor/miniaudio/include -I /home/acar/turtle/Turtle/vendor/portable-file-dialog -m64 -g -o /home/acar/turtle/bin-int/Debug-linux-x86_64/Turtle/ComponentSerializers.o -MF /home/acar/turtle/bin-int/Debug-linux-x86_64/Turtle/ComponentSerializers.d -c /home/acar/turtle/Turtle/src/Turtle/Scene/ComponentSerializers.cpp"
+          }
+,
+          {
+            "directory": "/home/acar/turtle/Turtle",
+            "file": "/home/acar/turtle/Turtle/src/Turtle/Scene/ComponentUI.cpp",
+            "command": "cc -MD -MP -D_CRT_SECURE_NO_WARNINGS -DTURT_DEBUG -I /home/acar/turtle/Turtle/src -I /home/acar/turtle/Turtle/vendor/spdlog/include -I /home/acar/turtle/Turtle/vendor/GLFW/include -I /home/acar/turtle/Turtle/vendor/Glad/include -I /home/acar/turtle/Turtle/vendor/imgui -I /home/acar/turtle/Turtle/vendor/glm -I /home/acar/turtle/Turtle/vendor/stb_image -I /home/acar/turtle/Turtle/vendor/yaml-cpp/include -I /home/acar/turtle/Turtle/vendor/entt/include -I /home/acar/turtle/Turtle/vendor/lua/src -I /home/acar/turtle/Turtle/vendor/miniaudio/include -I /home/acar/turtle/Turtle/vendor/portable-file-dialog -m64 -g -o /home/acar/turtle/bin-int/Debug-linux-x86_64/Turtle/ComponentUI.o -MF /home/acar/turtle/bin-int/Debug-linux-x86_64/Turtle/ComponentUI.d -c /home/acar/turtle/Turtle/src/Turtle/Scene/ComponentUI.cpp"
+          }
+,
+          {
+            "directory": "/home/acar/turtle/Turtle",
+            "file": "/home/acar/turtle/Turtle/src/Turtle/Scene/Entity.cpp",
+            "command": "cc -MD -MP -D_CRT_SECURE_NO_WARNINGS -DTURT_DEBUG -I /home/acar/turtle/Turtle/src -I /home/acar/turtle/Turtle/vendor/spdlog/include -I /home/acar/turtle/Turtle/vendor/GLFW/include -I /home/acar/turtle/Turtle/vendor/Glad/include -I /home/acar/turtle/Turtle/vendor/imgui -I /home/acar/turtle/Turtle/vendor/glm -I /home/acar/turtle/Turtle/vendor/stb_image -I /home/acar/turtle/Turtle/vendor/yaml-cpp/include -I /home/acar/turtle/Turtle/vendor/entt/include -I /home/acar/turtle/Turtle/vendor/lua/src -I /home/acar/turtle/Turtle/vendor/miniaudio/include -I /home/acar/turtle/Turtle/vendor/portable-file-dialog -m64 -g -o /home/acar/turtle/bin-int/Debug-linux-x86_64/Turtle/Entity.o -MF /home/acar/turtle/bin-int/Debug-linux-x86_64/Turtle/Entity.d -c /home/acar/turtle/Turtle/src/Turtle/Scene/Entity.cpp"
+          }
+,
+          {
+            "directory": "/home/acar/turtle/Turtle",
+            "file": "/home/acar/turtle/Turtle/src/Turtle/Scene/Scene.cpp",
+            "command": "cc -MD -MP -D_CRT_SECURE_NO_WARNINGS -DTURT_DEBUG -I /home/acar/turtle/Turtle/src -I /home/acar/turtle/Turtle/vendor/spdlog/include -I /home/acar/turtle/Turtle/vendor/GLFW/include -I /home/acar/turtle/Turtle/vendor/Glad/include -I /home/acar/turtle/Turtle/vendor/imgui -I /home/acar/turtle/Turtle/vendor/glm -I /home/acar/turtle/Turtle/vendor/stb_image -I /home/acar/turtle/Turtle/vendor/yaml-cpp/include -I /home/acar/turtle/Turtle/vendor/entt/include -I /home/acar/turtle/Turtle/vendor/lua/src -I /home/acar/turtle/Turtle/vendor/miniaudio/include -I /home/acar/turtle/Turtle/vendor/portable-file-dialog -m64 -g -o /home/acar/turtle/bin-int/Debug-linux-x86_64/Turtle/Scene.o -MF /home/acar/turtle/bin-int/Debug-linux-x86_64/Turtle/Scene.d -c /home/acar/turtle/Turtle/src/Turtle/Scene/Scene.cpp"
+          }
+,
+          {
+            "directory": "/home/acar/turtle/Turtle",
+            "file": "/home/acar/turtle/Turtle/src/Turtle/Scene/SceneCamera.cpp",
+            "command": "cc -MD -MP -D_CRT_SECURE_NO_WARNINGS -DTURT_DEBUG -I /home/acar/turtle/Turtle/src -I /home/acar/turtle/Turtle/vendor/spdlog/include -I /home/acar/turtle/Turtle/vendor/GLFW/include -I /home/acar/turtle/Turtle/vendor/Glad/include -I /home/acar/turtle/Turtle/vendor/imgui -I /home/acar/turtle/Turtle/vendor/glm -I /home/acar/turtle/Turtle/vendor/stb_image -I /home/acar/turtle/Turtle/vendor/yaml-cpp/include -I /home/acar/turtle/Turtle/vendor/entt/include -I /home/acar/turtle/Turtle/vendor/lua/src -I /home/acar/turtle/Turtle/vendor/miniaudio/include -I /home/acar/turtle/Turtle/vendor/portable-file-dialog -m64 -g -o /home/acar/turtle/bin-int/Debug-linux-x86_64/Turtle/SceneCamera.o -MF /home/acar/turtle/bin-int/Debug-linux-x86_64/Turtle/SceneCamera.d -c /home/acar/turtle/Turtle/src/Turtle/Scene/SceneCamera.cpp"
+          }
+,
+          {
+            "directory": "/home/acar/turtle/Turtle",
+            "file": "/home/acar/turtle/Turtle/src/Turtle/Scripting/LuaScript.cpp",
+            "command": "cc -MD -MP -D_CRT_SECURE_NO_WARNINGS -DTURT_DEBUG -I /home/acar/turtle/Turtle/src -I /home/acar/turtle/Turtle/vendor/spdlog/include -I /home/acar/turtle/Turtle/vendor/GLFW/include -I /home/acar/turtle/Turtle/vendor/Glad/include -I /home/acar/turtle/Turtle/vendor/imgui -I /home/acar/turtle/Turtle/vendor/glm -I /home/acar/turtle/Turtle/vendor/stb_image -I /home/acar/turtle/Turtle/vendor/yaml-cpp/include -I /home/acar/turtle/Turtle/vendor/entt/include -I /home/acar/turtle/Turtle/vendor/lua/src -I /home/acar/turtle/Turtle/vendor/miniaudio/include -I /home/acar/turtle/Turtle/vendor/portable-file-dialog -m64 -g -o /home/acar/turtle/bin-int/Debug-linux-x86_64/Turtle/LuaScript.o -MF /home/acar/turtle/bin-int/Debug-linux-x86_64/Turtle/LuaScript.d -c /home/acar/turtle/Turtle/src/Turtle/Scripting/LuaScript.cpp"
+          }
+,
+          {
+            "directory": "/home/acar/turtle/Turtle",
+            "file": "/home/acar/turtle/Turtle/src/turtpch.cpp",
+            "command": "cc -MD -MP -D_CRT_SECURE_NO_WARNINGS -DTURT_DEBUG -I /home/acar/turtle/Turtle/src -I /home/acar/turtle/Turtle/vendor/spdlog/include -I /home/acar/turtle/Turtle/vendor/GLFW/include -I /home/acar/turtle/Turtle/vendor/Glad/include -I /home/acar/turtle/Turtle/vendor/imgui -I /home/acar/turtle/Turtle/vendor/glm -I /home/acar/turtle/Turtle/vendor/stb_image -I /home/acar/turtle/Turtle/vendor/yaml-cpp/include -I /home/acar/turtle/Turtle/vendor/entt/include -I /home/acar/turtle/Turtle/vendor/lua/src -I /home/acar/turtle/Turtle/vendor/miniaudio/include -I /home/acar/turtle/Turtle/vendor/portable-file-dialog -m64 -g -o /home/acar/turtle/bin-int/Debug-linux-x86_64/Turtle/turtpch.o -MF /home/acar/turtle/bin-int/Debug-linux-x86_64/Turtle/turtpch.d -c /home/acar/turtle/Turtle/src/turtpch.cpp"
+          }
+,
+          {
+            "directory": "/home/acar/turtle/Turtle",
+            "file": "/home/acar/turtle/Turtle/vendor/stb_image/stb_image.cpp",
+            "command": "cc -MD -MP -D_CRT_SECURE_NO_WARNINGS -DTURT_DEBUG -I /home/acar/turtle/Turtle/src -I /home/acar/turtle/Turtle/vendor/spdlog/include -I /home/acar/turtle/Turtle/vendor/GLFW/include -I /home/acar/turtle/Turtle/vendor/Glad/include -I /home/acar/turtle/Turtle/vendor/imgui -I /home/acar/turtle/Turtle/vendor/glm -I /home/acar/turtle/Turtle/vendor/stb_image -I /home/acar/turtle/Turtle/vendor/yaml-cpp/include -I /home/acar/turtle/Turtle/vendor/entt/include -I /home/acar/turtle/Turtle/vendor/lua/src -I /home/acar/turtle/Turtle/vendor/miniaudio/include -I /home/acar/turtle/Turtle/vendor/portable-file-dialog -m64 -g -o /home/acar/turtle/bin-int/Debug-linux-x86_64/Turtle/stb_image.o -MF /home/acar/turtle/bin-int/Debug-linux-x86_64/Turtle/stb_image.d -c /home/acar/turtle/Turtle/vendor/stb_image/stb_image.cpp"
+          }
+,
+          {
+            "directory": "/home/acar/turtle/Tortuga",
+            "file": "/home/acar/turtle/Tortuga/src/EditorLayer.cpp",
+            "command": "cc -MD -MP -DTURT_DEBUG -I /home/acar/turtle/Turtle/vendor/spdlog/include -I /home/acar/turtle/Turtle/src -I /home/acar/turtle/Turtle/vendor -I /home/acar/turtle/Turtle/vendor/glm -I /home/acar/turtle/Turtle/vendor/entt/include -I /home/acar/turtle/Turtle/vendor/miniaudio/include -I /home/acar/turtle/Turtle/vendor/imgui -I /home/acar/turtle/Turtle/vendor/yaml-cpp/include -I /home/acar/turtle/Turtle/vendor/lua/src -I /home/acar/turtle/Turtle/vendor/portable-file-dialog -m64 -g -o /home/acar/turtle/bin-int/Debug-linux-x86_64/Tortuga/EditorLayer.o -MF /home/acar/turtle/bin-int/Debug-linux-x86_64/Tortuga/EditorLayer.d -c /home/acar/turtle/Tortuga/src/EditorLayer.cpp"
+          }
+,
+          {
+            "directory": "/home/acar/turtle/Tortuga",
+            "file": "/home/acar/turtle/Tortuga/src/Panels/ComponentSelectPanel.cpp",
+            "command": "cc -MD -MP -DTURT_DEBUG -I /home/acar/turtle/Turtle/vendor/spdlog/include -I /home/acar/turtle/Turtle/src -I /home/acar/turtle/Turtle/vendor -I /home/acar/turtle/Turtle/vendor/glm -I /home/acar/turtle/Turtle/vendor/entt/include -I /home/acar/turtle/Turtle/vendor/miniaudio/include -I /home/acar/turtle/Turtle/vendor/imgui -I /home/acar/turtle/Turtle/vendor/yaml-cpp/include -I /home/acar/turtle/Turtle/vendor/lua/src -I /home/acar/turtle/Turtle/vendor/portable-file-dialog -m64 -g -o /home/acar/turtle/bin-int/Debug-linux-x86_64/Tortuga/ComponentSelectPanel.o -MF /home/acar/turtle/bin-int/Debug-linux-x86_64/Tortuga/ComponentSelectPanel.d -c /home/acar/turtle/Tortuga/src/Panels/ComponentSelectPanel.cpp"
+          }
+,
+          {
+            "directory": "/home/acar/turtle/Tortuga",
+            "file": "/home/acar/turtle/Tortuga/src/Panels/FileSelector.cpp",
+            "command": "cc -MD -MP -DTURT_DEBUG -I /home/acar/turtle/Turtle/vendor/spdlog/include -I /home/acar/turtle/Turtle/src -I /home/acar/turtle/Turtle/vendor -I /home/acar/turtle/Turtle/vendor/glm -I /home/acar/turtle/Turtle/vendor/entt/include -I /home/acar/turtle/Turtle/vendor/miniaudio/include -I /home/acar/turtle/Turtle/vendor/imgui -I /home/acar/turtle/Turtle/vendor/yaml-cpp/include -I /home/acar/turtle/Turtle/vendor/lua/src -I /home/acar/turtle/Turtle/vendor/portable-file-dialog -m64 -g -o /home/acar/turtle/bin-int/Debug-linux-x86_64/Tortuga/FileSelector.o -MF /home/acar/turtle/bin-int/Debug-linux-x86_64/Tortuga/FileSelector.d -c /home/acar/turtle/Tortuga/src/Panels/FileSelector.cpp"
+          }
+,
+          {
+            "directory": "/home/acar/turtle/Tortuga",
+            "file": "/home/acar/turtle/Tortuga/src/Panels/SceneHeirarchyPanel.cpp",
+            "command": "cc -MD -MP -DTURT_DEBUG -I /home/acar/turtle/Turtle/vendor/spdlog/include -I /home/acar/turtle/Turtle/src -I /home/acar/turtle/Turtle/vendor -I /home/acar/turtle/Turtle/vendor/glm -I /home/acar/turtle/Turtle/vendor/entt/include -I /home/acar/turtle/Turtle/vendor/miniaudio/include -I /home/acar/turtle/Turtle/vendor/imgui -I /home/acar/turtle/Turtle/vendor/yaml-cpp/include -I /home/acar/turtle/Turtle/vendor/lua/src -I /home/acar/turtle/Turtle/vendor/portable-file-dialog -m64 -g -o /home/acar/turtle/bin-int/Debug-linux-x86_64/Tortuga/SceneHeirarchyPanel.o -MF /home/acar/turtle/bin-int/Debug-linux-x86_64/Tortuga/SceneHeirarchyPanel.d -c /home/acar/turtle/Tortuga/src/Panels/SceneHeirarchyPanel.cpp"
+          }
+,
+          {
+            "directory": "/home/acar/turtle/Tortuga",
+            "file": "/home/acar/turtle/Tortuga/src/Panels/TilePallettePanel.cpp",
+            "command": "cc -MD -MP -DTURT_DEBUG -I /home/acar/turtle/Turtle/vendor/spdlog/include -I /home/acar/turtle/Turtle/src -I /home/acar/turtle/Turtle/vendor -I /home/acar/turtle/Turtle/vendor/glm -I /home/acar/turtle/Turtle/vendor/entt/include -I /home/acar/turtle/Turtle/vendor/miniaudio/include -I /home/acar/turtle/Turtle/vendor/imgui -I /home/acar/turtle/Turtle/vendor/yaml-cpp/include -I /home/acar/turtle/Turtle/vendor/lua/src -I /home/acar/turtle/Turtle/vendor/portable-file-dialog -m64 -g -o /home/acar/turtle/bin-int/Debug-linux-x86_64/Tortuga/TilePallettePanel.o -MF /home/acar/turtle/bin-int/Debug-linux-x86_64/Tortuga/TilePallettePanel.d -c /home/acar/turtle/Tortuga/src/Panels/TilePallettePanel.cpp"
+          }
+,
+          {
+            "directory": "/home/acar/turtle/Tortuga",
+            "file": "/home/acar/turtle/Tortuga/src/TortugaApp.cpp",
+            "command": "cc -MD -MP -DTURT_DEBUG -I /home/acar/turtle/Turtle/vendor/spdlog/include -I /home/acar/turtle/Turtle/src -I /home/acar/turtle/Turtle/vendor -I /home/acar/turtle/Turtle/vendor/glm -I /home/acar/turtle/Turtle/vendor/entt/include -I /home/acar/turtle/Turtle/vendor/miniaudio/include -I /home/acar/turtle/Turtle/vendor/imgui -I /home/acar/turtle/Turtle/vendor/yaml-cpp/include -I /home/acar/turtle/Turtle/vendor/lua/src -I /home/acar/turtle/Turtle/vendor/portable-file-dialog -m64 -g -o /home/acar/turtle/bin-int/Debug-linux-x86_64/Tortuga/TortugaApp.o -MF /home/acar/turtle/bin-int/Debug-linux-x86_64/Tortuga/TortugaApp.d -c /home/acar/turtle/Tortuga/src/TortugaApp.cpp"
+          }
+,
+          {
+            "directory": "/home/acar/turtle/Sandbox",
+            "file": "/home/acar/turtle/Sandbox/src/Sandbox2D.cpp",
+            "command": "cc -MD -MP -DTURT_DEBUG -I /home/acar/turtle/Turtle/vendor/spdlog/include -I /home/acar/turtle/Turtle/src -I /home/acar/turtle/Turtle/vendor -I /home/acar/turtle/Turtle/vendor/glm -I /home/acar/turtle/Turtle/vendor/entt/include -I /home/acar/turtle/Turtle/vendor/miniaudio/include -I /home/acar/turtle/Turtle/vendor/yaml-cpp/include -I /home/acar/turtle/Turtle/vendor/lua/src -I /home/acar/turtle/Turtle/vendor/portable-file-dialog -m64 -g -o /home/acar/turtle/bin-int/Debug-linux-x86_64/Sandbox/Sandbox2D.o -MF /home/acar/turtle/bin-int/Debug-linux-x86_64/Sandbox/Sandbox2D.d -c /home/acar/turtle/Sandbox/src/Sandbox2D.cpp"
+          }
+,
+          {
+            "directory": "/home/acar/turtle/Sandbox",
+            "file": "/home/acar/turtle/Sandbox/src/SandboxApp.cpp",
+            "command": "cc -MD -MP -DTURT_DEBUG -I /home/acar/turtle/Turtle/vendor/spdlog/include -I /home/acar/turtle/Turtle/src -I /home/acar/turtle/Turtle/vendor -I /home/acar/turtle/Turtle/vendor/glm -I /home/acar/turtle/Turtle/vendor/entt/include -I /home/acar/turtle/Turtle/vendor/miniaudio/include -I /home/acar/turtle/Turtle/vendor/yaml-cpp/include -I /home/acar/turtle/Turtle/vendor/lua/src -I /home/acar/turtle/Turtle/vendor/portable-file-dialog -m64 -g -o /home/acar/turtle/bin-int/Debug-linux-x86_64/Sandbox/SandboxApp.o -MF /home/acar/turtle/bin-int/Debug-linux-x86_64/Sandbox/SandboxApp.d -c /home/acar/turtle/Sandbox/src/SandboxApp.cpp"
+          }
+]
