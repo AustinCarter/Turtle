@@ -40,18 +40,23 @@ OpenGLTexture2D::OpenGLTexture2D(const std::string &path) : m_Path(path) {
   m_InternalFormat = internalFormat;
   m_DataFormat = dataFormat;
 
-  glCreateTextures(GL_TEXTURE_2D, 1, &m_RendererID);
-  glTextureStorage2D(m_RendererID, 1, internalFormat, m_Width, m_Height);
+  TURT_CORE_INFO("loading texture");
+  glGenTextures(1, &m_RendererID);
+  glBindTexture(GL_TEXTURE_2D, m_RendererID);
+  glTexImage2D(GL_TEXTURE_2D, 0, m_InternalFormat, m_Width, m_Height, 0,
+               GL_RGBA, GL_UNSIGNED_INT_8_8_8_8, NULL);
 
-  glTextureParameteri(m_RendererID, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-  glTextureParameteri(m_RendererID, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-  glTextureParameteri(m_RendererID, GL_TEXTURE_WRAP_S, GL_REPEAT);
-  glTextureParameteri(m_RendererID, GL_TEXTURE_WRAP_T, GL_REPEAT);
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 
-  glTextureSubImage2D(m_RendererID, 0, 0, 0, m_Width, m_Height, dataFormat,
-                      GL_UNSIGNED_BYTE, data);
+  glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, m_Width, m_Height, dataFormat,
+                  GL_UNSIGNED_BYTE, data);
 
+  TURT_CORE_INFO("freeing image data");
   stbi_image_free(data);
+  TURT_CORE_INFO("texture loaded");
 }
 
 OpenGLTexture2D::OpenGLTexture2D(uint32_t width, uint32_t height)
