@@ -40,7 +40,6 @@ OpenGLTexture2D::OpenGLTexture2D(const std::string &path) : m_Path(path) {
   m_InternalFormat = internalFormat;
   m_DataFormat = dataFormat;
 
-  TURT_CORE_INFO("loading texture");
   glGenTextures(1, &m_RendererID);
   glBindTexture(GL_TEXTURE_2D, m_RendererID);
   glTexImage2D(GL_TEXTURE_2D, 0, m_InternalFormat, m_Width, m_Height, 0,
@@ -54,9 +53,7 @@ OpenGLTexture2D::OpenGLTexture2D(const std::string &path) : m_Path(path) {
   glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, m_Width, m_Height, dataFormat,
                   GL_UNSIGNED_BYTE, data);
 
-  TURT_CORE_INFO("freeing image data");
   stbi_image_free(data);
-  TURT_CORE_INFO("texture loaded");
 }
 
 OpenGLTexture2D::OpenGLTexture2D(uint32_t width, uint32_t height)
