@@ -156,7 +156,7 @@ void ScriptComponent::DrawUI(Entity entity) {
       // Iterate over 'Props' global table and print out all values
       // NOTE: currently assumes that all values are numeric
       //		could recurse on meta table of user data and print all
-      //floats
+      // floats
       lua_getglobal(L, "Props");
       int top = lua_gettop(L);
       // first key
@@ -303,7 +303,7 @@ void ParticleSpawnerComponent::DrawUI(Entity entity) {
                          0.0f, 1.0f);
         ImGui::PopItemWidth();
         ImGui::NextColumn();
-        // ImGui::DragFloat("Rotation", &particle.Rotation, 0.03f, 0.0f, 5.0f);
+        // ImGui::DragFloat("Rotation", &paricle.Rotation, 0.03f, 0.0f, 5.0f);
         ImGui::Text("LifeTime");
         ImGui::NextColumn();
         ImGui::PushItemWidth(ImGui::GetContentRegionAvailWidth() * 0.8f);

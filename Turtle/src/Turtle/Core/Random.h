@@ -1,6 +1,8 @@
 #pragma once
 
 #include "Turtle/Core/Log.h"
+#include <cstdint>
+#include <limits>
 #include <random>
 
 namespace Turtle {
@@ -13,8 +15,9 @@ public:
   }
 
   static float Float() {
-    return (float)s_Distribution(s_RandomEngine) /
-           (float)std::numeric_limits<uint32_t>::max();
+    uint32_t dist = s_Distribution(s_RandomEngine);
+    uint32_t max = std::numeric_limits<uint32_t>::max();
+    return (float)dist / max;
   }
 
 private:

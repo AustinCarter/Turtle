@@ -1,4 +1,5 @@
 #include "ParticleSpawner.h"
+#include "Turtle/Core/Log.h"
 #include "turtpch.h"
 
 #include "Turtle/Core/Random.h"
@@ -45,7 +46,6 @@ void ParticleSpawner::OnRender() {
     glm::vec4 color = glm::lerp(particle.ColorEnd, particle.ColorBegin, life);
 
     float size = glm::lerp(particle.SizeEnd, particle.SizeBegin, life);
-
     // Render
     //
     // NOTE: MIGHT NOT WANT TO DO A BEGIN SCENE AND END SCENE HERE, WILL MEAN

@@ -103,6 +103,7 @@ void Scene::OnUpdate(Timestep ts) {
 
         spawner.ParticleSpawner.OnUpdate(ts);
         spawner.ParticleSpawner.OnRender();
+
         for (int i = 0; i < spawner.EmissionRate; i++)
           spawner.ParticleSpawner.Emit(spawner.Particle);
       }
